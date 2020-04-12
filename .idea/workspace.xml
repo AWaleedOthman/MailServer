@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17c3474d-20e9-41f2-b27b-e8a9e7bf42ce" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/MailServer/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Interfaces/MailServer/IUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/eg/edu/alexu/csd/datastructure/Classes/MailServer/UserTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/eg/edu/alexu/csd/datastructure/Classes/Misc/AESTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/MailServer/Contact.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/Misc/AES.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/Misc/Birthday.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/Misc/Utils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MailServer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MailServer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/DataStructures/QueueArrayBased.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/DataStructures/QueueArrayBased.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/DataStructures/doubleLList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/DataStructures/DoublyLinkedList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/MailServer/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/MailServer/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Interfaces/MailServer/IUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Interfaces/MailServer/IUser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,9 +21,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="JUnit5 Test Class" />
         <option value="Class" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -44,7 +49,8 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Classes/QueueArrayBased.java" />
+    <property name="last.edited.regexp" value="bb" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Linked List" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -55,6 +61,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="eg.edu.alexu.csd.datastructure.Classes.DataStructures" />
+      <recent name="eg.edu.alexu.csd.datastructure.Classes.Misc" />
+      <recent name="eg.edu.alexu.csd.datastructure.Classes.MailServer" />
       <recent name="eg.edu.alexu.csd.datastructure.queue" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -65,6 +74,22 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.All in MailServer">
+    <configuration name="AESTest.name" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MailServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="eg.edu.alexu.csd.datastructure.Classes.Misc.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="eg.edu.alexu.csd.datastructure.Classes.Misc" />
+      <option name="MAIN_CLASS_NAME" value="eg.edu.alexu.csd.datastructure.Classes.Misc.AESTest" />
+      <option name="METHOD_NAME" value="name" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="All in MailServer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MailServer" />
       <option name="PACKAGE_NAME" value="" />
@@ -73,61 +98,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LinkedQueueTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserTest.name" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MailServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="eg.edu.alexu.csd.datastructure.Interfaces.DataStructures.*" />
+          <option name="PATTERN" value="eg.edu.alexu.csd.datastructure.Classes.MailServer.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="eg.edu.alexu.csd.datastructure.Classes" />
-      <option name="MAIN_CLASS_NAME" value="eg.edu.alexu.csd.datastructure.Classes.LinkedQueueTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="eg.edu.alexu.csd.datastructure.Classes.MailServer" />
+      <option name="MAIN_CLASS_NAME" value="eg.edu.alexu.csd.datastructure.Classes.MailServer.UserTest" />
+      <option name="METHOD_NAME" value="name" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="QueueArrayBasedTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserTest.signupTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MailServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="eg.edu.alexu.csd.datastructure.Classes.DataStructures.*" />
+          <option name="PATTERN" value="eg.edu.alexu.csd.datastructure.Classes.MailServer.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="eg.edu.alexu.csd.datastructure.Classes.DataStructures" />
-      <option name="MAIN_CLASS_NAME" value="eg.edu.alexu.csd.datastructure.Classes.DataStructures.QueueArrayBasedTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="eg.edu.alexu.csd.datastructure.Classes.MailServer" />
+      <option name="MAIN_CLASS_NAME" value="eg.edu.alexu.csd.datastructure.Classes.MailServer.UserTest" />
+      <option name="METHOD_NAME" value="signupTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="QueueLinkedBasedTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MailServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="eg.edu.alexu.csd.datastructure.Classes.DataStructures.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="eg.edu.alexu.csd.datastructure.Classes.DataStructures" />
-      <option name="MAIN_CLASS_NAME" value="eg.edu.alexu.csd.datastructure.Classes.DataStructures.QueueLinkedBasedTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="eg.edu.alexu.csd.datastructure.Classes in MailServer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MailServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="eg.edu.alexu.csd.datastructure.Classes.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="eg.edu.alexu.csd.datastructure.Classes" />
-      <option name="TEST_OBJECT" value="package" />
+    <configuration name="Scratch" type="Java Scratch" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Scratch" />
+      <option name="SCRATCH_FILE_URL" value="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -135,10 +140,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in MailServer" />
-        <item itemvalue="JUnit.eg.edu.alexu.csd.datastructure.Classes in MailServer" />
-        <item itemvalue="JUnit.QueueLinkedBasedTest" />
-        <item itemvalue="JUnit.QueueArrayBasedTest" />
-        <item itemvalue="JUnit.LinkedQueueTest" />
+        <item itemvalue="JUnit.UserTest.signupTest" />
+        <item itemvalue="JUnit.AESTest.name" />
+        <item itemvalue="Java Scratch.Scratch" />
+        <item itemvalue="JUnit.UserTest.name" />
       </list>
     </recent_temporary>
   </component>
@@ -159,7 +164,7 @@
       <workItem from="1586629938500" duration="810000" />
       <workItem from="1586636997965" duration="267000" />
       <workItem from="1586684574746" duration="1518000" />
-      <workItem from="1586691626581" duration="1026000" />
+      <workItem from="1586691626581" duration="22934000" />
     </task>
     <task id="LOCAL-00001" summary="Linked Queue">
       <created>1586098847397</created>
@@ -175,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586686084000</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="system folder">
+      <created>1586692840275</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1586692840276</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,53 +196,70 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Linked Queue" />
     <MESSAGE value="changed project structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed project structure" />
+    <MESSAGE value="system folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="system folder" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="574" y="122" key="#com.intellij.ide.util.MemberChooser" timestamp="1586094654196">
+    <state x="574" y="122" key="#com.intellij.ide.util.MemberChooser" timestamp="1586722076849">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="122" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1586094654196" />
+    <state x="574" y="122" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1586722076849" />
     <state x="571" y="281" width="514" height="265" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1586685019098">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="571" y="281" width="514" height="265" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.824@0.0.1536.824" timestamp="1586685019098" />
-    <state x="421" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586098137566">
+    <state x="421" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586695197161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="421" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1586098137566" />
+    <state x="421" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1586695197161" />
     <state x="499" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586684746587">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1586684746587" />
-    <state x="281" y="11" key="CommitChangelistDialog2" timestamp="1586686081047">
+    <state x="281" y="11" key="CommitChangelistDialog2" timestamp="1586692838936">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="281" y="11" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586686081047" />
+    <state x="281" y="11" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586692838936" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1586630751818">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1586630751818" />
-    <state x="549" y="170" key="FileChooserDialogImpl" timestamp="1586630646275">
+    <state x="549" y="170" key="FileChooserDialogImpl" timestamp="1586706699146">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586630646275" />
-    <state width="1493" height="333" key="GridCell.Tab.0.bottom" timestamp="1586686093533">
+    <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586706699146" />
+    <state width="1493" height="195" key="GridCell.Tab.0.bottom" timestamp="1586722504264">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="333" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586686093533" />
-    <state width="1493" height="333" key="GridCell.Tab.0.center" timestamp="1586686093533">
+    <state width="1493" height="195" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586722504264" />
+    <state width="1493" height="195" key="GridCell.Tab.0.center" timestamp="1586722504264">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="333" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586686093533" />
-    <state width="1493" height="333" key="GridCell.Tab.0.left" timestamp="1586686093533">
+    <state width="1493" height="195" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586722504264" />
+    <state width="1493" height="195" key="GridCell.Tab.0.left" timestamp="1586722504263">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="333" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586686093533" />
-    <state width="1493" height="333" key="GridCell.Tab.0.right" timestamp="1586686093533">
+    <state width="1493" height="195" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586722504263" />
+    <state width="1493" height="195" key="GridCell.Tab.0.right" timestamp="1586722504264">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="333" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586686093533" />
+    <state width="1493" height="195" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586722504264" />
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1586721223412">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586721223412" />
+    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1586721223412">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1586721223412" />
+    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1586721223412">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1586721223412" />
+    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1586721223412">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1586721223412" />
     <state x="477" y="240" key="com.intellij.ide.util.TipDialog" timestamp="1586691627896">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -239,18 +268,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="498" y="313" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.824@0.0.1536.824" timestamp="1586095234455" />
-    <state x="580" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586685939651">
+    <state x="580" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586722546633">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="580" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1586685939651" />
-    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1586097883636">
+    <state x="580" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1586722546633" />
+    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1586706676782">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1536.824@0.0.1536.824" timestamp="1586097883636" />
+    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1536.824@0.0.1536.824" timestamp="1586706676782" />
+    <state x="499" y="198" key="extract.method.dialog" timestamp="1586704505277">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="499" y="198" key="extract.method.dialog/0.0.1536.824@0.0.1536.824" timestamp="1586704505277" />
     <state x="473" y="46" width="590" height="732" key="find.popup" timestamp="1586685188969">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="473" y="46" width="590" height="732" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1586685188969" />
+    <state x="477" y="47" key="refactoring.ChangeSignatureDialog" timestamp="1586718332523">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="477" y="47" key="refactoring.ChangeSignatureDialog/0.0.1536.824@0.0.1536.824" timestamp="1586718332523" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MailServer$eg_edu_alexu_csd_datastructure_Classes_in_MailServer.ic" NAME="eg.edu.alexu.csd.datastructure.Classes in MailServer Coverage Results" MODIFIED="1586685838421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
