@@ -9,9 +9,9 @@ public class QueueArrayBased implements IQueue, IArrayBased {
     int f, r, capacity;
 
     public QueueArrayBased(int cap) {
-        Queue = new Object[cap];
         f = r = 0;
         capacity = cap+1;
+        Queue = new Object[capacity];
     }
 
     @Override
