@@ -1,7 +1,7 @@
-package eg.edu.alexu.csd.datastructure.Classes.DataStructures;
+package Classes.DataStructures;
 
-import eg.edu.alexu.csd.datastructure.Interfaces.DataStructures.IArrayBased;
-import eg.edu.alexu.csd.datastructure.Interfaces.DataStructures.IQueue;
+import Interfaces.DataStructures.IArrayBased;
+import Interfaces.DataStructures.IQueue;
 
 public class QueueArrayBased implements IQueue, IArrayBased {
 

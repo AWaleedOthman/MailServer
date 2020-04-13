@@ -1,7 +1,7 @@
-package eg.edu.alexu.csd.datastructure.Classes.DataStructures;
+package Classes.DataStructures;
 
-import eg.edu.alexu.csd.datastructure.Interfaces.DataStructures.ILinkedBased;
-import eg.edu.alexu.csd.datastructure.Interfaces.DataStructures.IQueue;
+import Interfaces.DataStructures.ILinkedBased;
+import Interfaces.DataStructures.IQueue;
 
 public class QueueLinkedBased implements IQueue, ILinkedBased {
 

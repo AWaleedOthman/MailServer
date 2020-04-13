@@ -1,4 +1,4 @@
-package eg.edu.alexu.csd.datastructure.Classes.Misc;
+package Classes.Misc;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -28,7 +28,7 @@ public class AES {
 
     public static String encrypt(String strToEncrypt, String secret)
     {
-        String returned = null;
+        String returned;
         try
         {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -37,16 +37,15 @@ public class AES {
             returned = Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8)));
             return returned;
         }
-        catch (Exception e)
+        catch (Exception ignored)
         {
-            System.out.println("Error while encrypting: " + e.toString());
         }
-        return returned;
+        return null;
     }
 
     public static String decrypt(String strToDecrypt, String secret)
     {
-        String returned = null;
+        String returned;
         try
         {
             setKey(secret);
@@ -55,10 +54,9 @@ public class AES {
             returned = new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
             return returned;
         }
-        catch (Exception e)
+        catch (Exception ignored)
         {
-            System.out.println("Error while decrypting: " + e.toString());
         }
-        return returned;
+        return null;
     }
 }

@@ -1,6 +1,6 @@
-package eg.edu.alexu.csd.datastructure.Classes.MailServer;
+package Classes.MailServer;
 
-import eg.edu.alexu.csd.datastructure.Classes.Misc.Birthday;
+import Classes.Misc.Birthday;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,26 +22,32 @@ public class Folder {
 
     public void createUserFolder(String address, String name, String gender, Birthday bd) throws IOException {
         Folder userFolder = addSubFolder(address);
-        File userInfo = new File(userFolder.addSubFolder("info.txt").getPath());
+        File userInfo = new File(userFolder.getPath() + "\\info.txt");
+        userInfo.createNewFile();
         BufferedWriter writer = new BufferedWriter(new FileWriter(userInfo, false));
         writer.write(name);
         writer.newLine();
         writer.write(gender);
         writer.newLine();
-        writer.write(bd.getDay());
+        writer.write(Integer.toString(bd.getDay()));
         writer.newLine();
-        writer.write(bd.getMonth());
+        writer.write(Integer.toString(bd.getMonth()));
         writer.newLine();
-        writer.write(bd.getYear());
+        writer.write(Integer.toString(bd.getYear()));
         writer.newLine();
+        writer.close();
         Folder inbox = userFolder.addSubFolder("inbox");
-        inbox.addSubFolder("index.txt");
+        File inboxIndex = new File(inbox.getPath() + "\\index.txt");
+        inboxIndex.createNewFile();
         Folder archive = userFolder.addSubFolder("archive");
-        archive.addSubFolder("index.txt");
+        File archiveIndex = new File(archive.getPath() + "\\index.txt");
+        archiveIndex.createNewFile();
         Folder sent = userFolder.addSubFolder("sent");
-        sent.addSubFolder("index.txt");
+        File sentIndex = new File(sent.getPath() + "\\index.txt");
+        sentIndex.createNewFile();
         Folder trash = userFolder.addSubFolder("trash");
-        trash.addSubFolder("index.txt");
+        File trashIndex = new File(trash.getPath() + "\\index.txt");
+        trashIndex.createNewFile();
 
     }
 

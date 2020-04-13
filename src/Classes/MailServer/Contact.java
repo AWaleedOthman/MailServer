@@ -1,4 +1,4 @@
-package eg.edu.alexu.csd.datastructure.Classes.MailServer;
+package Classes.MailServer;
 
 public class Contact {
     private String name, address;

@@ -1,4 +1,4 @@
-package eg.edu.alexu.csd.datastructure.Interfaces.DataStructures;
+package Interfaces.DataStructures;
 
 public interface ILinkedList {
     /**

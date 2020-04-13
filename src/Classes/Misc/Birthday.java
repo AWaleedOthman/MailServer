@@ -1,4 +1,4 @@
-package eg.edu.alexu.csd.datastructure.Classes.Misc;
+package Classes.Misc;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

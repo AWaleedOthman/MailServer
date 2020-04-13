@@ -1,6 +1,6 @@
-package eg.edu.alexu.csd.datastructure.Classes.DataStructures;
+package Classes.DataStructures;
 
-import eg.edu.alexu.csd.datastructure.Interfaces.DataStructures.ILinkedList;
+import Interfaces.DataStructures.ILinkedList;
 
 public class DoublyLinkedList implements ILinkedList {
     private static class dListNode {

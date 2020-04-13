@@ -1,7 +1,7 @@
-package eg.edu.alexu.csd.datastructure.Classes.Misc;
+package Classes.Misc;
 
-import eg.edu.alexu.csd.datastructure.Classes.DataStructures.DoublyLinkedList;
-import eg.edu.alexu.csd.datastructure.Classes.MailServer.User;
+import Classes.DataStructures.DoublyLinkedList;
+import Classes.MailServer.User;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,18 +14,13 @@ public class Utils {
      * @return true if valid, false otherwise
      */
     public static boolean validAddress(String address) {
-        Pattern p = Pattern.compile("@");
-        Matcher m = p.matcher(address);
-        if (!m.find()) return false;
         int index = address.indexOf('@');
-        if (index == 0) return false;
+        if (index == -1 || index == 0) return false;
         if (!address.substring(index).equals("@thetrio.com")) return false;
-        p = Pattern.compile("[^\\w|.]");
-        m = p.matcher(address.substring(0, index - 1));
+        Pattern p = Pattern.compile("[^\\w|.]");
+        Matcher m = p.matcher(address.substring(0, index - 1));
         if (m.find()) return false;
-        p = Pattern.compile("[.][.]");
-        m = p.matcher(address.substring(0, index - 1));
-        return !m.find();
+        return !address.contains("..");
     }
 
     /**

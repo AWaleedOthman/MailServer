@@ -1,13 +1,14 @@
-package eg.edu.alexu.csd.datastructure.Classes.MailServer;
+package Classes.MailServer;
 
-import eg.edu.alexu.csd.datastructure.Classes.DataStructures.DoublyLinkedList;
-import eg.edu.alexu.csd.datastructure.Classes.DataStructures.SinglyLinkedList;
-import eg.edu.alexu.csd.datastructure.Classes.Misc.AES;
-import eg.edu.alexu.csd.datastructure.Classes.Misc.Birthday;
-import eg.edu.alexu.csd.datastructure.Classes.Misc.Utils;
-import eg.edu.alexu.csd.datastructure.Interfaces.MailServer.IUser;
+import Classes.DataStructures.DoublyLinkedList;
+import Classes.DataStructures.SinglyLinkedList;
+import Classes.Misc.AES;
+import Classes.Misc.Birthday;
+import Classes.Misc.Utils;
+import Interfaces.MailServer.IUser;
 
 import java.io.*;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class User implements IUser {
@@ -31,9 +32,10 @@ public class User implements IUser {
 
     /**
      * overwrites the file "list"
+     *
      * @throws IOException file not found
      */
-    public static void exportList() throws IOException {
+    private static void exportList() throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(fList, false));
         if (list.isEmpty()) return;
         User user = (User) list.get(0);
@@ -57,12 +59,15 @@ public class User implements IUser {
      * @param address  email address
      * @param password password
      * @return user created or null if invalid signup
-
      * @throws IOException file not found
      */
     public static User signup(String address, String password, String name, String gender, Birthday bd, boolean validated) throws IOException {
-        if (!validated && (validSignup(address, password, bd.getDay(), bd.getMonth(), bd.getYear()) != 0)) return null;
-        User user = new User(address, AES.encrypt(password, password));
+        if (!validated && (validateSignup(address, password) != null)) return null;
+        User user;
+        try {
+        user = new User(address, AES.encrypt(password, password));} catch (Exception e) {
+            return null;
+        }
         Utils.addToSorted(user, list);
         exportList();
         //create new folder with info
@@ -76,35 +81,49 @@ public class User implements IUser {
     }
 
     /**
+     * it validates the email address and the password.
+     * birthday must be validated before hand using Birthday.valid() in case it is **typed** by user
      *
-     * @param address email address
+     * @param address  email address
      * @param password password
-     * @return   0: successfully signed-up
-     *          -1: already signed-up
-     *          -2: invalid email address (a valid address contains letters, numbers or non-consecutive periods then "@thetrio.com")
-     *          -3: invalid password (a valid password must be between 6 and 30 characters inclusive)
-     *          -4: invalid birthday
+     * @return 0: successfully signed-up
+     * -1: already signed-up
+     * -2: invalid email address (a valid address contains letters, numbers or non-consecutive periods then "@thetrio.com")
+     * -3: invalid password (a valid password must be between 6 and 30 characters inclusive)
+     * -4: both -2 and -3
      */
-    public static int validSignup(String address, String password, int day, int month, int year) {
-        if (Utils.binarySearch(address, list) != null) return -1; //already signed up
-        if (!Utils.validAddress(address)) return -2; //invalid address
-        if (password.length() < 6 || password.length() > 30) return -3; //invalid password
-        if (!Birthday.valid(day, month, year)) return -4; //invalid birthday
-        return 0;
+    public static String validateSignup(String address, String password) {
+        String s = null;
+        if (Utils.binarySearch(address, list) != null) return "alreadyExists"; //already signed up
+        if (!Utils.validAddress(address)) s = "invalidEmailAddress"; //invalid address
+
+        if (password.length() < 6 || password.length() > 30 || password.indexOf(' ') != -1) {
+            if (s != null)
+                s = "invalidEmailAddressANDPassword";
+            else s = "invalidPassword";
+        }
+        /*uncomment the next line if the birthday fields are **typed** by the user*/
+        //if (!Birthday.valid(day, month, year)) return -4; //invalid birthday
+        return s;
     }
 
     /**
+     * call loadUsers before calling this
      *
-     * @param address to search for
+     * @param address  to search for
      * @param password to match
      * @return user if valid sign-in, null otherwise
      */
     public static User signin(String address, String password) throws IOException {
         User user = Utils.binarySearch(address, list);
         if (user == null) return null; //invalid sign-in
-        if (!AES.decrypt(user.encryptedPassword, password).equals(password)) return null;
+        try {
+            if (!Objects.equals(AES.decrypt(user.encryptedPassword, password), password)) return null;
+        } catch (Exception e) {
+            return null;
+        }
         /*load user info*/
-        Scanner sc = new Scanner(path + "\\" + address + "\\info.txt");
+        Scanner sc = new Scanner(new File(path + "\\" + address + "\\info.txt"));
         user.setFilePath(path + "\\" + address);
         user.setName(sc.nextLine());
         user.setGender(sc.nextLine());
@@ -120,21 +139,23 @@ public class User implements IUser {
 
     private String address, encryptedPassword;
     private String name, filePath;
-    private Gender gender;
+    private String gender;
     private Birthday birthday;
-    private enum Gender {Male, Female, Other}
+
     private SinglyLinkedList contacts = new SinglyLinkedList();
+    //TODO methods for searching contacts linearly
 
     /**
      * adds a contact to the user's list of contacts
-     * @param name contact's name
+     *
+     * @param name    contact's name
      * @param address contact's address
      * @throws IOException file not found
      */
     public void addContact(String name, String address) throws IOException {
         Contact c = new Contact(name, address);
         contacts.add(c);
-        BufferedWriter writer = new BufferedWriter(new FileWriter(path + "\\" + address + "\\info.txt", true));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + "\\info.txt", true));
         writer.write(name);
         writer.newLine();
         writer.write(address);
@@ -168,11 +189,11 @@ public class User implements IUser {
     }
 
     public void setGender(String gender) {
-        this.gender = Gender.valueOf(gender);
+        this.gender = gender;
     }
 
     public String getGender() {
-        return gender.toString();
+        return gender;
     }
 
     public void setBirthday(Birthday bd) {
