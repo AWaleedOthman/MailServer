@@ -1,6 +1,7 @@
 package eg.edu.alexu.csd.datastructure.Classes.MailServer;
 
 import eg.edu.alexu.csd.datastructure.Classes.DataStructures.DoublyLinkedList;
+import eg.edu.alexu.csd.datastructure.Classes.DataStructures.SinglyLinkedList;
 import eg.edu.alexu.csd.datastructure.Classes.Misc.AES;
 import eg.edu.alexu.csd.datastructure.Classes.Misc.Birthday;
 import eg.edu.alexu.csd.datastructure.Classes.Misc.Utils;
@@ -59,17 +60,18 @@ public class User implements IUser {
 
      * @throws IOException file not found
      */
-    public static User signup(String address, String password, String name, String gender, Birthday bd) throws IOException {
-        if (validSignup(address, password) != 0) return null;
+    public static User signup(String address, String password, String name, String gender, Birthday bd, boolean validated) throws IOException {
+        if (!validated && (validSignup(address, password, bd.getDay(), bd.getMonth(), bd.getYear()) != 0)) return null;
         User user = new User(address, AES.encrypt(password, password));
         Utils.addToSorted(user, list);
         exportList();
-        //TODO
-        //create new folder and set user file path
+        //create new folder with info
+        Folder usersFolder = new Folder(path);
+        usersFolder.createUserFolder(address, name, gender, bd);
         user.setName(name);
         user.setGender(gender);
         user.setBirthday(bd);
-        user.setFilePath("");
+        user.setFilePath(path + "\\" + address);
         return user;
     }
 
@@ -81,30 +83,64 @@ public class User implements IUser {
      *          -1: already signed-up
      *          -2: invalid email address (a valid address contains letters, numbers or non-consecutive periods then "@thetrio.com")
      *          -3: invalid password (a valid password must be between 6 and 30 characters inclusive)
+     *          -4: invalid birthday
      */
-    public static int validSignup(String address, String password) {
+    public static int validSignup(String address, String password, int day, int month, int year) {
         if (Utils.binarySearch(address, list) != null) return -1; //already signed up
         if (!Utils.validAddress(address)) return -2; //invalid address
         if (password.length() < 6 || password.length() > 30) return -3; //invalid password
+        if (!Birthday.valid(day, month, year)) return -4; //invalid birthday
         return 0;
     }
 
-    public static User signin(String address, String password) {
-
-
-        //TODO
-        //load User info
-        return null;
+    /**
+     *
+     * @param address to search for
+     * @param password to match
+     * @return user if valid sign-in, null otherwise
+     */
+    public static User signin(String address, String password) throws IOException {
+        User user = Utils.binarySearch(address, list);
+        if (user == null) return null; //invalid sign-in
+        if (!AES.decrypt(user.encryptedPassword, password).equals(password)) return null;
+        /*load user info*/
+        Scanner sc = new Scanner(path + "\\" + address + "\\info.txt");
+        user.setFilePath(path + "\\" + address);
+        user.setName(sc.nextLine());
+        user.setGender(sc.nextLine());
+        /*nextLine instead of nextInt to avoid problem of newLine being taken in next nextLine call*/
+        user.setBirthday(new Birthday(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
+        while (sc.hasNext()) {
+            user.addContact(sc.nextLine(), sc.nextLine());
+        }
+        sc.close();
+        return user;
     }
 
 
     private String address, encryptedPassword;
-    private String name;
+    private String name, filePath;
     private Gender gender;
     private Birthday birthday;
     private enum Gender {Male, Female, Other}
-    private String filePath;
-    //TODO add contacts
+    private SinglyLinkedList contacts = new SinglyLinkedList();
+
+    /**
+     * adds a contact to the user's list of contacts
+     * @param name contact's name
+     * @param address contact's address
+     * @throws IOException file not found
+     */
+    public void addContact(String name, String address) throws IOException {
+        Contact c = new Contact(name, address);
+        contacts.add(c);
+        BufferedWriter writer = new BufferedWriter(new FileWriter(path + "\\" + address + "\\info.txt", true));
+        writer.write(name);
+        writer.newLine();
+        writer.write(address);
+        writer.newLine();
+        writer.close();
+    }
 
     public String getFilePath() {
         return filePath;

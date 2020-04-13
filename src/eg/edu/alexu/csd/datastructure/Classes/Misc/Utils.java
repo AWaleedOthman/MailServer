@@ -29,17 +29,17 @@ public class Utils {
     }
 
     /**
-     * searches for s in a doubly linked list of Users
-     * @param s: search key
-     * @return the index of the element if s was found, -1 otherwise
+     * searches for address in a doubly linked list of Users
+     * @param address: search key
+     * @return the user if found, null otherwise
      */
-    public static User binarySearch(String s, DoublyLinkedList dll) {
+    public static User binarySearch(String address, DoublyLinkedList dll) {
 
         int first = 0, last = dll.size() - 1;
         while (first <= last) {
             int m = (first + last) / 2;
             User temp = (User)dll.get(m);
-            int r = s.compareTo(temp.getAddress());
+            int r = address.compareTo(temp.getAddress());
             if (r == 0) return temp;
             else if (r > 0) /*s bigger*/ first = m + 1;
             else last = m - 1;
