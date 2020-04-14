@@ -24,30 +24,26 @@ public class Birthday {
         this.year = year;
     }
 
-    public static boolean valid(int day, int month, int year) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        if (day > 9 || day < 1) return false;
-        if (month > 31 || month < 1) return false;
-        if (year > 9999 || year < 1900) return false;
-        Date bd = null;
-        try {
-            bd = sdf.parse(day + "/" + month + "/" + year);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Date today = Calendar.getInstance().getTime();
-        long diff = today.getTime() - bd.getTime();
-        return diff >= 0;
-    }
+//    public static boolean valid(int day, int month, int year) {
+//        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+//        if (day > 9 || day < 1) return false;
+//        if (month > 31 || month < 1) return false;
+//        if (year > 9999 || year < 1900) return false;
+//        Date bd = null;
+//        try {
+//            bd = sdf.parse(day + "/" + month + "/" + year);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        Date today = Calendar.getInstance().getTime();
+//        long diff = today.getTime() - bd.getTime();
+//        return diff >= 0;
+//    }
 
-    public int getAge() {
+    public int getAge() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        Date bd = null;
-        try {
-            bd = sdf.parse(day + "/" + month + "/" + year);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date bd = sdf.parse(day + "/" + month + "/" + year);
+
         Date today = Calendar.getInstance().getTime();
         long diff = today.getTime() - bd.getTime();
         int diffDays = (int) (diff / (24 * 60 * 60 * 1000));

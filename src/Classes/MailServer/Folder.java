@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class Folder {
     private String path;
 
@@ -53,9 +54,5 @@ public class Folder {
 
     public String getPath() {
         return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 }

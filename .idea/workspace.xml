@@ -2,27 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17c3474d-20e9-41f2-b27b-e8a9e7bf42ce" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Tests/Classes/MailServer/UserTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Interfaces/DataStructures/IPriorityQueue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Interfaces/MailServer/IFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Interfaces/MailServer/IMail.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/eg/edu/alexu/csd/datastructure/Classes/DataStructures/QueueArrayBasedTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/eg/edu/alexu/csd/datastructure/Classes/DataStructures/QueueLinkedBasedTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/eg/edu/alexu/csd/datastructure/Classes/MailServer/UserTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/eg/edu/alexu/csd/datastructure/Classes/Misc/AESTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/DataStructures/DoublyLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/DataStructures/DoublyLinkedList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/DataStructures/QueueArrayBased.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/DataStructures/QueueArrayBased.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/DataStructures/QueueLinkedBased.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/DataStructures/QueueLinkedBased.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/DataStructures/SinglyLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/DataStructures/SinglyLinkedList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/MailServer/Contact.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MailServer/Contact.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/MailServer/Folder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MailServer/Folder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/MailServer/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MailServer/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/Misc/AES.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Misc/AES.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/Misc/Birthday.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Misc/Birthday.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Classes/Misc/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Misc/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Interfaces/DataStructures/IArrayBased.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interfaces/DataStructures/IArrayBased.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Interfaces/DataStructures/ILinkedBased.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interfaces/DataStructures/ILinkedBased.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Interfaces/DataStructures/ILinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interfaces/DataStructures/ILinkedList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Interfaces/DataStructures/IQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interfaces/DataStructures/IQueue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/eg/edu/alexu/csd/datastructure/Interfaces/MailServer/IUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interfaces/MailServer/IUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/DataStructures/pQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/DataStructures/PQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/MailServer/Folder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MailServer/Folder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/MailServer/Mail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MailServer/Mail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/MailServer/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MailServer/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/Misc/Birthday.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Misc/Birthday.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,9 +20,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JavaFXApplication" />
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -68,15 +57,18 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/Classes/QueueArrayBased.java" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="Classes.Misc" />
       <recent name="Classes.MailServer" />
       <recent name="eg.edu.alexu.csd.datastructure.Classes.DataStructures" />
       <recent name="eg.edu.alexu.csd.datastructure.Classes.Misc" />
       <recent name="eg.edu.alexu.csd.datastructure.Classes.MailServer" />
-      <recent name="eg.edu.alexu.csd.datastructure.queue" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="Classes" />
@@ -197,7 +189,10 @@
       <workItem from="1586763087561" duration="6684000" />
       <workItem from="1586779118773" duration="48000" />
       <workItem from="1586783924791" duration="4532000" />
-      <workItem from="1586789345973" duration="2537000" />
+      <workItem from="1586789345973" duration="3192000" />
+      <workItem from="1586807566041" duration="600000" />
+      <workItem from="1586872317275" duration="190000" />
+      <workItem from="1586893097363" duration="2163000" />
     </task>
     <task id="LOCAL-00001" summary="Linked Queue">
       <created>1586098847397</created>
@@ -234,7 +229,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586779160258</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="User class done">
+      <created>1586792133331</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1586792133331</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -246,7 +248,8 @@
     <MESSAGE value="system folder" />
     <MESSAGE value="half way through making User class" />
     <MESSAGE value="finished User but did not test.. will test later today isa" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished User but did not test.. will test later today isa" />
+    <MESSAGE value="User class done" />
+    <option name="LAST_COMMIT_MESSAGE" value="User class done" />
   </component>
   <component name="WindowStateProjectService">
     <state x="93" y="93" width="1350" height="638" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1586787992488">
@@ -277,10 +280,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1586791565360" />
-    <state x="281" y="11" key="CommitChangelistDialog2" timestamp="1586779158307">
+    <state x="281" y="11" key="CommitChangelistDialog2" timestamp="1586792130339">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="281" y="11" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586779158307" />
+    <state x="281" y="11" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586792130339" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1586630751818">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -289,42 +292,46 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586706699146" />
-    <state width="1493" height="249" key="GridCell.Tab.0.bottom" timestamp="1586792082209">
+    <state width="1493" height="279" key="GridCell.Tab.0.bottom" timestamp="1586792550513">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="249" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586792082209" />
-    <state width="1493" height="249" key="GridCell.Tab.0.center" timestamp="1586792082209">
+    <state width="1493" height="279" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
+    <state width="1493" height="279" key="GridCell.Tab.0.center" timestamp="1586792550513">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="249" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586792082209" />
-    <state width="1493" height="249" key="GridCell.Tab.0.left" timestamp="1586792082209">
+    <state width="1493" height="279" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
+    <state width="1493" height="279" key="GridCell.Tab.0.left" timestamp="1586792550513">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="249" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586792082209" />
-    <state width="1493" height="249" key="GridCell.Tab.0.right" timestamp="1586792082209">
+    <state width="1493" height="279" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
+    <state width="1493" height="279" key="GridCell.Tab.0.right" timestamp="1586792550513">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="249" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586792082209" />
-    <state width="1493" height="279" key="GridCell.Tab.1.bottom" timestamp="1586790411808">
+    <state width="1493" height="279" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
+    <state width="1493" height="279" key="GridCell.Tab.1.bottom" timestamp="1586792550513">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586790411808" />
-    <state width="1493" height="279" key="GridCell.Tab.1.center" timestamp="1586790411808">
+    <state width="1493" height="279" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
+    <state width="1493" height="279" key="GridCell.Tab.1.center" timestamp="1586792550513">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1586790411808" />
-    <state width="1493" height="279" key="GridCell.Tab.1.left" timestamp="1586790411808">
+    <state width="1493" height="279" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
+    <state width="1493" height="279" key="GridCell.Tab.1.left" timestamp="1586792550513">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1586790411808" />
-    <state width="1493" height="279" key="GridCell.Tab.1.right" timestamp="1586790411808">
+    <state width="1493" height="279" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
+    <state width="1493" height="279" key="GridCell.Tab.1.right" timestamp="1586792550513">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1586790411808" />
-    <state x="477" y="240" key="com.intellij.ide.util.TipDialog" timestamp="1586789360237">
+    <state width="1493" height="279" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
+    <state x="249" y="0" key="SettingsEditor" timestamp="1586808135911">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="477" y="240" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1586789360237" />
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1586808135911" />
+    <state x="477" y="240" key="com.intellij.ide.util.TipDialog" timestamp="1586893116008">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="477" y="240" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1586893116008" />
     <state x="498" y="313" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1586095234455">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -333,10 +340,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="580" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1586788428869" />
-    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1586786360424">
+    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1586872464790">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1536.824@0.0.1536.824" timestamp="1586786360424" />
+    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1536.824@0.0.1536.824" timestamp="1586872464790" />
     <state x="93" y="93" width="1350" height="638" key="dock-window-1" timestamp="1586768231344">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

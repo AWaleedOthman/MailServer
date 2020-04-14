@@ -18,39 +18,30 @@ public class User implements IUser {
     private static DoublyLinkedList list = new DoublyLinkedList();
 
     /**
-     * loads the list of users from the file to a static doubly linked list
+     * it validates the email address and the password.
+     * birthday must be validated before hand using Birthday.valid() in case it is **typed** by user
      *
-     * @throws FileNotFoundException file not found
+     * @param address  email address
+     * @param password password
+     * @return 0: successfully signed-up
+     * -1: already signed-up
+     * -2: invalid email address (a valid address contains letters, numbers or non-consecutive periods then "@thetrio.com")
+     * -3: invalid password (a valid password must be between 6 and 30 characters inclusive)
+     * -4: both -2 and -3
      */
-    public static void loadUsers() throws FileNotFoundException {
-        Scanner sc = new Scanner(fList);
-        while (sc.hasNext()) {
-            list.add(new User(sc.nextLine(), sc.nextLine()));
-        }
-        sc.close();
-    }
+    public static String validateSignup(String address, String password) {
+        String s = null;
+        if (Utils.binarySearch(address, list) != null) return "alreadyExists"; //already signed up
+        if (!Utils.validAddress(address)) s = "invalidEmailAddress"; //invalid address
 
-    /**
-     * overwrites the file "list"
-     *
-     * @throws IOException file not found
-     */
-    private static void exportList() throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(fList, false));
-        if (list.isEmpty()) return;
-        User user = (User) list.get(0);
-        writer.write(user.getAddress());
-        writer.newLine();
-        writer.write(user.getEncryptedPassword());
-        writer.newLine();
-        while (list.hasNext()) {
-            user = (User) list.getNext();
-            writer.write(user.getAddress());
-            writer.newLine();
-            writer.write(user.getEncryptedPassword());
-            writer.newLine();
+        if (password.length() < 6 || password.length() > 30 || password.indexOf(' ') != -1) {
+            if (s != null)
+                s = "invalidEmailAddressANDPassword";
+            else s = "invalidPassword";
         }
-        writer.close();
+        /*uncomment the next line if the birthday fields are **typed** by the user*/
+        //if (!Birthday.valid(day, month, year)) return -4; //invalid birthday
+        return s;
     }
 
     /**
@@ -81,30 +72,16 @@ public class User implements IUser {
     }
 
     /**
-     * it validates the email address and the password.
-     * birthday must be validated before hand using Birthday.valid() in case it is **typed** by user
+     * loads the list of users from the file to a static doubly linked list
      *
-     * @param address  email address
-     * @param password password
-     * @return 0: successfully signed-up
-     * -1: already signed-up
-     * -2: invalid email address (a valid address contains letters, numbers or non-consecutive periods then "@thetrio.com")
-     * -3: invalid password (a valid password must be between 6 and 30 characters inclusive)
-     * -4: both -2 and -3
+     * @throws FileNotFoundException file not found
      */
-    public static String validateSignup(String address, String password) {
-        String s = null;
-        if (Utils.binarySearch(address, list) != null) return "alreadyExists"; //already signed up
-        if (!Utils.validAddress(address)) s = "invalidEmailAddress"; //invalid address
-
-        if (password.length() < 6 || password.length() > 30 || password.indexOf(' ') != -1) {
-            if (s != null)
-                s = "invalidEmailAddressANDPassword";
-            else s = "invalidPassword";
+    public static void loadUsers() throws FileNotFoundException {
+        Scanner sc = new Scanner(fList);
+        while (sc.hasNext()) {
+            list.add(new User(sc.nextLine(), sc.nextLine()));
         }
-        /*uncomment the next line if the birthday fields are **typed** by the user*/
-        //if (!Birthday.valid(day, month, year)) return -4; //invalid birthday
-        return s;
+        sc.close();
     }
 
     /**
@@ -134,6 +111,29 @@ public class User implements IUser {
         }
         sc.close();
         return user;
+    }
+
+    /**
+     * overwrites the file "list"
+     *
+     * @throws IOException file not found
+     */
+    private static void exportList() throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fList, false));
+        if (list.isEmpty()) return;
+        User user = (User) list.get(0);
+        writer.write(user.getAddress());
+        writer.newLine();
+        writer.write(user.getEncryptedPassword());
+        writer.newLine();
+        while (list.hasNext()) {
+            user = (User) list.getNext();
+            writer.write(user.getAddress());
+            writer.newLine();
+            writer.write(user.getEncryptedPassword());
+            writer.newLine();
+        }
+        writer.close();
     }
 
 
