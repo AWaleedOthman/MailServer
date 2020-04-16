@@ -2,6 +2,7 @@ package Classes.MailServer;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,11 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class UserTest {
 
     @Test
-    void validateSignupTest() {
+    void validateSignupTest() throws FileNotFoundException {
         String s;
+        User.loadUsers();
         s = User.validateSignup("a..waleedothman@thetrio.com", "strong password");
         assertEquals("invalidEmailAddressANDPassword", s);
         s = User.validateSignup("a.waleedhman@thetrio.com", "ssord");
+        assertEquals("invalidPassword", s);
+        s = User.validateSignup("a.waleedhman@thetrio.com", "P  assword");
         assertEquals("invalidPassword", s);
         s = User.validateSignup("a.w@leedothman@thetrio.com", "passssword");
         assertEquals("invalidEmailAddress", s);

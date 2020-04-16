@@ -34,7 +34,7 @@ public class User implements IUser {
         if (Utils.binarySearch(address, list) != null) return "alreadyExists"; //already signed up
         if (!Utils.validAddress(address)) s = "invalidEmailAddress"; //invalid address
 
-        if (password.length() < 6 || password.length() > 30 || password.indexOf(' ') != -1) {
+        if (!Utils.validPassword(password)) {
             if (s != null)
                 s = "invalidEmailAddressANDPassword";
             else s = "invalidPassword";
@@ -56,7 +56,8 @@ public class User implements IUser {
         if (!validated && (validateSignup(address, password) != null)) return null;
         User user;
         try {
-        user = new User(address, AES.encrypt(password, password));} catch (Exception e) {
+            user = new User(address, AES.encrypt(password, password));
+        } catch (Exception e) {
             return null;
         }
         Utils.addToSorted(user, list);
@@ -111,6 +112,11 @@ public class User implements IUser {
         }
         sc.close();
         return user;
+    }
+
+    public static boolean addressExists(String address) {
+        User user = Utils.binarySearch(address, list);
+        return user != null;
     }
 
     /**

@@ -2,15 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17c3474d-20e9-41f2-b27b-e8a9e7bf42ce" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Interfaces/DataStructures/IPriorityQueue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Interfaces/MailServer/IFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Interfaces/MailServer/IMail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/Classes/Misc/UtilsTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Classes/GUI/Signin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Classes/GUI/Signup.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Classes/GUI/TrioMail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Classes/GUI/application.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Classes/GUI/signin.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Classes/GUI/signup.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/DataStructures/pQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/DataStructures/PQueue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/MailServer/Folder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MailServer/Folder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/MailServer/Mail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MailServer/Mail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MailServer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MailServer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tests/Classes/MailServer/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/Classes/MailServer/UserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MailServer/Classes/MailServer/Folder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MailServer/Classes/MailServer/Folder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MailServer/Classes/MailServer/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MailServer/Classes/MailServer/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MailServer/Classes/Misc/Birthday.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MailServer/Classes/Misc/Birthday.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MailServer/Classes/Misc/Utils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MailServer/Classes/Misc/Utils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/MailServer/Classes/MailServer/UserTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/MailServer/Classes/MailServer/UserTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/MailServer/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MailServer/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Misc/Birthday.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Misc/Birthday.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/Misc/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Misc/Utils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,10 +28,12 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
-        <option value="JavaFXApplication" />
-        <option value="JUnit5 Test Class" />
         <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+        <option value="JavaFXApplication" />
+        <option value="CSS File" />
+        <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -50,16 +60,18 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="last.edited.regexp" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Linked List" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../stack" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/Classes/QueueArrayBased.java" />
   </component>
   <component name="RecentsManager">
@@ -77,8 +89,26 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Uni\Term4\Data Structures\Labs\MailServer\system" />
+      <recent name="D:\Uni\Term4\Data Structures\Labs\MailServer\src\Classes\GUI" />
+    </key>
   </component>
-  <component name="RunManager" selected="JUnit.UserTest.signinTest">
+  <component name="RunManager" selected="Application.TrioMail">
+    <configuration name="TrioMail" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Classes.GUI.TrioMail" />
+      <module name="MailServer" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\openjfx-11.0.2_windows-x64_bin-sdk\javafx-sdk-11.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Classes.GUI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MailServer" />
       <extension name="coverage">
@@ -90,38 +120,6 @@
       <option name="PACKAGE_NAME" value="Classes.MailServer" />
       <option name="MAIN_CLASS_NAME" value="Classes.MailServer.UserTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserTest.addContact" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MailServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Classes.MailServer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Classes.MailServer" />
-      <option name="MAIN_CLASS_NAME" value="Classes.MailServer.UserTest" />
-      <option name="METHOD_NAME" value="addContact" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserTest.other" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MailServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Classes.MailServer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Classes.MailServer" />
-      <option name="MAIN_CLASS_NAME" value="Classes.MailServer.UserTest" />
-      <option name="METHOD_NAME" value="other" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -158,13 +156,36 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UtilsTest.name" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MailServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Classes.Misc.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Classes.Misc" />
+      <option name="MAIN_CLASS_NAME" value="Classes.Misc.UtilsTest" />
+      <option name="METHOD_NAME" value="name" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.TrioMail" />
+      <item itemvalue="JUnit.UserTest" />
+      <item itemvalue="JUnit.UserTest.signinTest" />
+      <item itemvalue="JUnit.UserTest.validateSignupTest" />
+      <item itemvalue="JUnit.UtilsTest.name" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TrioMail" />
+        <item itemvalue="JUnit.UserTest.validateSignupTest" />
+        <item itemvalue="JUnit.UtilsTest.name" />
         <item itemvalue="JUnit.UserTest.signinTest" />
         <item itemvalue="JUnit.UserTest" />
-        <item itemvalue="JUnit.UserTest.other" />
-        <item itemvalue="JUnit.UserTest.addContact" />
-        <item itemvalue="JUnit.UserTest.validateSignupTest" />
       </list>
     </recent_temporary>
   </component>
@@ -192,7 +213,13 @@
       <workItem from="1586789345973" duration="3192000" />
       <workItem from="1586807566041" duration="600000" />
       <workItem from="1586872317275" duration="190000" />
-      <workItem from="1586893097363" duration="2163000" />
+      <workItem from="1586893097363" duration="2934000" />
+      <workItem from="1586939962261" duration="9955000" />
+      <workItem from="1586952427161" duration="2481000" />
+      <workItem from="1587024326534" duration="668000" />
+      <workItem from="1587029178952" duration="436000" />
+      <workItem from="1587035242848" duration="7119000" />
+      <workItem from="1587067191395" duration="3770000" />
     </task>
     <task id="LOCAL-00001" summary="Linked Queue">
       <created>1586098847397</created>
@@ -252,10 +279,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="User class done" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586945378919">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1586945378919" />
     <state x="93" y="93" width="1350" height="638" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1586787992488">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1536.824@0.0.1536.824" timestamp="1586787992488" />
+    <state x="325" y="120" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1586945369454">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="325" y="120" key="#com.intellij.ide.macro.MacrosDialog/0.0.1536.824@0.0.1536.824" timestamp="1586945369454" />
     <state x="574" y="122" key="#com.intellij.ide.util.MemberChooser" timestamp="1586768970819">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -280,6 +315,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1586791565360" />
+    <state x="520" y="272" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1587069657660">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="520" y="272" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1587069657660" />
     <state x="281" y="11" key="CommitChangelistDialog2" timestamp="1586792130339">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -288,50 +327,50 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1586630751818" />
-    <state x="549" y="170" key="FileChooserDialogImpl" timestamp="1586706699146">
+    <state x="549" y="170" key="FileChooserDialogImpl" timestamp="1586945037500">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586706699146" />
-    <state width="1493" height="279" key="GridCell.Tab.0.bottom" timestamp="1586792550513">
+    <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586945037500" />
+    <state width="1493" height="134" key="GridCell.Tab.0.bottom" timestamp="1587070964470">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
-    <state width="1493" height="279" key="GridCell.Tab.0.center" timestamp="1586792550513">
+    <state width="1493" height="134" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1587070964470" />
+    <state width="1493" height="134" key="GridCell.Tab.0.center" timestamp="1587070964469">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
-    <state width="1493" height="279" key="GridCell.Tab.0.left" timestamp="1586792550513">
+    <state width="1493" height="134" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1587070964469" />
+    <state width="1493" height="134" key="GridCell.Tab.0.left" timestamp="1587070964469">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
-    <state width="1493" height="279" key="GridCell.Tab.0.right" timestamp="1586792550513">
+    <state width="1493" height="134" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1587070964469" />
+    <state width="1493" height="134" key="GridCell.Tab.0.right" timestamp="1587070964470">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
-    <state width="1493" height="279" key="GridCell.Tab.1.bottom" timestamp="1586792550513">
+    <state width="1493" height="134" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1587070964470" />
+    <state width="1493" height="279" key="GridCell.Tab.1.bottom" timestamp="1587048304238">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
-    <state width="1493" height="279" key="GridCell.Tab.1.center" timestamp="1586792550513">
+    <state width="1493" height="279" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1587048304238" />
+    <state width="1493" height="279" key="GridCell.Tab.1.center" timestamp="1587048304238">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
-    <state width="1493" height="279" key="GridCell.Tab.1.left" timestamp="1586792550513">
+    <state width="1493" height="279" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1587048304238" />
+    <state width="1493" height="279" key="GridCell.Tab.1.left" timestamp="1587048304238">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
-    <state width="1493" height="279" key="GridCell.Tab.1.right" timestamp="1586792550513">
+    <state width="1493" height="279" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1587048304238" />
+    <state width="1493" height="279" key="GridCell.Tab.1.right" timestamp="1587048304238">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="279" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1586792550513" />
-    <state x="249" y="0" key="SettingsEditor" timestamp="1586808135911">
+    <state width="1493" height="279" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1587048304238" />
+    <state x="249" y="0" key="SettingsEditor" timestamp="1586945321507">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1586808135911" />
-    <state x="477" y="240" key="com.intellij.ide.util.TipDialog" timestamp="1586893116008">
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1586945321507" />
+    <state x="477" y="240" key="com.intellij.ide.util.TipDialog" timestamp="1587067221243">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="477" y="240" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1586893116008" />
+    <state x="477" y="240" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1587067221243" />
     <state x="498" y="313" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1586095234455">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -340,10 +379,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="580" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1586788428869" />
-    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1586872464790">
+    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1586942078567">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1536.824@0.0.1536.824" timestamp="1586872464790" />
+    <state x="531" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1536.824@0.0.1536.824" timestamp="1586942078567" />
     <state x="93" y="93" width="1350" height="638" key="dock-window-1" timestamp="1586768231344">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -360,6 +399,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="477" y="47" key="refactoring.ChangeSignatureDialog/0.0.1536.824@0.0.1536.824" timestamp="1586718332523" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1587068271703">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1587068271703" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1586787253028">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
