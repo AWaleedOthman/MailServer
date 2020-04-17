@@ -1,6 +1,6 @@
-package Classes;
+package Classes.DataStructures;
 
-import Interface.IPriorityQueue;
+import Interfaces.DataStructures.IPriorityQueue;
 
 public class PQueue implements IPriorityQueue {
 

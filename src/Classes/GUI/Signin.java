@@ -23,7 +23,7 @@ public class Signin {
     private void signin() {
         User user = null;
         try {
-            user = User.signin(addressField.getText(), passwordField.getText());
+            user = User.signin(addressField.getText().toLowerCase(), passwordField.getText());
         } catch (IOException e) {
             Utils.fileNotFound();
         }

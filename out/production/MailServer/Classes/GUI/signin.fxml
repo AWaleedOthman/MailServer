@@ -15,9 +15,9 @@
 
 <AnchorPane fx:id="rootPane" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Classes.GUI.Signin">
    <children>
-      <VBox alignment="CENTER_LEFT" layoutX="-1.0" prefHeight="119.0" prefWidth="600.0">
+      <VBox alignment="CENTER_LEFT" layoutX="14.0" prefHeight="119.0" prefWidth="600.0">
          <children>
-            <Label prefHeight="62.0" prefWidth="318.0" text="   TrioMail">
+            <Label prefHeight="62.0" prefWidth="318.0" text="    TrioMail">
                <font>
                   <Font name="Centaur" size="50.0" />
                </font>

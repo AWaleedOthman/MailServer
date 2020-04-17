@@ -1,5 +1,4 @@
-package Test;
-import Classes.PQueue;
+package Classes.DataStructures;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
@@ -9,10 +8,10 @@ class PQueueTest {
 	@Test
 	void test() {
 		queue = new PQueue();
-		assertEquals(true, queue.isEmpty());
+		assertTrue(queue.isEmpty());
 		assertEquals(0, queue.size());
 		queue.insert(2, 1);
-		assertEquals(false, queue.isEmpty());
+		assertFalse(queue.isEmpty());
 		assertEquals(1, queue.size());
 		queue.insert(3, 2);
 		queue.insert(5, 3);
@@ -29,13 +28,14 @@ class PQueueTest {
 		assertEquals(4, queue.size());
 		assertEquals(2, queue.min());
 	}
-	
+
+	@Test
 	void test2() {
 		queue = new PQueue();
-		assertEquals(true, queue.isEmpty());
+		assertTrue(queue.isEmpty());
 		assertEquals(0, queue.size());
 		queue.insert(2, 1);
-		assertEquals(false, queue.isEmpty());
+		assertFalse(queue.isEmpty());
 		assertEquals(1, queue.size());
 		queue.insert(3, 1);
 		queue.insert(5, 1);
