@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
 
-
     @Test
     void signinTest() throws IOException {
         User.loadUsers();
@@ -22,4 +21,5 @@ class UserTest {
         assertFalse(User.signin("a.waleedothman@thetrio.com", "wrongPassword"));
         assertFalse(User.signin("a.waleedthman@thetrio.com", "PA$$w0rd"));
     }
+
 }
