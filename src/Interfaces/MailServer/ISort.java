@@ -1,5 +1,4 @@
 package Interfaces.MailServer;
 
-public interface IUser {
-
+public interface ISort {
 }

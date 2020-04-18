@@ -1,14 +1,13 @@
-package Classes.GUI;
+package GUI;
 
+import Classes.MailServer.App;
 import Classes.MailServer.User;
+import Classes.Misc.AES;
 import Classes.Misc.Birthday;
 import Classes.Misc.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
@@ -127,14 +126,15 @@ public class Signup {
             invalidLabel.setText("invalid information");
         } else {
             LocalDate ld = datePicker.getValue();
-            try {
-                User user = User.signup(addressField.getText().toLowerCase(), passwordField.getText(), nameField.getText(),
-                        t1.getSelectedToggle().toString(), new Birthday(ld.getDayOfMonth(), ld.getMonthValue(), ld.getYear()),true);
-                invalidLabel.setText("");
-                //TODO
-            } catch (IOException e) {
-                Utils.fileNotFound();
-            }
+            User user = new User(addressField.getText().toLowerCase(), AES.encrypt(passwordField.getText(), passwordField.getText()));
+            user.setName(nameField.getText());
+            user.setGender(((RadioButton)t1.getSelectedToggle()).getText());
+            user.setBirthday(new Birthday(ld.getDayOfMonth(), ld.getMonthValue(), ld.getYear()));
+            App app = new App();
+            if (!app.signup(user)) Utils.fileNotFound();
+            invalidLabel.setText("");
+            user = User.loadInfo(user.getAddress());
+            //TODO new scene passing user
         }
         passwordField.setText("");
         confirmField.setText("");

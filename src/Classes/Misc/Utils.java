@@ -21,7 +21,7 @@ public class Utils {
         if (index == -1 || index == 0) return false;
         if (!address.substring(index).equals("@thetrio.com")) return false;
         Pattern p = Pattern.compile("[^\\w|.]");
-        Matcher m = p.matcher(address.substring(0, index - 1));
+        Matcher m = p.matcher(address.substring(0, index));
         if (m.find()) return false;
         return !address.contains("..");
     }

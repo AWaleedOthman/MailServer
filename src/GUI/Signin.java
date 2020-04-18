@@ -1,5 +1,6 @@
-package Classes.GUI;
+package GUI;
 
+import Classes.MailServer.App;
 import Classes.MailServer.User;
 import Classes.Misc.Utils;
 import javafx.fxml.FXML;
@@ -22,16 +23,15 @@ public class Signin {
     @FXML
     private void signin() {
         User user = null;
-        try {
-            user = User.signin(addressField.getText().toLowerCase(), passwordField.getText());
-        } catch (IOException e) {
-            Utils.fileNotFound();
-        }
-        passwordField.setText("");
-        if (user == null) {
+        App app = new App();
+        ;
+        if (!app.signin(addressField.getText().toLowerCase(), passwordField.getText())) {
             invalidSigninLabel.setText("Invalid email address or password");
+            passwordField.setText("");
         } else {
             invalidSigninLabel.setText("");
+            user = User.loadInfo(addressField.getText());
+            passwordField.setText("");
             //TODO open new scene passing user
         }
     }
