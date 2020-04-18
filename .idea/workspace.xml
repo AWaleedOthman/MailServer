@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="17c3474d-20e9-41f2-b27b-e8a9e7bf42ce" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MailServer/Classes/DataStructures/PQueue$Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MailServer/Classes/DataStructures/PQueue$Node.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MailServer/Classes/DataStructures/PQueue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MailServer/Classes/DataStructures/PQueue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MailServer/Classes/GUI/Signin.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MailServer/Classes/GUI/Signin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MailServer/Classes/GUI/Signup.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MailServer/Classes/GUI/Signup.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MailServer/Classes/GUI/signin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MailServer/Classes/GUI/signin.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MailServer/Classes/GUI/signup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MailServer/Classes/GUI/signup.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MailServer/users/list.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MailServer/users/list.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/DataStructures/PQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/DataStructures/PQueue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/GUI/Signin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/GUI/Signin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/GUI/Signup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/GUI/Signup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/GUI/signin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/GUI/signin.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/GUI/signup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/GUI/signup.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/users/list.txt" beforeDir="false" afterPath="$PROJECT_DIR$/system/users/list.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Classes/DataStructures/PQueueTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Classes/DataStructures/PQueueTest.java" afterDir="false" />
+    <list default="true" id="17c3474d-20e9-41f2-b27b-e8a9e7bf42ce" name="Default Changelist" comment="User class done">
+      <change beforePath="$PROJECT_DIR$/Tests/Classes/MailServer/ContactTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/Classes/MailServer/ContactTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tests/Classes/MailServer/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/Classes/MailServer/UserTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -317,30 +304,34 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="281" y="11" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586792130339" />
-    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1586630751818">
+    <state width="389" height="442" key="Diff.GoToChangePopup" timestamp="1587238041572">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1586630751818" />
+    <state width="389" height="442" key="Diff.GoToChangePopup/0.0.1536.824@0.0.1536.824" timestamp="1587238041572" />
+    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1587238083064">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1587238083064" />
     <state x="549" y="170" key="FileChooserDialogImpl" timestamp="1586945037500">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586945037500" />
-    <state width="1493" height="134" key="GridCell.Tab.0.bottom" timestamp="1587149417462">
+    <state width="1493" height="123" key="GridCell.Tab.0.bottom" timestamp="1587238087310">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="134" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1587149417462" />
-    <state width="1493" height="134" key="GridCell.Tab.0.center" timestamp="1587149417462">
+    <state width="1493" height="123" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1587238087310" />
+    <state width="1493" height="123" key="GridCell.Tab.0.center" timestamp="1587238087309">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="134" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1587149417462" />
-    <state width="1493" height="134" key="GridCell.Tab.0.left" timestamp="1587149417461">
+    <state width="1493" height="123" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1587238087309" />
+    <state width="1493" height="123" key="GridCell.Tab.0.left" timestamp="1587238087309">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="134" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1587149417461" />
-    <state width="1493" height="134" key="GridCell.Tab.0.right" timestamp="1587149417462">
+    <state width="1493" height="123" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1587238087309" />
+    <state width="1493" height="123" key="GridCell.Tab.0.right" timestamp="1587238087310">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="134" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1587149417462" />
+    <state width="1493" height="123" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1587238087310" />
     <state width="1493" height="279" key="GridCell.Tab.1.bottom" timestamp="1587149295361">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
