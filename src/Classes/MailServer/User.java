@@ -14,7 +14,7 @@ public class User implements IContact {
 
     private final static String path = System.getProperty("user.dir") + "\\system\\users";
     private final static File fList = new File(path + "\\list.txt");
-    private static DoublyLinkedList list = new DoublyLinkedList();
+    private static final DoublyLinkedList list = new DoublyLinkedList();
 
 //    /**
 //     * it validates the email address and the password.
@@ -97,37 +97,7 @@ public class User implements IContact {
 
     }
 
-    public static User loadInfo(String address) {
-        /*load user info*/
-        User user = new User(address);
-        Scanner sc;
-        try {
-            sc = new Scanner(new File(path + "\\" + address + "\\info.txt"));
-        } catch (FileNotFoundException e) {
-            Utils.fileNotFound();
-            return null;
-        }
-        user.setFilePath(path + "\\" + address);
-        user.setName(sc.nextLine());
-        user.setGender(sc.nextLine());
-        /*nextLine instead of nextInt to avoid problem of newLine being taken in next nextLine call*/
-        user.setBirthday(new Birthday(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
-        sc.close();
-        try {
-            sc = new Scanner(new File(path + "\\" + address + "\\contacts.csv"));
-        } catch (FileNotFoundException e) {
-            Utils.fileNotFound();
-        }
-        while (sc.hasNext()) {
-            try {
-                user.addContact(new Contact(sc.nextLine(), sc.nextLine()));
-            } catch (IOException e) {
-                Utils.fileNotFound();
-            }
-        }
-        sc.close();
-        return user;
-    }
+    private final String address;
 
     public static boolean addressExists(String address) {
         User user = Utils.binarySearch(address, list);
@@ -157,14 +127,49 @@ public class User implements IContact {
         writer.close();
     }
 
-
-    private String address, encryptedPassword;
+    private final DoublyLinkedList contacts = new DoublyLinkedList();
+    private String encryptedPassword;
     private String name, filePath;
     private String gender;
     private Birthday birthday;
-    private DoublyLinkedList contacts = new DoublyLinkedList();
-    //TODO methods for searching, sorting, deleting and editing contacts
 
+    public static User loadInfo(String address) {
+        /*load user info*/
+        User user = new User(address);
+        Scanner sc;
+        try {
+            sc = new Scanner(new File(path + "\\" + address + "\\info.txt"));
+        } catch (FileNotFoundException e) {
+            Utils.fileNotFound();
+            return null;
+        }
+        user.setFilePath(path + "\\" + address);
+        user.setName(sc.nextLine());
+        user.setGender(sc.nextLine());
+        /*nextLine instead of nextInt to avoid problem of newLine being taken in next nextLine call*/
+        user.setBirthday(new Birthday(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
+        sc.close();
+        try {
+            sc = new Scanner(new File(path + "\\" + address + "\\contacts.csv"));
+        } catch (FileNotFoundException e) {
+            Utils.fileNotFound();
+        }
+        while (sc.hasNext()) {
+            try {
+                String s = sc.nextLine();
+                String[] arr = s.split(",", 2);
+                Contact c = new Contact(arr[0], user);
+                c.addAddresses(arr[1]);
+                user.addContact(c);
+
+            } catch (IOException e) {
+                Utils.fileNotFound();
+            }
+        }
+        sc.close();
+        return user;
+    }
+    //TODO methods for searching and sorting contacts
 
     /**
      * adds to list and to csv file
@@ -174,21 +179,46 @@ public class User implements IContact {
     public void addContact(Contact contact) throws IOException {
         contacts.add(contact);
         BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + "\\contacts.csv", true));
-        writer.write(name);
-        writer.newLine();
-        writer.write(address);
+        writer.write(contact.getName() + "," + contact.getAddressesString());
         writer.newLine();
         writer.close();
     }
 
-    private void exportContacts() throws IOException {
+    protected boolean delContact(Contact contact) {
+        if (contact.equals(contacts.get(0))) {
+            contacts.remove(0);
+            try {
+                exportContacts();
+            } catch (IOException e) {
+                Utils.fileNotFound();
+            }
+            return true;
+        }
+        for (int i = 1; contacts.hasNext(); i++) {
+            if (contact.equals(contacts.getNext())) {
+                contacts.remove(i);
+                try {
+                    exportContacts();
+                } catch (IOException e) {
+                    Utils.fileNotFound();
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected void exportContacts() throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + "\\contacts.csv", false));
         if (contacts.isEmpty()) return;
         Contact contact = (Contact) contacts.get(0);
-        writer.write(contact.getName());
+        writer.write(contact.getName() + "," + contact.getAddressesString());
         writer.newLine();
-        writer.write(contact.getAddressesString());
-        writer.newLine();
+        while (contacts.hasNext()) {
+            contact = (Contact) contacts.getNext();
+            writer.write(contact.getName() + "," + contact.getAddressesString());
+            writer.newLine();
+        }
         writer.close();
     }
 
@@ -238,5 +268,9 @@ public class User implements IContact {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public DoublyLinkedList getContacts() {
+        return contacts;
     }
 }
