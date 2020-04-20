@@ -139,8 +139,7 @@ public class Signup {
             App app = new App();
             if (!app.signup(user)) Utils.fileNotFound();
             invalidLabel.setText("");
-            user = app.loadInfo(user.getAddress());
-            //TODO new scene passing user
+            //TODO new scene
         }
         passwordField.setText("");
         confirmField.setText("");

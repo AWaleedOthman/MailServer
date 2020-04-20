@@ -23,6 +23,10 @@ public class Contact implements IContact {
         this.index = index;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
     public boolean delete() {
         return owner.delContact(this);
     }
@@ -44,16 +48,10 @@ public class Contact implements IContact {
         return addresses;
     }
 
-    public int addAddresses(@NotNull String addresses) {
-        int i = 0;
-        if (addresses.isEmpty()) return i;
-        String[] arr = addresses.split(",");
+    public void addAddresses(String @NotNull [] arr) {
         for (String s : arr) {
-            if (!app.addressExists(s)) return i;
             this.addresses.add(s);
-            ++i;
         }
-        return i;
     }
 
     public boolean addAddress(String address) {

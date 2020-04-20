@@ -6,6 +6,7 @@ import Classes.Misc.Birthday;
 import Classes.Misc.Utils;
 import Interfaces.DataStructures.ILinkedList;
 import Interfaces.MailServer.*;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
@@ -15,9 +16,14 @@ import java.util.Scanner;
 
 public class App implements IApp {
 
-    private final static String path = System.getProperty("user.dir") + "\\system\\users";
-    private final static File fList = new File(path + "\\list.txt");
-    private static final DoublyLinkedList list = new DoublyLinkedList();
+    private final String path = System.getProperty("user.dir") + "\\system\\users";
+    private final File fList = new File(path + "\\list.txt");
+    private final DoublyLinkedList list = new DoublyLinkedList();
+    private User loggedinUser;
+
+    public User getLoggedinUser() {
+        return loggedinUser;
+    }
 
     @Override
     public boolean signin(String email, String password) {
@@ -28,6 +34,7 @@ public class App implements IApp {
         } catch (Exception e) {
             return false;
         }
+        loggedinUser = loadInfo(user.getAddress());
         return true;
     }
 
@@ -45,6 +52,7 @@ public class App implements IApp {
         } catch (IOException e) {
             return false;
         }
+        loggedinUser = loadInfo(user.getAddress());
         return true;
     }
 
@@ -91,6 +99,15 @@ public class App implements IApp {
         return user != null;
     }
 
+    public int addressesExist(String @NotNull [] arr) {
+        int i = 0;
+        if (arr.length == 0) return i;
+        for (String address : arr) {
+            if (Utils.binarySearch(address, list) == null) return i;
+        }
+        return i;
+    }
+
     /**
      * overwrites the file "list"
      *
@@ -110,7 +127,7 @@ public class App implements IApp {
         writer.close();
     }
 
-    public @Nullable User loadInfo(String address) {
+    private @Nullable User loadInfo(String address) {
         /*load user info*/
         User user = new User(address);
         Scanner sc;
@@ -136,7 +153,7 @@ public class App implements IApp {
                 String s = sc.nextLine();
                 String[] arr = s.split(",", 2);
                 Contact c = new Contact(this, arr[0], user, user.getContacts().size());
-                c.addAddresses(arr[1]);
+                c.addAddresses(arr[1].split(","));
                 user.addContact(c);
 
             } catch (IOException e) {

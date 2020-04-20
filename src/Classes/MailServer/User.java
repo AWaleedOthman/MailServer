@@ -4,11 +4,14 @@ import Classes.DataStructures.DoublyLinkedList;
 import Classes.Misc.Birthday;
 import Classes.Misc.Utils;
 import Interfaces.MailServer.IContact;
+import Sorts.ContactIndexSort;
+import Sorts.ContactNameSort;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class User implements IContact {
@@ -20,8 +23,6 @@ public class User implements IContact {
     private String name, filePath;
     private String gender;
     private Birthday birthday;
-
-    //TODO methods for searching and sorting contacts
 
     public User(String address, String encryptedpassword) {
         this.address = address;
@@ -44,6 +45,44 @@ public class User implements IContact {
         writer.write(contact.getName() + "," + contact.getAddressesString());
         writer.newLine();
         writer.close();
+    }
+
+    public DoublyLinkedList sortContactsByIndex() {
+        ContactIndexSort ci = new ContactIndexSort();
+        Comparator c = ci.sortAttribute();
+        contacts.Qsort(c);
+        return contacts;
+    }
+
+    public DoublyLinkedList sortContactsByName() {
+        ContactNameSort ci = new ContactNameSort();
+        Comparator c = ci.sortAttribute();
+        contacts.Qsort(c);
+        return contacts;
+    }
+
+    public Contact getContactByName(String Name) {
+        Name = Name.toLowerCase();
+        Iterator iter = contacts.iterator(true);
+        for (int i = 0; iter.hasNext(); i++) {
+            Contact c = (Contact) iter.next();
+            if (c.getName().toLowerCase().startsWith(Name)) return c;
+        }
+        return null;
+    }
+
+    public Contact getContactByAddress(String address) {
+        address = address.toLowerCase();
+        Iterator iter1 = contacts.iterator(true);
+        while (iter1.hasNext()) {
+            Contact c = (Contact) iter1.next();
+            Iterator iter2 = c.getAddresses().iterator(true);
+            while (iter2.hasNext()) {
+                String s = (String) iter2.next();
+                if (s.startsWith(address)) return c;
+            }
+        }
+        return null;
     }
 
     protected boolean delContact(@NotNull Contact contact) {
@@ -109,10 +148,6 @@ public class User implements IContact {
 
     public Birthday getBirthday() {
         return birthday;
-    }
-
-    public String getBirthdayString() {
-        return birthday.getBirthday();
     }
 
     public void setFilePath(String filePath) {

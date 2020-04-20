@@ -30,15 +30,13 @@ public class Signin {
     private void signin() {
         User user = null;
         App app = new App();
-        ;
         if (!app.signin(addressField.getText().toLowerCase(), passwordField.getText())) {
             invalidSigninLabel.setText("Invalid email address or password");
             passwordField.setText("");
         } else {
             invalidSigninLabel.setText("");
-            user = app.loadInfo(addressField.getText());
             passwordField.setText("");
-            //TODO open new scene passing user
+            //TODO open new scene
         }
     }
 
