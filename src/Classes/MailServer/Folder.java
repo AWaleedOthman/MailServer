@@ -2,6 +2,8 @@ package Classes.MailServer;
 
 import Classes.Misc.Birthday;
 import Interfaces.MailServer.IFolder;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,19 +12,20 @@ import java.io.IOException;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class Folder implements IFolder {
-    private String path;
+    private final String path;
 
     public Folder(String path) {
         this.path = path;
     }
 
-    private Folder addSubFolder(String name) {
+    @Contract("_ -> new")
+    private @NotNull Folder addSubFolder(String name) {
         File f = new File(path + "\\" + name);
         f.mkdir();
         return new Folder(path + "\\" + name);
     }
 
-    public void createUserFolder(String address, String name, String gender, Birthday bd) throws IOException {
+    public void createUserFolder(String address, String name, String gender, @NotNull Birthday bd) throws IOException {
         Folder userFolder = addSubFolder(address);
         File userInfo = new File(userFolder.getPath() + "\\info.txt");
         userInfo.createNewFile();

@@ -1,9 +1,9 @@
 package Sorts;
 
-import java.util.Comparator;
+import Classes.MailServer.Mail;
+import Interfaces.MailServer.ISort;
 
-import Classes.Mail;
-import Interfaces.ISort;
+import java.util.Comparator;
 
 public class senderNameSort implements ISort {
 	@Override

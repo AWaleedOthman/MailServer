@@ -1,20 +1,51 @@
 package Classes.MailServer;
 
+import Classes.DataStructures.DoublyLinkedList;
+import Classes.Misc.AES;
+import Classes.Misc.Birthday;
 import Classes.Misc.Utils;
 import Interfaces.DataStructures.ILinkedList;
 import Interfaces.MailServer.*;
+import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class App implements IApp {
+
+    private final static String path = System.getProperty("user.dir") + "\\system\\users";
+    private final static File fList = new File(path + "\\list.txt");
+    private static final DoublyLinkedList list = new DoublyLinkedList();
+
     @Override
     public boolean signin(String email, String password) {
-        return User.signin(email, password);
+        User user = Utils.binarySearch(email, list);
+        if (user == null) return false; //invalid sign-in
+        try {
+            if (!Objects.equals(AES.decrypt(user.getEncryptedPassword(), password), password)) return false;
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public boolean signup(IContact contact) {
-        return User.signup(contact);
+        User user;
+        user = (User) contact;
+        Utils.addToSorted(user, list);
+        try {
+            exportList();
+            //create new folder with info
+            Folder usersFolder = new Folder(path);
+            usersFolder.createUserFolder(user.getAddress(), user.getName(), user.getGender(), user.getBirthday());
+            user.setFilePath(path + "\\" + user.getAddress());
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -41,4 +72,79 @@ public class App implements IApp {
     public boolean compose(IMail email) {
         return false;
     }
+
+    /**
+     * loads the list of users from the file to a static doubly linked list
+     *
+     * @throws FileNotFoundException file not found
+     */
+    public void loadUsers() throws FileNotFoundException {
+        Scanner sc = new Scanner(fList);
+        while (sc.hasNext()) {
+            list.add(new User(sc.nextLine(), sc.nextLine()));
+        }
+        sc.close();
+    }
+
+    public boolean addressExists(String address) {
+        User user = Utils.binarySearch(address, list);
+        return user != null;
+    }
+
+    /**
+     * overwrites the file "list"
+     *
+     * @throws IOException file not found
+     */
+    private void exportList() throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fList, false));
+        if (list.isEmpty()) return;
+        Iterator<User> i = list.iterator(true);
+        while (i.hasNext()) {
+            User user = i.next();
+            writer.write(user.getAddress());
+            writer.newLine();
+            writer.write(user.getEncryptedPassword());
+            writer.newLine();
+        }
+        writer.close();
+    }
+
+    public @Nullable User loadInfo(String address) {
+        /*load user info*/
+        User user = new User(address);
+        Scanner sc;
+        try {
+            sc = new Scanner(new File(path + "\\" + address + "\\info.txt"));
+        } catch (FileNotFoundException e) {
+            Utils.fileNotFound();
+            return null;
+        }
+        user.setFilePath(path + "\\" + address);
+        user.setName(sc.nextLine());
+        user.setGender(sc.nextLine());
+        /*nextLine instead of nextInt to avoid problem of newLine being taken in next nextLine call*/
+        user.setBirthday(new Birthday(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
+        sc.close();
+        try {
+            sc = new Scanner(new File(path + "\\" + address + "\\contacts.csv"));
+        } catch (FileNotFoundException e) {
+            Utils.fileNotFound();
+        }
+        while (sc.hasNext()) {
+            try {
+                String s = sc.nextLine();
+                String[] arr = s.split(",", 2);
+                Contact c = new Contact(this, arr[0], user, user.getContacts().size());
+                c.addAddresses(arr[1]);
+                user.addContact(c);
+
+            } catch (IOException e) {
+                Utils.fileNotFound();
+            }
+        }
+        sc.close();
+        return user;
+    }
+
 }

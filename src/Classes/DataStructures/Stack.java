@@ -1,6 +1,6 @@
-package Classes;
+package Classes.DataStructures;
 
-import Interfaces.IStack;
+import Interfaces.DataStructures.IStack;
 
 /**
  * This class implements a stack as a linkedlist

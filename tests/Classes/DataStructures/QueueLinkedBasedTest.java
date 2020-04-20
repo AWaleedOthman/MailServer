@@ -1,19 +1,19 @@
 package Classes.DataStructures;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class QueueLinkedBasedTest {
 
-	QueueLinkedBased q;
-	
-	@BeforeEach
-	void setUp() {
-		// Instantiate a array based queue with a capacity of five elements
-		q = new QueueLinkedBased();
+    QueueLinkedBased q;
+
+    @BeforeEach
+    void setUp() {
+        // Instantiate a array based queue with a capacity of five elements
+        q = new QueueLinkedBased();
 		// Initialize queue
 		q.enqueue(5);
 		q.enqueue(10);

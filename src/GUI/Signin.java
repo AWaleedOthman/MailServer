@@ -13,6 +13,12 @@ import java.io.IOException;
 
 public class Signin {
 
+    private App app;
+
+    protected void setApp(App app) {
+        this.app = app;
+    }
+
     @FXML
     private TextField addressField, passwordField;
     @FXML
@@ -30,7 +36,7 @@ public class Signin {
             passwordField.setText("");
         } else {
             invalidSigninLabel.setText("");
-            user = User.loadInfo(addressField.getText());
+            user = app.loadInfo(addressField.getText());
             passwordField.setText("");
             //TODO open new scene passing user
         }
@@ -40,7 +46,10 @@ public class Signin {
     private void loadSignup() {
         AnchorPane pane = null;
         try {
-            pane = FXMLLoader.load(getClass().getResource("signup.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("signup.fxml"));
+            pane = loader.load();
+            Signup signupController = loader.getController();
+            signupController.setApp(app);
         } catch (IOException e) {
             Utils.fileNotFound();
         }

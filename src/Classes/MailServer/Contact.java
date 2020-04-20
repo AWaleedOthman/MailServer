@@ -3,17 +3,24 @@ package Classes.MailServer;
 import Classes.DataStructures.DoublyLinkedList;
 import Classes.Misc.Utils;
 import Interfaces.MailServer.IContact;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 public class Contact implements IContact {
+
+    private final App app;
     private String name;
     private final DoublyLinkedList addresses = new DoublyLinkedList();
     private final User owner;
+    private final int index;
 
-    public Contact(String name, User owner) {
+    public Contact(App app, String name, User owner, int index) {
+        this.app = app;
         this.name = name;
         this.owner = owner;
+        this.index = index;
     }
 
     public boolean delete() {
@@ -37,12 +44,12 @@ public class Contact implements IContact {
         return addresses;
     }
 
-    public int addAddresses(String addresses) {
+    public int addAddresses(@NotNull String addresses) {
         int i = 0;
         if (addresses.isEmpty()) return i;
         String[] arr = addresses.split(",");
         for (String s : arr) {
-            if (!User.addressExists(s)) return i;
+            if (!app.addressExists(s)) return i;
             this.addresses.add(s);
             ++i;
         }
@@ -50,7 +57,7 @@ public class Contact implements IContact {
     }
 
     public boolean addAddress(String address) {
-        if (!User.addressExists(address)) return false;
+        if (!app.addressExists(address)) return false;
         addresses.add(address);
         try {
             owner.exportContacts();
@@ -61,18 +68,11 @@ public class Contact implements IContact {
     }
 
     public boolean changeAddress(String old, String address) {
-        if (!User.addressExists(address)) return false;
-        if (old.equals(addresses.get(0))) {
-            addresses.set(0, address);
-            try {
-                owner.exportContacts();
-            } catch (IOException e) {
-                Utils.fileNotFound();
-            }
-            return true;
-        }
-        for (int i = 1; addresses.hasNext(); i++) {
-            if (old.equals(addresses.getNext())) {
+        if (!app.addressExists(address)) return false;
+        Iterator<String> iter = addresses.iterator(true);
+
+        for (int i = 0; iter.hasNext(); i++) {
+            if (old.equals(iter.next())) {
                 addresses.set(i, address);
                 try {
                     owner.exportContacts();
@@ -85,18 +85,11 @@ public class Contact implements IContact {
         return false;
     }
 
-    public void deleteAddress(String old) {
-        if (old.equals(addresses.get(0))) {
-            addresses.remove(0);
-            try {
-                owner.exportContacts();
-            } catch (IOException e) {
-                Utils.fileNotFound();
-            }
-            return;
-        }
-        for (int i = 1; addresses.hasNext(); i++) {
-            if (old.equals(addresses.getNext())) {
+    public void deleteAddress(@NotNull String old) {
+        Iterator<String> iter = addresses.iterator(true);
+
+        for (int i = 0; iter.hasNext(); i++) {
+            if (old.equals(iter.next())) {
                 addresses.remove(i);
                 try {
                     owner.exportContacts();
@@ -111,9 +104,10 @@ public class Contact implements IContact {
     public String getAddressesString() {
         StringBuilder sb = new StringBuilder();
         if (addresses.isEmpty()) return "";
-        sb.append(addresses.get(0));
-        while (addresses.hasNext()) {
-            sb.append(",").append(addresses.getNext());
+        Iterator<String> iter = addresses.iterator(true);
+        sb.append(iter.next());
+        while (iter.hasNext()) {
+            sb.append(",").append(iter.next());
         }
         return sb.toString();
     }

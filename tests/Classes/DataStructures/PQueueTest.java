@@ -1,17 +1,19 @@
 package Classes.DataStructures;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class PQueueTest {
-	PQueue queue ;
-	@Test
-	void test() {
-		queue = new PQueue();
-		assertTrue(queue.isEmpty());
-		assertEquals(0, queue.size());
-		queue.insert(2, 1);
-		assertFalse(queue.isEmpty());
+    PQueue queue;
+
+    @Test
+    void test() {
+        queue = new PQueue();
+        assertTrue(queue.isEmpty());
+        assertEquals(0, queue.size());
+        queue.insert(2, 1);
+        assertFalse(queue.isEmpty());
 		assertEquals(1, queue.size());
 		queue.insert(3, 2);
 		queue.insert(5, 3);

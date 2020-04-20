@@ -1,11 +1,11 @@
 package Classes.MailServer;
 
-import java.util.Date;
-import java.util.UUID;
-
 import Classes.DataStructures.SinglyLinkedList;
 import Interfaces.MailServer.IFilter;
 import Interfaces.MailServer.IMail;
+
+import java.util.Date;
+import java.util.UUID;
 
 public class Mail implements IMail {
     /*

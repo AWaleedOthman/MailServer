@@ -1,11 +1,12 @@
-package Classes;
+package Classes.DataStructures;
+
+import Classes.MailServer.Mail;
+import Interfaces.ILinkedList;
 
 import java.util.Comparator;
 import java.util.Iterator;
 
-import Interfaces.ILinkedList;
-
-public class DoublyLinkedList implements ILinkedList{
+public class DoublyLinkedList implements ILinkedList {
 	private class dListNode {
 		private dListNode next;
 		private dListNode prev;
@@ -45,13 +46,13 @@ public class DoublyLinkedList implements ILinkedList{
 
 	private dListNode head;
 	private dListNode tail;
+	private dListNode current;
 	private int size;
-	
-	public DoublyLinkedList()
-	{
+
+	public DoublyLinkedList() {
 		size = 0;
 	}
-	
+
 	DoublyLinkedList(dListNode node) {
 		setHead(node);
 		setTail(node);
@@ -61,38 +62,38 @@ public class DoublyLinkedList implements ILinkedList{
 	@Override
 	public void add(int index, Object element) {
 		dListNode newNode = new dListNode(null, null, element);
-		if(index < 0 || index > this.size()) { throw new IndexOutOfBoundsException();}
+		if (index < 0 || index > this.size()) {
+			throw new IndexOutOfBoundsException();
+		}
 		if (index == 0) {
 			newNode.setNext(this.head);
 			if (tail == null) {
-				this.tail = this.head = newNode;
-			}
-			else {
+				this.tail = this.head = this.current = newNode;
+			} else {
 				this.head.setPrev(newNode);
 				this.head = newNode;
 			}
 			size++;
-		}
-		else if (index >= size) { add(element); }
-		else { 
+		} else if (index >= size) {
+			add(element);
+		} else {
 			dListNode current = this.head;
 			for (int i = 1; i < index; i++) {
-				 current = current.getNext();
-			 }
-			 newNode.setNext(current.getNext());
-			 current.getNext().setPrev(newNode);
-			 current.setNext(newNode);
-			 size++;
+				current = current.getNext();
+			}
+			newNode.setNext(current.getNext());
+			current.getNext().setPrev(newNode);
+			current.setNext(newNode);
+			size++;
 		}
 	}
 
 	@Override
 	public void add(Object element) {
 		dListNode newNode = new dListNode(null, null, element);
-		if(this.tail == null) {
-			head = tail = newNode;
-		}
-		else {
+		if (this.tail == null) {
+			head = tail = current = newNode;
+		} else {
 			this.tail.setNext(newNode);
 			newNode.setPrev(this.tail);
 			this.tail = newNode;
@@ -102,26 +103,31 @@ public class DoublyLinkedList implements ILinkedList{
 
 	@Override
 	public Object get(int index) {
-		if(index < 0 || index >= this.size()) { return null;}
-		// Index starts from 0 excluding
-		if (getHead() == null)
-		{
+		if (index < 0 || index >= this.size()) {
 			return null;
 		}
-		dListNode fetcher = getHead();
-		int counter = 0;
-		while(fetcher != null && counter < index)
-		{
-			if(fetcher == this.tail) {
-				fetcher = null;
-			}
-			else {
-				fetcher = fetcher.getNext();
-			}
-			counter++;
+		// Index starts from 0 excluding
+		if (getHead() == null) {
+			return null;
 		}
-		if(fetcher != null)
-		{
+		dListNode fetcher;
+		if (index < this.size / 2) {
+			fetcher = getHead();
+			int counter = 0;
+			while (counter < index) {
+				fetcher = fetcher.getNext();
+				counter++;
+			}
+		} else {
+			fetcher = getTail();
+			int counter = this.size - 1;
+			while (counter > index) {
+				fetcher = fetcher.prev;
+				--counter;
+			}
+		}
+		if (fetcher != null) {
+			current = fetcher;
 			return fetcher.getElement();
 		}
 		return null;
@@ -154,7 +160,7 @@ public class DoublyLinkedList implements ILinkedList{
 
 	@Override
 	public void clear() {
-		this.head = this.tail = null;
+		this.head = this.tail = this.current = null;
 		size = 0;
 	}
 
@@ -278,17 +284,17 @@ public class DoublyLinkedList implements ILinkedList{
 	/*
 	 * Iterative implementation of quicksort sorting algorithm using stack 
 	 *  */ 
-	public void Qsort(Comparator cmp) { 
-		
-		Stack stack = new Stack(); 
+	public void Qsort(Comparator cmp) {
+
+		Stack stack = new Stack();
 		// Push the head and tail of the list means we are going to sort all the list
-		stack.push(this.head); 
+		stack.push(this.head);
 		stack.push(this.tail);
 		// While stack is not empty means there is indices to be sorted
-		while (!stack.isEmpty()) { 
+		while (!stack.isEmpty()) {
 			// Get the end and start index from stack to arrange the list between them
-			dListNode end = (dListNode)stack.pop();	
-			dListNode start = (dListNode)stack.pop();
+			dListNode end = (dListNode) stack.pop();
+			dListNode start = (dListNode) stack.pop();
 			// If the start and end indices are the same 
 			// Or end crossed start
 			// Or the indices crossed the limits of the list

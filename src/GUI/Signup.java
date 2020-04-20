@@ -16,6 +16,12 @@ import java.time.LocalDate;
 
 public class Signup {
 
+    private App app;
+
+    protected void setApp(App app) {
+        this.app = app;
+    }
+
     @FXML
     private AnchorPane rootPane;
     @FXML
@@ -55,7 +61,7 @@ public class Signup {
             invalidAddressLabel3.setText("");
             return false;
         }
-        if (User.addressExists(text)) {
+        if (app.addressExists(text)) {
             invalidAddressLabel.setTextFill(Color.web("#ff0000"));
             invalidAddressLabel.setText("email address already exists!");
             invalidAddressLabel2.setText("try signing-in instead.");
@@ -133,7 +139,7 @@ public class Signup {
             App app = new App();
             if (!app.signup(user)) Utils.fileNotFound();
             invalidLabel.setText("");
-            user = User.loadInfo(user.getAddress());
+            user = app.loadInfo(user.getAddress());
             //TODO new scene passing user
         }
         passwordField.setText("");

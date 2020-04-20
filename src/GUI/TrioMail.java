@@ -1,7 +1,6 @@
 package GUI;
 
-import Classes.MailServer.User;
-import Classes.Misc.Utils;
+import Classes.MailServer.App;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,13 +19,13 @@ public class TrioMail extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        try {
-            User.loadUsers();
-        } catch (IOException e) {
-            Utils.fileNotFound();
-        }
+        App app = new App();
+        app.loadUsers();
 
-        Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("signin.fxml"));
+        Parent root = loader.load();
+        Signin signinConntroller = loader.getController();
+        signinConntroller.setApp(app);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("TrioMail");

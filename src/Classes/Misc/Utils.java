@@ -4,7 +4,10 @@ import Classes.DataStructures.DoublyLinkedList;
 import Classes.DataStructures.SinglyLinkedList;
 import Classes.MailServer.User;
 import javafx.scene.control.Alert;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +19,7 @@ public class Utils {
      * @param address: email address to be validated
      * @return true if valid, false otherwise
      */
-    public static boolean validAddress(String address) {
+    public static boolean validAddress(@NotNull String address) {
         int index = address.indexOf('@');
         if (index == -1 || index == 0) return false;
         if (!address.substring(index).equals("@thetrio.com")) return false;
@@ -29,10 +32,11 @@ public class Utils {
     /**
      * password may contain anything but whitespace.
      * it also has to be between 6 and 30 chars inclusive
+     *
      * @param password to be validated
      * @return whether the password is valid
      */
-    public static boolean validPassword(String password) {
+    public static boolean validPassword(@NotNull String password) {
         return password.length() >= 6 && password.length() <= 30 && password.indexOf(' ') == -1;
     }
 
@@ -42,7 +46,7 @@ public class Utils {
      * @param address: search key
      * @return the user if found, null otherwise
      */
-    public static User binarySearch(String address, DoublyLinkedList dll) {
+    public static @Nullable User binarySearch(String address, @NotNull DoublyLinkedList dll) {
 
         int first = 0, last = dll.size() - 1;
         while (first <= last) {
@@ -62,20 +66,21 @@ public class Utils {
      * @param u    User to be added
      * @param list list of Users
      */
-    public static void addToSorted(User u, DoublyLinkedList list) {
+    public static void addToSorted(User u, @NotNull DoublyLinkedList list) {
         if (list.isEmpty()) {
             list.add(u);
             return;
         }
         String addressMain = u.getAddress();
-        String address = ((User) list.get(0)).getAddress();
+        Iterator<User> iter = list.iterator(true);
+        String address = iter.next().getAddress();
         int index = 0;
         if (addressMain.compareTo(address) <= 0) {
             list.add(0, u);
         } else {
             boolean added = false;
-            while (list.hasNext()) {
-                address = ((User) list.getNext()).getAddress();
+            while (iter.hasNext()) {
+                address = iter.next().getAddress();
                 ++index;
                 if (addressMain.compareTo(address) <= 0) {
                     list.add(index, u);
@@ -89,7 +94,7 @@ public class Utils {
         }
     }
 
-    public static SinglyLinkedList getValues(String csLine) {
+    public static @Nullable SinglyLinkedList getValues(@NotNull String csLine) {
         SinglyLinkedList list = new SinglyLinkedList();
         int length = csLine.length(), l, r;
         Pattern p = Pattern.compile("\"[^\"]*\"");
@@ -106,7 +111,7 @@ public class Utils {
         return list;
     }
 
-    public static boolean validString(String s) {
+    public static boolean validString(@NotNull String s) {
         return s.indexOf(',') == -1 && s.indexOf('"') == -1;
     }
 
