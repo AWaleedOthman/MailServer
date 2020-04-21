@@ -5,13 +5,16 @@ import Classes.MailServer.User;
 import Classes.Misc.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class Signin {
+public class Signin implements Initializable {
 
     private App app;
 
@@ -29,7 +32,6 @@ public class Signin {
     @FXML
     private void signin() {
         User user = null;
-        App app = new App();
         if (!app.signin(addressField.getText().toLowerCase(), passwordField.getText())) {
             invalidSigninLabel.setText("Invalid email address or password");
             passwordField.setText("");
@@ -55,4 +57,8 @@ public class Signin {
         rootPane.getScene().getWindow().sizeToScene();
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 }

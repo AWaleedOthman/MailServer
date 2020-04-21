@@ -7,14 +7,17 @@ import Classes.Misc.Birthday;
 import Classes.Misc.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 
-public class Signup {
+public class Signup implements Initializable {
 
     private App app;
 
@@ -132,11 +135,12 @@ public class Signup {
             invalidLabel.setText("invalid information");
         } else {
             LocalDate ld = datePicker.getValue();
-            User user = new User(addressField.getText().toLowerCase(), AES.encrypt(passwordField.getText(), passwordField.getText()));
+            String password = passwordField.getText();
+            User user = new User(addressField.getText().toLowerCase(), AES.encrypt(password, password));
+            password = null;
             user.setName(nameField.getText());
-            user.setGender(((RadioButton)t1.getSelectedToggle()).getText());
+            user.setGender(((RadioButton) t1.getSelectedToggle()).getText());
             user.setBirthday(new Birthday(ld.getDayOfMonth(), ld.getMonthValue(), ld.getYear()));
-            App app = new App();
             if (!app.signup(user)) Utils.fileNotFound();
             invalidLabel.setText("");
             //TODO new scene
@@ -152,7 +156,10 @@ public class Signup {
     private void loadSignin() {
         AnchorPane pane = null;
         try {
-            pane = FXMLLoader.load(getClass().getResource("signin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("signin.fxml"));
+            pane = loader.load();
+            Signin controller = loader.getController();
+            controller.setApp(app);
         } catch (IOException e) {
             Utils.fileNotFound();
         }
@@ -163,5 +170,10 @@ public class Signup {
 
     private boolean allValid() {
         return checkName() && checkAddress() && checkPassword() && checkConfirm() && datePicker.getValue() != null;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }
