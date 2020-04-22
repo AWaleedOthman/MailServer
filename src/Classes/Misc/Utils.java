@@ -1,7 +1,6 @@
 package Classes.Misc;
 
 import Classes.DataStructures.DoublyLinkedList;
-import Classes.DataStructures.SinglyLinkedList;
 import Classes.MailServer.User;
 import javafx.scene.control.Alert;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +21,7 @@ public class Utils {
     public static boolean validAddress(@NotNull String address) {
         int index = address.indexOf('@');
         if (index == -1 || index == 0) return false;
-        if (!address.substring(index).equals("@thetrio.com")) return false;
+        if (!address.substring(index).equals("@trio.com")) return false;
         Pattern p = Pattern.compile("[^\\w|.]");
         Matcher m = p.matcher(address.substring(0, index));
         if (m.find()) return false;
@@ -94,22 +93,22 @@ public class Utils {
         }
     }
 
-    public static @Nullable SinglyLinkedList getValues(@NotNull String csLine) {
-        SinglyLinkedList list = new SinglyLinkedList();
-        int length = csLine.length(), l, r;
-        Pattern p = Pattern.compile("\"[^\"]*\"");
-        Matcher m = p.matcher(csLine);
-        while (m.find()) {
-            l = m.start();
-            r = m.end();
-            while (r < length && csLine.charAt(r) == '"') {
-                if (!m.find()) return null;
-                r = m.end();
-            }
-            list.add(csLine.substring(l + 1, r - 1));
-        }
-        return list;
-    }
+//    public static @Nullable SinglyLinkedList getValues(@NotNull String csLine) {
+//        SinglyLinkedList list = new SinglyLinkedList();
+//        int length = csLine.length(), l, r;
+//        Pattern p = Pattern.compile("\"[^\"]*\"");
+//        Matcher m = p.matcher(csLine);
+//        while (m.find()) {
+//            l = m.start();
+//            r = m.end();
+//            while (r < length && csLine.charAt(r) == '"') {
+//                if (!m.find()) return null;
+//                r = m.end();
+//            }
+//            list.add(csLine.substring(l + 1, r - 1));
+//        }
+//        return list;
+//    }
 
     public static boolean validString(@NotNull String s) {
         return s.indexOf(',') == -1 && s.indexOf('"') == -1;

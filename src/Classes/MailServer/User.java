@@ -24,6 +24,7 @@ public class User implements IContact {
     private String gender;
     private Birthday birthday;
 
+
     public User(String address, String encryptedpassword) {
         this.address = address;
         this.encryptedPassword = encryptedpassword;
@@ -40,6 +41,8 @@ public class User implements IContact {
      * @throws IOException file not found
      */
     public void addContact(Contact contact) throws IOException {
+        contact.setIndex(contacts.size());
+        contact.setOwner(this);
         contacts.add(contact);
         BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + "\\contacts.csv", true));
         writer.write(contact.getName() + "," + contact.getAddressesString());
@@ -63,9 +66,9 @@ public class User implements IContact {
 
     public Contact getContactByName(String Name) {
         Name = Name.toLowerCase();
-        Iterator iter = contacts.iterator(true);
+        Iterator<Contact> iter = contacts.iterator(true);
         for (int i = 0; iter.hasNext(); i++) {
-            Contact c = (Contact) iter.next();
+            Contact c = iter.next();
             if (c.getName().toLowerCase().startsWith(Name)) return c;
         }
         return null;
@@ -73,12 +76,12 @@ public class User implements IContact {
 
     public Contact getContactByAddress(String address) {
         address = address.toLowerCase();
-        Iterator iter1 = contacts.iterator(true);
+        Iterator<Contact> iter1 = contacts.iterator(true);
         while (iter1.hasNext()) {
-            Contact c = (Contact) iter1.next();
-            Iterator iter2 = c.getAddresses().iterator(true);
+            Contact c = iter1.next();
+            Iterator<String> iter2 = c.getAddresses().iterator(true);
             while (iter2.hasNext()) {
-                String s = (String) iter2.next();
+                String s = iter2.next();
                 if (s.startsWith(address)) return c;
             }
         }
@@ -87,14 +90,24 @@ public class User implements IContact {
 
     protected boolean delContact(@NotNull Contact contact) {
         Iterator<Contact> iter = contacts.iterator(true);
-
+        int index;
         for (int i = 0; iter.hasNext(); i++) {
-            if (contact.equals(iter.next())) {
+            Contact con = iter.next();
+            if (contact.equals(con)) {
                 contacts.remove(i);
+                index = con.getIndex();
                 try {
                     exportContacts();
                 } catch (IOException e) {
                     Utils.fileNotFound();
+                }
+                Iterator<Contact> iter2 = contacts.iterator(true);
+                //minus 1 from indexes
+                while (iter2.hasNext()) {
+                    Contact c = iter2.next();
+                    if (c.getIndex() > index) {
+                        c.setIndex(c.getIndex() - 1);
+                    }
                 }
                 return true;
             }

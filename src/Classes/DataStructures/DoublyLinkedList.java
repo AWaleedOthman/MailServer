@@ -46,7 +46,6 @@ public class DoublyLinkedList implements ILinkedList {
 
 	private dListNode head;
 	private dListNode tail;
-	private dListNode current;
 	private int size;
 
 	public DoublyLinkedList() {
@@ -68,8 +67,8 @@ public class DoublyLinkedList implements ILinkedList {
 		if (index == 0) {
 			newNode.setNext(this.head);
 			if (tail == null) {
-				this.tail = this.head = this.current = newNode;
-			} else {
+                this.tail = this.head = newNode;
+            } else {
 				this.head.setPrev(newNode);
 				this.head = newNode;
 			}
@@ -92,8 +91,8 @@ public class DoublyLinkedList implements ILinkedList {
 	public void add(Object element) {
 		dListNode newNode = new dListNode(null, null, element);
 		if (this.tail == null) {
-			head = tail = current = newNode;
-		} else {
+            head = tail = newNode;
+        } else {
 			this.tail.setNext(newNode);
 			newNode.setPrev(this.tail);
 			this.tail = newNode;
@@ -127,7 +126,6 @@ public class DoublyLinkedList implements ILinkedList {
 			}
 		}
 		if (fetcher != null) {
-			current = fetcher;
 			return fetcher.getElement();
 		}
 		return null;
@@ -160,9 +158,9 @@ public class DoublyLinkedList implements ILinkedList {
 
 	@Override
 	public void clear() {
-		this.head = this.tail = this.current = null;
-		size = 0;
-	}
+        this.head = this.tail = null;
+        size = 0;
+    }
 
 	@Override
 	public boolean isEmpty() {

@@ -82,7 +82,7 @@ public class Signup implements Initializable {
         invalidAddressLabel.setTextFill(Color.web("#ff0000"));
         invalidAddressLabel.setText("invalid address");
         invalidAddressLabel2.setText("can only contain numbers, letters, periods or underscore");
-        invalidAddressLabel3.setText("make sure to include \"@thetrio.com\"");
+        invalidAddressLabel3.setText("make sure to include \"@trio.com\"");
         return false;
 
     }

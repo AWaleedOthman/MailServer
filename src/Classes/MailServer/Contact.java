@@ -7,14 +7,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.Iterator;
+//TODO test Contact and User and App
+//TODO JavaDoc comments in all project
 
 public class Contact implements IContact {
 
     private final App app;
     private String name;
     private final DoublyLinkedList addresses = new DoublyLinkedList();
-    private final User owner;
-    private final int index;
+    private User owner;
+    private int index;
 
     public Contact(App app, String name, User owner, int index) {
         this.app = app;
@@ -23,8 +25,21 @@ public class Contact implements IContact {
         this.index = index;
     }
 
+    public Contact(App app, String name) {
+        this.app = app;
+        this.name = name;
+    }
+
     public int getIndex() {
         return index;
+    }
+
+    protected void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    protected void setIndex(int index) {
+        this.index = index;
     }
 
     public boolean delete() {
@@ -99,7 +114,7 @@ public class Contact implements IContact {
         }
     }
 
-    public String getAddressesString() {
+    protected String getAddressesString() {
         StringBuilder sb = new StringBuilder();
         if (addresses.isEmpty()) return "";
         Iterator<String> iter = addresses.iterator(true);

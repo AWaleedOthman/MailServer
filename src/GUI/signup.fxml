@@ -63,7 +63,8 @@
                </font>
             </Label>
             <TextField fx:id="nameField" onKeyTyped="#checkName" GridPane.columnIndex="1" />
-            <TextField fx:id="addressField" onKeyTyped="#checkAddress" promptText="example@thetrio.com" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="addressField" onKeyTyped="#checkAddress" promptText="example@trio.com"
+                       GridPane.columnIndex="1" GridPane.rowIndex="2"/>
             <PasswordField fx:id="passwordField" onKeyTyped="#checkPassword" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <PasswordField fx:id="confirmField" onKeyTyped="#checkPassword" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
