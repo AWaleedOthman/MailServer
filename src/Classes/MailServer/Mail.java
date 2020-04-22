@@ -11,7 +11,7 @@ public class Mail implements IMail {
     /*
      * ID member is  a unique ID identifies each mail
      * */
-    private String ID;
+    private int ID;
     /*
      * Text member is  a string field carrying the body message of the mail
      * */
@@ -51,7 +51,7 @@ public class Mail implements IMail {
     // Adding Replies
 
     public Mail(String title, int senderID, String senderName, Date date, int priority) {
-        this.ID = UUID.randomUUID().toString();
+        // this.ID = Generate unique next ID
         this.Title = title;
         this.senderID = senderID;
         this.senderName = senderName;
@@ -59,7 +59,7 @@ public class Mail implements IMail {
         this.setPriority(priority);
     }
 
-    public Mail(String ID, String title, int senderID, String senderName, Date date, int priority) {
+    public Mail(int ID, String title, int senderID, String senderName, Date date, int priority) {
         this.ID = ID;
         this.Title = title;
         this.senderID = senderID;
@@ -68,7 +68,7 @@ public class Mail implements IMail {
         this.setPriority(priority);
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 

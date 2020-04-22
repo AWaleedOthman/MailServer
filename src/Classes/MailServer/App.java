@@ -58,14 +58,51 @@ public class App implements IApp {
 
     @Override
     public void setViewingOptions(IFolder folder, IFilter filter, ISort sort) {
-
+        // No loaded mails and no specified folder to load from
+		if (folder == null && mails == null) { throw new IllegalArgumentException();}
+		// Setting the specified folder
+		if (folder != null) {
+			this.currentFolder = (Folder) folder;
+			mails.clear();
+			loadMails();
+		}
+		// Setting the specified filter
+		if (filter != null) {
+			this.currentFilter = (Filter) filter;
+		}
+		// Setting the specified sort
+		if (sort != null) {
+			mails.Qsort(sort.sortAttribute());
+		}
     }
 
     @Override
     public IMail[] listEmails(int page) {
-        return new IMail[0];
+        // If no loaded mails then Set viewing options has not been called yet
+		if (this.mails == null) { throw new IllegalStateException();}
+		
+		Mail[] returnedMails = new Mail[10];
+		int counter = 0;
+		
+		Iterator it = mails.iterator(!reverseSorting);
+		// Skip the unwanted pages
+		while (it.hasNext() && counter < (page-1) * 10) {
+			Mail tmpMail = (Mail) it.next();
+			if (this.currentFilter.filter(tmpMail)) {
+				counter ++;
+			}
+		}
+		// Load the wanted page
+		while (it.hasNext() && counter < (page) * 10) {
+			Mail tmpMail = (Mail) it.next();
+			if (this.currentFilter.filter(tmpMail)) {
+				returnedMails[counter%10] = tmpMail;
+				counter ++;
+			}
+		}
+		return returnedMails;
     }
-
+    
     @Override
     public void deleteEmails(ILinkedList mails) {
 
@@ -163,5 +200,71 @@ public class App implements IApp {
         sc.close();
         return user;
     }
-
+    
+    
+    /*
+	 * Get the number of thwe available mails in the specified filter and folder
+	 * */
+	public int availableMailsCount() {
+		if (this.currentFilter == null) { return mails.size();}
+		int counter = 0;
+		Iterator it = mails.iterator(true);
+		while (it.hasNext()) {
+			if (this.currentFilter.filter((Mail)it.next())) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+	
+	public void SortByPriority() {
+		PriorityQueue PQueue = new PriorityQueue();
+		Iterator it = mails.iterator(true);
+		while (it.hasNext()) {
+			Mail tmpMail = (Mail)it.next();
+			PQueue.insert(tmpMail, tmpMail.getPriority());
+		}
+		mails.clear();
+		while (!PQueue.isEmpty()) {
+			mails.add(PQueue.removeMin());
+		}
+	}
+	
+    /*
+    * Reverse list sorting 
+    * */
+	public void reverseSort(boolean flag) {
+		this.reverseSorting = flag;
+	}
+    
+    public void loadMails() {
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(this.currentFolder.getIndexPath()));
+			String row;
+			while ((row = reader.readLine()) != null) {
+			    String[] data = row.split(",");
+			    /*
+			     * At data
+			     * Index 0 for ID
+			     * Index 1 for Title
+			     * Index 2 for SenderAddress
+			     * Index 3 for SenderName
+			     * Index 4 for Date
+			     * Index 5 for Priority
+			     * */
+			    
+			    mails.add(new Mail(Integer.parseInt(data[0]), data[1], data[2], data[3],
+			    		new SimpleDateFormat("dd/MM/yyyy").parse(data[4]), Integer.parseInt(data[5])));
+			    
+			}
+			reader.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Error loading file");
+		}
+	}
+    
+    
 }
