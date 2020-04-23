@@ -72,7 +72,8 @@ public class App implements IApp {
 		}
 		// Setting the specified sort
 		if (sort != null) {
-			mails.Qsort(sort.sortAttribute());
+			Sort sortClass = (Sort)sort; 
+			mails.Qsort(sortClass.sortAttribute());
 		}
     }
 
