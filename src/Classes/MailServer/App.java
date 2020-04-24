@@ -175,7 +175,54 @@ public class App implements IApp {
 
 		return true;
     }
-
+	
+	
+public boolean draft(IMail email) {
+	Mail  mail = (Mail)email;
+    	// Data to be entered in index file
+    	String content = mail.getID() + "," + mail.getTitle() + "," + mail.getSenderAddress() + "," + mail.getSenderName() + ","
+				+ "," + (mail.getPriority().ordinal()+1) + "," + mail.getDate();
+    	String s = System.getProperty("file.separator");
+	try {
+		//appending data in csv file
+		// Appending in the sender draft folder index
+		BufferedWriter edit = new BufferedWriter(
+				new FileWriter("system" + s + "users" + s + mail.getSenderAddress() + s + "draft" + s + "index.csv", true));
+		edit.append(content);
+		edit.append("\n");
+		edit.flush();
+		edit.close();
+		// Creating mail folder in the draft folder
+		Folder dir = new Folder("system" + s + "users"+ s + mail.getSenderAddress() + s + "draft" + s);
+		dir.addSubFolder(mail.getID()+"");
+		Folder mailDir = new Folder("system" + s + "users"+ s + mail.getSenderAddress() + s + "draft" + s + mail.getID() + s);
+		mailDir.addSubFolder("attachment");
+		File directory = new File("system"+ s +"users"+ s + mail.getSenderAddress() + s + "draft" + s + mail.getID() + s +  mail.getID() + ".txt");
+		// Creating body file
+		String mailBody = mail.getID() + "\n" + mail.getTitle() + "\n" + mail.getSenderAddress() + "\n" + mail.getSenderName() + "\n"
+							+ mail.getDate().toString() + "\n" + mail.getPriority().toString() + "\n";
+		Iterator<Object> it = mail.getRecieverAddress().iterator();
+		while (it.hasNext()) {
+			mailBody += it.next().toString() + ",";
+		}
+		mailBody += "\n" + mail.getText() + "\n";
+		FileWriter writer = new FileWriter(directory);
+		directory.createNewFile();
+		writer.write(mailBody);
+		writer.close();
+		// Upload attachments
+		it = mail.getAttachments().iterator();
+		while (it.hasNext()) {
+			File file = (File)it.next();
+			String dest = "system" + s + "users" + s + mail.getSenderAddress() + s + "draft" + s + mail.getID() + s + "attachment" + s + file.getName();
+			if(!Folder.copyFiles(file, dest)) { return false;}
+		}
+	} catch (Exception e) {
+		System.out.println("not found");
+		return false;
+	}
+		return true;
+	}
     /**
      * loads the list of users from the file to a static doubly linked list
      *
