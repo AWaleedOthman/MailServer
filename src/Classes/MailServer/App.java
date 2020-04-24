@@ -116,58 +116,86 @@ public class App implements IApp {
 
     @Override
     public boolean compose(IMail email) {
-        String content = " ";
-		
-    	// data i want to enter in csv file
-    	content = ((Mail) email).getID() + "," + ((Mail) email).getTitle() + "," + ((Mail) email).getSenderAdress() + "," + ((Mail) email).getSenderName() + ","
-				+ ((Mail) email).getRecieverAddress() + "," + ((Mail) email).getFilter() + "," + ((Mail) email).getPriority() + "," + ((Mail) email).getDate();
-
+        Mail  mail = (Mail)email;
+    	// Data to be entered in index file
+    	String content = mail.getID() + "," + mail.getTitle() + "," + mail.getSenderAddress() + "," + mail.getSenderName() + ","
+				+ "," + (mail.getPriority().ordinal()+1) + "," + mail.getDate();
+    	String s = System.getProperty("file.separator");
 		try {
 			//appending data in csv file
+			// Appending in the sender sent folder index
 			BufferedWriter edit = new BufferedWriter(
-					new FileWriter("system\\users\\" + ((Mail) email).getSenderAdress() + "\\inbox\\" + "index.csv", true));
+					new FileWriter("system" + s + "users" + s + mail.getSenderAddress() + s + "sent" + s + "index.csv", true));
 			edit.append(content);
 			edit.append("\n");
 			edit.flush();
 			edit.close();
-
-			BufferedWriter infoEdit = new BufferedWriter(
-					new FileWriter("system\\users\\" + ((Mail) email).getRecieverAddress() + "\\inbox\\" + "index.csv", true));
-			infoEdit.append(content);
-			infoEdit.append("\n");
-			infoEdit.flush();
-			infoEdit.close();
-
-			// writing in txt file
-			Folder newMessage = new Folder("system\\users\\" + ((Mail) email).getRecieverAddress() + "\\inbox\\");
-			newMessage.addSubFolder(((Mail) email).getID());
-			File newMail = new File("system\\users\\" + ((Mail) email).getRecieverAddress() + "\\inbox\\" + ((Mail) email).getID() + ".txt");
-			newMail.createNewFile();
-
-			String newMailContent = ((Mail) email).getID() + "\n" + ((Mail) email).getTitle() + "\n" + ((Mail) email).getSenderAdress() + "\n"
-					+ ((Mail) email).getRecieverAddress() + "\n";
-			FileWriter fw = new FileWriter(newMail);
-			fw.write(newMailContent);
-
-			System.out.println("type here \n");
-			Scanner sc = new Scanner(System.in);
-			String text = sc.nextLine();
-			fw.write(text);
-
-			Folder dir = new Folder("system\\users\\" + ((Mail) email).getSenderAdress() + "\\sent\\");
-			dir.addSubFolder(((Mail) email).getID());
-			File directory = new File("system\\users\\" + ((Mail) email).getSenderAdress() + "\\sent\\" + ((Mail) email).getID() + ".txt");
-
-			if (!directory.exists()) {
-				FileWriter fw2 = new FileWriter(directory);
-				directory.createNewFile();
-				fw2.write(newMailContent);
-				fw2.write(text);
-				fw2.close();
+			// Creating mail folder in the sent folder
+			Folder dir = new Folder("system" + s + "users"+ s + mail.getSenderAddress() + s + "sent" + s);
+			dir.addSubFolder(mail.getID()+"");
+			Folder mailDir = new Folder("system" + s + "users"+ s + mail.getSenderAddress() + s + "sent" + s + mail.getID() + s);
+			mailDir.addSubFolder("attachment");
+			File directory = new File("system"+ s +"users"+ s + mail.getSenderAddress() + s + "sent" + s + mail.getID() + s +  mail.getID() + ".txt");
+			// Creating body file
+			String mailBody = mail.getID() + "\n" + mail.getTitle() + "\n" + mail.getSenderAddress() + "\n" + mail.getSenderName() + "\n"
+								+ mail.getDate().toString() + "\n" + mail.getPriority().toString() + "\n";
+			Iterator<Object> it = mail.getRecieverAddress().iterator();
+			while (it.hasNext()) {
+				mailBody += it.next().toString() + ",";
 			}
-
-			fw.close();
-			sc.close();
+			mailBody += "\n" + mail.getText() + "\n";
+			FileWriter writer = new FileWriter(directory);
+			directory.createNewFile();
+			writer.write(mailBody);
+			writer.close();
+			// Upload attachments
+			it = mail.getAttachments().iterator();
+			while (it.hasNext()) {
+				File file = (File)it.next();
+				String dest = "system" + s + "users" + s + mail.getSenderAddress() + s + "sent" + s + mail.getID() + s + "attachment" + s + file.getName();
+				if(!Folder.copyFiles(file, dest)) { return false;}
+				//Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+			}
+			
+			
+			// Sending Mail
+			QueueLinkedList queue = new QueueLinkedList();
+			it = mail.getRecieverAddress().iterator();
+			while (it.hasNext()) {
+				queue.enqueue(it.next());
+			}
+			while (!queue.isEmpty()) {
+				
+				String reciever = queue.dequeue().toString();
+				edit = new BufferedWriter(
+						new FileWriter("system" + s + "users" + s + reciever + s + "inbox" + s + "index.csv", true));
+				edit.append(content);
+				edit.append("\n");
+				edit.flush();
+				edit.close();
+				
+				// Creating mail folder in the reciever's inbox folder
+				dir = new Folder("system" + s + "users"+ s + reciever + s + "inbox" + s);
+				dir.addSubFolder(mail.getID()+"");
+				mailDir = new Folder("system" + s + "users"+ s + reciever + s + "inbox" + s + mail.getID() + s);
+				mailDir.addSubFolder("attachment");
+				directory = new File("system"+ s +"users"+ s + reciever + s + "inbox" + s + mail.getID() + s +  mail.getID() + ".txt");
+				// Creating body file
+				mailBody = mail.getID() + "\n" + mail.getTitle() + "\n" + mail.getSenderAddress() + "\n" + mail.getSenderName() + "\n"
+									+ mail.getDate().toString() + "\n" + mail.getPriority().toString() + "\n" + reciever;
+				mailBody += "\n" + mail.getText() + "\n";
+				writer = new FileWriter(directory);
+				directory.createNewFile();
+				writer.write(mailBody);
+				writer.close();
+				// Upload attachments
+				it = mail.getAttachments().iterator();
+				while (it.hasNext()) {
+					File file = (File)it.next();
+					File dest = new File("system" + s + "users" + s + reciever + s + "inbox" + s + mail.getID() + s + "attachment" + s + file.getName());
+					Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+				}
+			}
 		} catch (Exception e) {
 			System.out.println("not found");
 			return false;
