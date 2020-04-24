@@ -36,9 +36,20 @@ public class Signin implements Initializable {
             invalidSigninLabel.setText("Invalid email address or password");
             passwordField.setText("");
         } else {
-            invalidSigninLabel.setText("");
-            passwordField.setText("");
-            //TODO open new scene
+            AnchorPane pane = null;
+            try {
+                invalidSigninLabel.setText("");
+                passwordField.setText("");
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("contacts.fxml"));
+                pane = loader.load();
+                Contacts controller = loader.getController();
+                controller.setApp(app);
+                controller.setUp();
+            } catch (IOException e) {
+                Utils.fileNotFound();
+            }
+            rootPane.getChildren().setAll(pane);
+            rootPane.getScene().getWindow().sizeToScene();
         }
     }
 

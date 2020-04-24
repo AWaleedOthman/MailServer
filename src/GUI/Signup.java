@@ -143,7 +143,6 @@ public class Signup implements Initializable {
             user.setBirthday(new Birthday(ld.getDayOfMonth(), ld.getMonthValue(), ld.getYear()));
             if (!app.signup(user)) Utils.fileNotFound();
             invalidLabel.setText("");
-            //TODO new scene
         }
         passwordField.setText("");
         confirmField.setText("");

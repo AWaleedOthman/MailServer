@@ -17,6 +17,8 @@ public class Contact implements IContact {
     private final DoublyLinkedList addresses = new DoublyLinkedList();
     private User owner;
     private int index;
+    private String mainAddress;
+
 
     public Contact(App app, String name, User owner, int index) {
         this.app = app;
@@ -63,10 +65,12 @@ public class Contact implements IContact {
         return addresses;
     }
 
-    public void addAddresses(String @NotNull [] arr) {
+    public void addAddresses(String[] arr) {
+        if (arr == null) return;
         for (String s : arr) {
             this.addresses.add(s);
         }
+        mainAddress = (String) addresses.get(0);
     }
 
     public boolean addAddress(String address) {
@@ -81,7 +85,6 @@ public class Contact implements IContact {
     }
 
     public boolean changeAddress(String old, String address) {
-        if (!app.addressExists(address)) return false;
         Iterator<String> iter = addresses.iterator(true);
 
         for (int i = 0; iter.hasNext(); i++) {
@@ -92,6 +95,7 @@ public class Contact implements IContact {
                 } catch (IOException e) {
                     Utils.fileNotFound();
                 }
+                mainAddress = (String) addresses.get(0);
                 return true;
             }
         }
@@ -114,7 +118,7 @@ public class Contact implements IContact {
         }
     }
 
-    protected String getAddressesString() {
+    public String getAddressesString() {
         StringBuilder sb = new StringBuilder();
         if (addresses.isEmpty()) return "";
         Iterator<String> iter = addresses.iterator(true);
@@ -123,5 +127,9 @@ public class Contact implements IContact {
             sb.append(",").append(iter.next());
         }
         return sb.toString();
+    }
+
+    public String getMainAddress() {
+        return mainAddress;
     }
 }

@@ -102,7 +102,7 @@ public class App implements IApp {
 		}
 		return returnedMails;
     }
-    
+
     @Override
     public void deleteEmails(ILinkedList mails) {
 
@@ -141,6 +141,7 @@ public class App implements IApp {
         if (arr.length == 0) return i;
         for (String address : arr) {
             if (Utils.binarySearch(address, list) == null) return i;
+            else ++i;
         }
         return i;
     }
@@ -186,22 +187,19 @@ public class App implements IApp {
             Utils.fileNotFound();
         }
         while (sc.hasNext()) {
-            try {
-                String s = sc.nextLine();
-                String[] arr = s.split(",", 2);
-                Contact c = new Contact(this, arr[0], user, user.getContacts().size());
+            String s = sc.nextLine();
+            String[] arr = s.split(",", 2);
+            Contact c = new Contact(this, arr[0], user, user.getContacts().size());
+            if (!arr[1].isEmpty())
                 c.addAddresses(arr[1].split(","));
-                user.addContact(c);
+            user.getContacts().add(c);
 
-            } catch (IOException e) {
-                Utils.fileNotFound();
-            }
         }
         sc.close();
         return user;
     }
-    
-    
+
+
     /*
 	 * Get the number of thwe available mails in the specified filter and folder
 	 * */

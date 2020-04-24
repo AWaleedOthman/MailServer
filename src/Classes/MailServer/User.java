@@ -40,14 +40,18 @@ public class User implements IContact {
      * @param contact to be added
      * @throws IOException file not found
      */
-    public void addContact(Contact contact) throws IOException {
+    public void addContact(Contact contact) {
         contact.setIndex(contacts.size());
         contact.setOwner(this);
         contacts.add(contact);
-        BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + "\\contacts.csv", true));
-        writer.write(contact.getName() + "," + contact.getAddressesString());
-        writer.newLine();
-        writer.close();
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + "\\contacts.csv", true));
+            writer.write(contact.getName() + "," + contact.getAddressesString());
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            Utils.fileNotFound();
+        }
     }
 
     public DoublyLinkedList sortContactsByIndex() {
@@ -64,28 +68,30 @@ public class User implements IContact {
         return contacts;
     }
 
-    public Contact getContactByName(String Name) {
+    public DoublyLinkedList getContactByName(String Name) {
         Name = Name.toLowerCase();
+        DoublyLinkedList res = new DoublyLinkedList();
         Iterator<Contact> iter = contacts.iterator(true);
         for (int i = 0; iter.hasNext(); i++) {
             Contact c = iter.next();
-            if (c.getName().toLowerCase().startsWith(Name)) return c;
+            if (c.getName().toLowerCase().startsWith(Name)) res.add(c);
         }
-        return null;
+        return res;
     }
 
-    public Contact getContactByAddress(String address) {
+    public DoublyLinkedList getContactByAddress(String address) {
         address = address.toLowerCase();
+        DoublyLinkedList res = new DoublyLinkedList();
         Iterator<Contact> iter1 = contacts.iterator(true);
         while (iter1.hasNext()) {
             Contact c = iter1.next();
             Iterator<String> iter2 = c.getAddresses().iterator(true);
             while (iter2.hasNext()) {
                 String s = iter2.next();
-                if (s.startsWith(address)) return c;
+                if (s.startsWith(address)) res.add(c);
             }
         }
-        return null;
+        return res;
     }
 
     protected boolean delContact(@NotNull Contact contact) {
