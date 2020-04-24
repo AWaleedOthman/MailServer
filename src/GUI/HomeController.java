@@ -1,27 +1,30 @@
 package GUI;
 
-import java.util.Iterator;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import com.sun.javafx.util.Utils;
 
 import Classes.App;
 import Classes.Folder;
 import Classes.Mail;
+import Classes.Priority;
+import Classes.Sort;
 import Classes.SortAttribute;
-import Sorts.dateSort;
-import Sorts.senderNameSort;
-import Sorts.titleSort;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -29,18 +32,24 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class HomeController {
+public class HomeController implements Initializable {
 
-	private App app = new App();
+	private App app;
 	
+	@FXML
+	private AnchorPane rootPane;
 	@FXML
 	private Button sortBtn;
 	@FXML
 	private Button priorityBtn;
 	@FXML
 	private Button searchBtn;
+	@FXML
+	private Button refreshBtn;
 	@FXML
 	private CheckBox reverseChkBox;
 	@FXML
@@ -57,6 +66,8 @@ public class HomeController {
 	private TextField searchTxt;
 	@FXML
 	private TitledPane inboxTPane;
+	@FXML
+	private Button composeBtn;
 	
 	
 	public class MailHeader {
@@ -71,12 +82,15 @@ public class HomeController {
 		
 		private String date;
 		
-		public MailHeader(int ID, String title, String sendername, String address, String date) {
+		private Priority priority;
+		
+		public MailHeader(int ID, String title, String sendername, String address, String date, Priority priority) {
 	        this.ID = ID;
 			this.title = title;
 	        this.senderName = sendername;
 	        this.address = address;
 	        this.date = date;
+	        this.priority = priority;
 	    }
 
 		public String getTitle() {
@@ -102,6 +116,14 @@ public class HomeController {
 		public void setID(int iD) {
 			ID = iD;
 		}
+
+		public Priority getPriority() {
+			return priority;
+		}
+
+		public void setPriority(Priority priority) {
+			this.priority = priority;
+		}
 		
 	}
 	
@@ -109,12 +131,13 @@ public class HomeController {
 		mailsTbl.getItems().clear();
 		Mail[] mails = (Mail[])app.listEmails(i);
 		for (int j = 0; j < 10 && mails[j] != null; j++) {
-			MailHeader MH = new MailHeader(mails[j].getID(), mails[j].getTitle(), mails[j].getSenderName(), mails[j].getSenderAddress(), mails[j].getDate().toString());
+			MailHeader MH = new MailHeader(mails[j].getID(), mails[j].getTitle(), mails[j].getSenderName(), mails[j].getSenderAddress(), mails[j].getDate().toString(), mails[j].getPriority());
 			mailsTbl.getItems().add(MH);
 		}
 	}
 	
-	public void initialize() {
+	public void initialize(App app) {
+		this.app = app;
 		bannerLbl.setText("Hello User"); // Replace user name here
 		sortChoiceBox.getItems().addAll(SortAttribute.Date.toString(), 
 				SortAttribute.Title.toString(), SortAttribute.SenderName.toString());
@@ -124,17 +147,17 @@ public class HomeController {
 		IDColumn.setVisible(false);
 	    IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
 		TableColumn<MailHeader, String> titleColumn=new TableColumn<>("Title");
-	    titleColumn.setMinWidth(200);
+	    titleColumn.setMinWidth(150);
 	    titleColumn.setResizable(false);
 	    titleColumn.setSortable(false);
 	    titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 	    TableColumn<MailHeader, String> senderNameColumn=new TableColumn<>("Sender name");
-	    senderNameColumn.setMinWidth(100);
+	    senderNameColumn.setMinWidth(145);
 	    senderNameColumn.setResizable(false);
 	    senderNameColumn.setSortable(false);
 	    senderNameColumn.setCellValueFactory(new PropertyValueFactory<>("SenderName"));
 	    TableColumn<MailHeader, String> addressColumn=new TableColumn<>("Address");
-	    addressColumn.setMinWidth(165);
+	    addressColumn.setMinWidth(150);
 	    addressColumn.setResizable(false);
 	    addressColumn.setSortable(false);
 	    addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -143,6 +166,11 @@ public class HomeController {
 	    dateColumn.setResizable(false);
 	    dateColumn.setSortable(false);
 	    dateColumn.setCellValueFactory(new PropertyValueFactory<MailHeader, String>("Date"));
+	    TableColumn<MailHeader, String> priorityColumn=new TableColumn<>("Priority");
+	    priorityColumn.setMinWidth(150);
+	    priorityColumn.setResizable(false);
+	    priorityColumn.setSortable(false);
+	    priorityColumn.setCellValueFactory(new PropertyValueFactory<MailHeader, String>("Priority"));
 	    mailsTbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 	        @Override
 	        public void handle(MouseEvent mouseEvent) {
@@ -155,7 +183,7 @@ public class HomeController {
 	    }); 
 	    mailsTbl.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	    // Add columns to the table view
-	    mailsTbl.getColumns().addAll(titleColumn, senderNameColumn, addressColumn, dateColumn);
+	    mailsTbl.getColumns().addAll(titleColumn, senderNameColumn, addressColumn, dateColumn, priorityColumn);
 		// Max page count depending on the number of loaded mails in the current folder and filter
 	    pgr.setPageCount((int)(((float)app.availableMailsCount()/10) + 0.9));
 	    // Load mails in the page 1
@@ -175,7 +203,7 @@ public class HomeController {
 		tPane.setExpanded(false);
 		folders.getChildren().add(tPane);
 		tPane = new TitledPane();
-		tPane.setText("personal");
+		tPane.setText("Personal");
 		tPane.setOnMouseClicked(new FoldersEventHandler());
 		tPane.setCollapsible(false);
 		tPane.setExpanded(false);
@@ -193,6 +221,8 @@ public class HomeController {
         @Override
         public void handle(Event evt) {
            System.out.println(((TitledPane)evt.getSource()).getText() + " Is Clicked");
+           app.setViewingOptions(new Folder(((TitledPane)evt.getSource()).getText()), null, null);
+           showMails(1);
            // Here We call setViewOptions at the current selected folder and then show mails
         }
     }
@@ -226,13 +256,13 @@ public class HomeController {
 	public void sortBtnClicked() {
 		// Sorting type
 		if (SortAttribute.valueOf(sortChoiceBox.getSelectionModel().getSelectedItem()) == SortAttribute.Date) {
-			app.setViewingOptions(null, null, new dateSort());
+			app.setViewingOptions(null, null, new Sort(SortAttribute.Date));
 		}
 		else if (SortAttribute.valueOf(sortChoiceBox.getSelectionModel().getSelectedItem()) == SortAttribute.Title) {
-			app.setViewingOptions(null, null, new titleSort());
+			app.setViewingOptions(null, null, new Sort(SortAttribute.Title));
 		}
 		else if (SortAttribute.valueOf(sortChoiceBox.getSelectionModel().getSelectedItem()) == SortAttribute.SenderName) {
-			app.setViewingOptions(null, null, new senderNameSort());
+			app.setViewingOptions(null, null, new Sort(SortAttribute.SenderName));
 		}
 		// Reverse Sorting
 		app.reverseSort(reverseChkBox.isSelected());
@@ -272,7 +302,43 @@ public class HomeController {
 		System.out.println("Hello");
 	}
 	
+	public void refresh() {
+		app.loadMails();
+		sortBtnClicked();
+		showMails(1);
+	}
+	
+	public void composeBtnClicked() {
+		AnchorPane pane = null;
+		Parent root;
+        
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource("Compose.fxml"));
+        	try {
+				root = loader.load();
+				ComposeController composeController = loader.getController();
+	        	Stage stage = new Stage();
+	            stage.setTitle("Compose");
+	            stage.setScene(new Scene(root, 948, 500));
+	            stage.setOnCloseRequest(event -> {composeController.draft();} );
+	            stage.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+            
+            
+        
+        
+	}
+	
 	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		
 	}
