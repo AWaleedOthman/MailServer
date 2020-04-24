@@ -195,8 +195,8 @@ public class DoublyLinkedList implements ILinkedList {
 			}
 			else {
 				dListNode temp = prev.getNext();
-				prev.setNext(prev.getNext().getNext());
 				prev.getNext().getNext().setPrev(prev);
+				prev.setNext(prev.getNext().getNext());
 				temp.setNext(null);
 				temp.setPrev(null);
 			}
