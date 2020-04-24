@@ -116,7 +116,64 @@ public class App implements IApp {
 
     @Override
     public boolean compose(IMail email) {
-        return false;
+        String content = " ";
+		
+    	// data i want to enter in csv file
+    	content = ((Mail) email).getID() + "," + ((Mail) email).getTitle() + "," + ((Mail) email).getSenderAdress() + "," + ((Mail) email).getSenderName() + ","
+				+ ((Mail) email).getRecieverAddress() + "," + ((Mail) email).getFilter() + "," + ((Mail) email).getPriority() + "," + ((Mail) email).getDate();
+
+		try {
+			//appending data in csv file
+			BufferedWriter edit = new BufferedWriter(
+					new FileWriter("system\\users\\" + ((Mail) email).getSenderAdress() + "\\inbox\\" + "index.csv", true));
+			edit.append(content);
+			edit.append("\n");
+			edit.flush();
+			edit.close();
+
+			BufferedWriter infoEdit = new BufferedWriter(
+					new FileWriter("system\\users\\" + ((Mail) email).getRecieverAddress() + "\\inbox\\" + "index.csv", true));
+			infoEdit.append(content);
+			infoEdit.append("\n");
+			infoEdit.flush();
+			infoEdit.close();
+
+			// writing in txt file
+			Folder newMessage = new Folder("system\\users\\" + ((Mail) email).getRecieverAddress() + "\\inbox\\");
+			newMessage.addSubFolder(((Mail) email).getID());
+			File newMail = new File("system\\users\\" + ((Mail) email).getRecieverAddress() + "\\inbox\\" + ((Mail) email).getID() + ".txt");
+			newMail.createNewFile();
+
+			String newMailContent = ((Mail) email).getID() + "\n" + ((Mail) email).getTitle() + "\n" + ((Mail) email).getSenderAdress() + "\n"
+					+ ((Mail) email).getRecieverAddress() + "\n";
+			FileWriter fw = new FileWriter(newMail);
+			fw.write(newMailContent);
+
+			System.out.println("type here \n");
+			Scanner sc = new Scanner(System.in);
+			String text = sc.nextLine();
+			fw.write(text);
+
+			Folder dir = new Folder("system\\users\\" + ((Mail) email).getSenderAdress() + "\\sent\\");
+			dir.addSubFolder(((Mail) email).getID());
+			File directory = new File("system\\users\\" + ((Mail) email).getSenderAdress() + "\\sent\\" + ((Mail) email).getID() + ".txt");
+
+			if (!directory.exists()) {
+				FileWriter fw2 = new FileWriter(directory);
+				directory.createNewFile();
+				fw2.write(newMailContent);
+				fw2.write(text);
+				fw2.close();
+			}
+
+			fw.close();
+			sc.close();
+		} catch (Exception e) {
+			System.out.println("not found");
+			return false;
+		}
+
+		return true;
     }
 
     /**
