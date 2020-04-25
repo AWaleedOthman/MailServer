@@ -5,7 +5,6 @@ import Interfaces.MailServer.IFilter;
 import Interfaces.MailServer.IMail;
 
 import java.util.Date;
-import java.util.UUID;
 
 public class Mail implements IMail {
     /*
@@ -49,6 +48,16 @@ public class Mail implements IMail {
      * */
     private int priority;
     // Adding Replies
+
+    private String senderAddress, recieverAddress;
+
+    public String getSenderAddress() {
+        return senderAddress;
+    }
+
+    public String getRecieverAddress() {
+        return recieverAddress;
+    }
 
     public Mail(String title, int senderID, String senderName, Date date, int priority) {
         // this.ID = Generate unique next ID

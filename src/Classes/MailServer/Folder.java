@@ -19,7 +19,7 @@ public class Folder implements IFolder {
     }
 
     @Contract("_ -> new")
-    private @NotNull Folder addSubFolder(String name) {
+    protected @NotNull Folder addSubFolder(String name) {
         File f = new File(path + "\\" + name);
         f.mkdir();
         return new Folder(path + "\\" + name);
@@ -60,5 +60,9 @@ public class Folder implements IFolder {
 
     public String getPath() {
         return path;
+    }
+
+    public String getIndexPath() {
+        return null;
     }
 }

@@ -4,8 +4,6 @@ import Classes.DataStructures.DoublyLinkedList;
 import Classes.Misc.Birthday;
 import Classes.Misc.Utils;
 import Interfaces.MailServer.IContact;
-import Sorts.ContactIndexSort;
-import Sorts.ContactNameSort;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedWriter;
@@ -55,15 +53,15 @@ public class User implements IContact {
     }
 
     public DoublyLinkedList sortContactsByIndex() {
-        ContactIndexSort ci = new ContactIndexSort();
-        Comparator c = ci.sortAttribute();
+        Sort sort = new Sort(SortAttribute.contactIndex);
+        Comparator c = sort.sortAttribute();
         contacts.Qsort(c);
         return contacts;
     }
 
     public DoublyLinkedList sortContactsByName() {
-        ContactNameSort ci = new ContactNameSort();
-        Comparator c = ci.sortAttribute();
+        Sort sort = new Sort(SortAttribute.contactName);
+        Comparator c = sort.sortAttribute();
         contacts.Qsort(c);
         return contacts;
     }

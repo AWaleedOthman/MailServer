@@ -1,5 +1,5 @@
-package Classes;
+package Classes.MailServer;
 
 public enum SortAttribute {
-	Date, SenderName, Title
+	Date, SenderName, Title, contactName, contactIndex
 }
