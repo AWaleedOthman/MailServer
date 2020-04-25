@@ -302,33 +302,37 @@ public class App implements IApp {
 	}
     
     public void loadMails() {
-		BufferedReader reader;
+	BufferedReader reader;
+		mails.clear();
 		try {
+			System.out.println(this.currentFolder.getIndexPath());
 			reader = new BufferedReader(new FileReader(this.currentFolder.getIndexPath()));
 			String row;
+			row = reader.readLine();
 			while ((row = reader.readLine()) != null) {
 			    String[] data = row.split(",");
-				/*
-				 * At data
-				 * Index 0 for ID
-				 * Index 1 for Title
-				 * Index 2 for SenderAddress
-				 * Index 3 for SenderName
-				 * Index 4 for Date
-				 * Index 5 for Priority
-				 * */
-
-				mails.add(new Mail(Integer.parseInt(data[0]), data[1], Integer.parseInt(data[2]), data[3],
-						new SimpleDateFormat("dd/MM/yyyy").parse(data[4]), Integer.parseInt(data[5])));
-
+			    /*
+			     * At data
+			     * Index 0 for ID
+			     * Index 1 for Title
+			     * Index 2 for SenderID
+			     * Index 3 for SenderName
+			     * Index 4 for Date
+			     * Index 5 for Priority
+			     * */
+			    mails.add(new Mail(Integer.parseInt(data[0]), data[1], data[2], data[3],
+			    		new SimpleDateFormat("EEEE - MMM dd - yyyy HH:mm:ss a").parse(data[4]), 
+			    		Priority.values()[Integer.parseInt(data[5])-1]));
+			    
 			}
 			reader.close();
+			workingList = mails.copyView();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("Error loading file");
+			//throw new RuntimeException("Error loading file");
 		}
-	}
+    }
     
     
 }
