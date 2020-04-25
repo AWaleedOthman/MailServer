@@ -85,6 +85,7 @@ public class Contacts implements Initializable {
         stage.getIcons().add(new Image("/icon.png"));
         stage.sizeToScene();
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -152,6 +153,7 @@ public class Contacts implements Initializable {
         stage.getIcons().add(new Image("/icon.png"));
         stage.sizeToScene();
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.show();
 
 

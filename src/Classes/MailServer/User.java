@@ -66,13 +66,20 @@ public class User implements IContact {
         return contacts;
     }
 
-    public DoublyLinkedList getContactByName(String Name) {
-        Name = Name.toLowerCase();
+    public DoublyLinkedList getContactByName(String cName) {
+        cName = cName.toLowerCase();
         DoublyLinkedList res = new DoublyLinkedList();
         Iterator<Contact> iter = contacts.iterator(true);
-        for (int i = 0; iter.hasNext(); i++) {
+        while (iter.hasNext()) {
             Contact c = iter.next();
-            if (c.getName().toLowerCase().startsWith(Name)) res.add(c);
+            if (c.getName().toLowerCase().startsWith(cName)) res.add(c);
+        }
+        if (res.isEmpty()) {
+            iter = contacts.iterator(true);
+            while (iter.hasNext()) {
+                Contact c = iter.next();
+                if (c.getName().toLowerCase().contains(cName)) res.add(c);
+            }
         }
         return res;
     }
@@ -87,6 +94,17 @@ public class User implements IContact {
             while (iter2.hasNext()) {
                 String s = iter2.next();
                 if (s.startsWith(address)) res.add(c);
+            }
+        }
+        if (res.isEmpty()) {
+            iter1 = contacts.iterator(true);
+            while (iter1.hasNext()) {
+                Contact c = iter1.next();
+                Iterator<String> iter2 = c.getAddresses().iterator(true);
+                while (iter2.hasNext()) {
+                    String s = iter2.next();
+                    if (s.contains(address)) res.add(c);
+                }
             }
         }
         return res;
