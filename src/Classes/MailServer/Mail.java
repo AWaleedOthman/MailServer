@@ -1,15 +1,17 @@
-package Classes;
+package Classes.MailServer;
+
+import Classes.DataStructures.SinglyLinkedList;
+import Classes.Priority;
+import Interfaces.MailServer.IMail;
 
 import java.util.Date;
 
-import Interfaces.IMail;
-
 public class Mail implements IMail {
-	
+
 	/*
 	 * ID member is  a unique ID identifies each mail
 	 * */
-	private int							ID;
+	private int ID;
 	/*
 	 * Text member is  a string field carrying the body message of the mail
 	 * */
@@ -25,15 +27,15 @@ public class Mail implements IMail {
 	/*
 	 * SenderName member to facilitate sender recognition
 	 * */
-	private String						senderName;
+	private String senderName;
 	/*
 	 * RecieverID member to identify mail's reciever
 	 * */
-	private SinglyLinkedList			recieversAddress;
+	private SinglyLinkedList recieversAddress;
 	/*
 	 * Attachments member carries mail attachments
 	 * */
-	private SinglyLinkedList			attachments;
+	private SinglyLinkedList attachments;
 	/*
 	 * Date member stores mail sending date
 	 * */
@@ -135,5 +137,8 @@ public class Mail implements IMail {
 	public void setSenderAddress(String senderAddress) {
 		this.senderAddress = senderAddress;
 	}
-	
+
+	public int getFilter() {
+		return 0;
+	}
 }

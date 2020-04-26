@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,11 +27,11 @@ public class Contacts implements Initializable {
     private App app;
     private User user;
     @FXML
+    private AnchorPane pane;
+    @FXML
     private TableView<Contact> tv;
     @FXML
     private TableColumn tcName, tcAddress;
-    @FXML
-    private Button sortBtn;
     @FXML
     private ComboBox sortCombo, searchCombo;
     @FXML
@@ -66,7 +67,7 @@ public class Contacts implements Initializable {
     protected void setApp(App app) {
         this.app = app;
         user = app.getLoggedinUser();
-
+        setUp();
     }
 
     @FXML
@@ -134,7 +135,17 @@ public class Contacts implements Initializable {
 
     @FXML
     private void back() {
-        //TODO
+        AnchorPane pane = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("folders.fxml"));
+            pane = loader.load();
+            Folders controller = loader.getController();
+            controller.setApp(app);
+        } catch (IOException e) {
+            Utils.fileNotFound();
+        }
+        this.pane.getChildren().setAll(pane);
+        this.pane.getScene().getWindow().sizeToScene();
     }
 
     private void edit(Contact contact) {

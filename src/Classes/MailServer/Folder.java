@@ -46,6 +46,8 @@ public class Folder implements IFolder {
         Folder inbox = userFolder.addSubFolder("inbox");
         File inboxIndex = new File(inbox.getPath() + "\\index.csv");
         inboxIndex.createNewFile();
+        File inboxFolders = new File(inbox.getPath() + "\\folders.txt");
+        inboxFolders.createNewFile();
         Folder archive = userFolder.addSubFolder("archive");
         File archiveIndex = new File(archive.getPath() + "\\index.csv");
         archiveIndex.createNewFile();
@@ -65,4 +67,6 @@ public class Folder implements IFolder {
     public String getIndexPath() {
         return null;
     }
+
+
 }

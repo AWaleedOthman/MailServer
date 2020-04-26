@@ -15,7 +15,7 @@ public class AddContact {
     private App app;
     private Contacts controller;
     @FXML
-    private Button saveBtn, cancelBtn;
+    private Button cancelBtn;
     @FXML
     private Label invalidName, invalidAddresses;
     @FXML
@@ -67,4 +67,5 @@ public class AddContact {
         this.app = app;
         this.controller = controller;
     }
+
 }

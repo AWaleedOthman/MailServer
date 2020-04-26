@@ -3,13 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane fx:id="rootPane" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Signin">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" prefHeight="400.0" prefWidth="614.0"
+            styleClass="anchor" stylesheets="@application.css" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            fx:controller="GUI.Signin">
    <children>
       <VBox alignment="CENTER_LEFT" layoutX="14.0" prefHeight="119.0" prefWidth="600.0">
          <children>
             <Label prefHeight="62.0" prefWidth="318.0" text="    TrioMail">
                <font>
-                  <Font name="Centaur" size="50.0" />
+                  <Font name="Centaur" size="50.0"/>
                </font>
             </Label>
          </children>

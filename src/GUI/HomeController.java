@@ -10,13 +10,17 @@ import Sorts.TitleSort;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-public class HomeController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class HomeController implements Initializable {
 
 	private final App app = new App();
 
@@ -137,6 +141,11 @@ public class HomeController {
 		app.reverseSort(reverseChkBox.isSelected());
 		// Load the mails of the first page after sorting
 		showMails(1);
+	}
+
+	@Override
+	public void initialize(URL url, ResourceBundle resourceBundle) {
+
 	}
 
 	/*

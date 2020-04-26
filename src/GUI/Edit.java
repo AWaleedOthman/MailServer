@@ -4,17 +4,13 @@ import Classes.MailServer.App;
 import Classes.MailServer.Contact;
 import Classes.Misc.Utils;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class Edit implements Initializable {
+public class Edit {
 
     private App app;
     private Contacts controller;
@@ -76,8 +72,4 @@ public class Edit implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 }

@@ -1,20 +1,16 @@
 package GUI;
 
 import Classes.MailServer.App;
-import Classes.MailServer.User;
 import Classes.Misc.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class Signin implements Initializable {
+public class Signin {
 
     private App app;
 
@@ -31,7 +27,6 @@ public class Signin implements Initializable {
 
     @FXML
     private void signin() {
-        User user = null;
         if (!app.signin(addressField.getText().toLowerCase(), passwordField.getText())) {
             invalidSigninLabel.setText("Invalid email address or password");
             passwordField.setText("");
@@ -44,12 +39,11 @@ public class Signin implements Initializable {
                 pane = loader.load();
                 Contacts controller = loader.getController();
                 controller.setApp(app);
-                controller.setUp();
             } catch (IOException e) {
                 Utils.fileNotFound();
             }
             rootPane.getChildren().setAll(pane);
-            rootPane.getScene().getWindow().sizeToScene();
+            rootPane.getScene().getWindow().setHeight(487);
         }
     }
 
@@ -65,11 +59,7 @@ public class Signin implements Initializable {
             Utils.fileNotFound();
         }
         rootPane.getChildren().setAll(pane);
-        rootPane.getScene().getWindow().sizeToScene();
+        rootPane.getScene().getWindow().setHeight(659);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 }

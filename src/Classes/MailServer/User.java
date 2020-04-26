@@ -7,6 +7,7 @@ import Interfaces.MailServer.IContact;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Comparator;
@@ -44,7 +45,7 @@ public class User implements IContact {
         contacts.add(contact);
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + "\\contacts.csv", true));
-            writer.write(contact.getName() + "," + contact.getAddressesString());
+            writer.write(contact.getName() + "," + contact.getIndex() + "," + contact.getAddressesString());
             writer.newLine();
             writer.close();
         } catch (IOException e) {
@@ -118,11 +119,7 @@ public class User implements IContact {
             if (contact.equals(con)) {
                 contacts.remove(i);
                 index = con.getIndex();
-                try {
-                    exportContacts();
-                } catch (IOException e) {
-                    Utils.fileNotFound();
-                }
+
                 Iterator<Contact> iter2 = contacts.iterator(true);
                 //minus 1 from indexes
                 while (iter2.hasNext()) {
@@ -130,6 +127,11 @@ public class User implements IContact {
                     if (c.getIndex() > index) {
                         c.setIndex(c.getIndex() - 1);
                     }
+                }
+                try {
+                    exportContacts();
+                } catch (IOException e) {
+                    Utils.fileNotFound();
                 }
                 return true;
             }
@@ -143,10 +145,38 @@ public class User implements IContact {
         Iterator<Contact> iter = contacts.iterator(true);
         while (iter.hasNext()) {
             Contact contact = iter.next();
-            writer.write(contact.getName() + "," + contact.getAddressesString());
+            writer.write(contact.getName() + "," + contact.getIndex() + "," + contact.getAddressesString());
             writer.newLine();
         }
         writer.close();
+    }
+
+    public void editFolders() {
+        File file = new File(this.getFilePath() + "\\inbox");
+        String[] directories = file.list((current, name) -> new File(current, name).isDirectory());
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + "\\inbox\\folders.txt", false));
+            for (String name : directories) {
+                writer.write(name);
+                writer.newLine();
+            }
+            writer.close();
+        } catch (IOException e) {
+            Utils.fileNotFound();
+        }
+
+    }
+
+    public void addFolder(String name) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + "\\inbox\\folders.txt", true));
+            writer.write(name);
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            Utils.fileNotFound();
+        }
+
     }
 
     public String getFilePath() {

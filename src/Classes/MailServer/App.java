@@ -5,6 +5,7 @@ import Classes.DataStructures.PQueue;
 import Classes.Misc.AES;
 import Classes.Misc.Birthday;
 import Classes.Misc.Utils;
+import Classes.Priority;
 import Interfaces.DataStructures.ILinkedList;
 import Interfaces.MailServer.*;
 import org.jetbrains.annotations.NotNull;
@@ -253,14 +254,14 @@ public class App implements IApp {
             Utils.fileNotFound();
         }
         while (sc.hasNext()) {
-            String s = sc.nextLine();
-            String[] arr = s.split(",", 2);
-            Contact c = new Contact(this, arr[0], user, user.getContacts().size());
-            if (!arr[1].isEmpty())
-                c.addAddresses(arr[1].split(","));
-            user.getContacts().add(c);
+			String s = sc.nextLine();
+			String[] arr = s.split(",", 3);
+			Contact c = new Contact(this, arr[0], user, Integer.parseInt(arr[1]));
+			if (!arr[2].isEmpty())
+				c.addAddresses(arr[2].split(","));
+			user.getContacts().add(c);
 
-        }
+		}
         sc.close();
         return user;
     }
@@ -286,7 +287,7 @@ public class App implements IApp {
 		Iterator it = mails.iterator(true);
 		while (it.hasNext()) {
 			Mail tmpMail = (Mail) it.next();
-			pQueue.insert(tmpMail, tmpMail.getPriority());
+			//pQueue.insert(tmpMail, tmpMail.getPriority());
 		}
 		mails.clear();
 		while (!pQueue.isEmpty()) {
@@ -316,17 +317,17 @@ public class App implements IApp {
 			     * Index 0 for ID
 			     * Index 1 for Title
 			     * Index 2 for SenderID
-			     * Index 3 for SenderName
-			     * Index 4 for Date
-			     * Index 5 for Priority
-			     * */
-			    mails.add(new Mail(Integer.parseInt(data[0]), data[1], data[2], data[3],
-			    		new SimpleDateFormat("EEEE - MMM dd - yyyy HH:mm:ss a").parse(data[4]), 
-			    		Priority.values()[Integer.parseInt(data[5])-1]));
-			    
+				 * Index 3 for SenderName
+				 * Index 4 for Date
+				 * Index 5 for Priority
+				 * */
+				mails.add(new Mail(Integer.parseInt(data[0]), data[1], data[2], data[3],
+						new SimpleDateFormat("EEEE - MMM dd - yyyy HH:mm:ss a").parse(data[4]),
+						Priority.values()[Integer.parseInt(data[5]) - 1]));
+
 			}
 			reader.close();
-			workingList = mails.copyView();
+			Object workingList = mails.copyView();
 		}
 		catch (Exception e) {
 			e.printStackTrace();

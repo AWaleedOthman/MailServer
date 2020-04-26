@@ -7,17 +7,14 @@ import Classes.Misc.Birthday;
 import Classes.Misc.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
 
-public class Signup implements Initializable {
+public class Signup {
 
     private App app;
 
@@ -137,7 +134,6 @@ public class Signup implements Initializable {
             LocalDate ld = datePicker.getValue();
             String password = passwordField.getText();
             User user = new User(addressField.getText().toLowerCase(), AES.encrypt(password, password));
-            password = null;
             user.setName(nameField.getText());
             user.setGender(((RadioButton) t1.getSelectedToggle()).getText());
             user.setBirthday(new Birthday(ld.getDayOfMonth(), ld.getMonthValue(), ld.getYear()));
@@ -163,7 +159,6 @@ public class Signup implements Initializable {
             Utils.fileNotFound();
         }
         rootPane.getChildren().setAll(pane);
-        rootPane.getScene().getWindow().sizeToScene();
         rootPane.getScene().getWindow().setHeight(437);
     }
 
@@ -171,8 +166,5 @@ public class Signup implements Initializable {
         return checkName() && checkAddress() && checkPassword() && checkConfirm() && datePicker.getValue() != null;
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    }
 }

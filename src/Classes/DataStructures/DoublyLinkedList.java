@@ -7,40 +7,30 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 public class DoublyLinkedList implements ILinkedList {
-	private class dListNode {
-		private dListNode next;
-		private dListNode prev;
-		private Object element;
-		
-		public dListNode(dListNode next, dListNode prev, Object element)
-		{
-			this.next = next;
-			this.prev = prev;
-			this.element = element;
-		}
-		
-		public dListNode getNext() {
-			return next;
-		}
-		
-		public void setNext(dListNode next) {
-			this.next = next;
-		}
-		
-		public dListNode getPrev() {
-			return prev;
-		}
-		
-		public void setPrev(dListNode prev) {
-			this.prev = prev;
-		}
+	public Object copyView() {
+		return null;
+	}
 
-		public Object getElement() {
-			return element;
+	@Override
+	public void set(int index, Object element) {
+		if (index < 0 || index >= this.size()) {
+			throw new IndexOutOfBoundsException();
 		}
-
-		public void setElement(Object element) {
-			this.element = element;
+		if (getHead() == null) {
+			return;
+		}
+		dListNode fetcher = getHead();
+		int counter = 0;
+		while (fetcher != null && counter < index) {
+			if (fetcher == this.tail) {
+				fetcher = null;
+			} else {
+				fetcher = fetcher.getNext();
+			}
+			counter++;
+		}
+		if (fetcher != null) {
+			fetcher.setElement(element);
 		}
 	}
 
@@ -132,42 +122,50 @@ public class DoublyLinkedList implements ILinkedList {
 	}
 
 	@Override
-	public void set(int index, Object element) {
-		if(index < 0 || index >= this.size()) { throw new IndexOutOfBoundsException();}
-		if (getHead() == null)
-		{
-			return;
-		}
-		dListNode fetcher = getHead();
-		int counter = 0;
-		while(fetcher != null && counter < index)
-		{
-			if(fetcher == this.tail) {
-				fetcher = null;
-			}
-			else {
-				fetcher = fetcher.getNext();
-			}
-			counter++;
-		}
-		if(fetcher != null)
-		{
-			fetcher.setElement((int[])element);
-		}
+	public boolean isEmpty() {
+		return this.size < 1;
 	}
 
 	@Override
 	public void clear() {
-        this.head = this.tail = null;
-        size = 0;
-    }
+		this.head = this.tail = null;
+		size = 0;
+	}
 
-	@Override
-	public boolean isEmpty() {
-		if(this.size < 1) {
-			return true;
+	private class dListNode {
+		private dListNode next;
+		private dListNode prev;
+		private Object element;
+
+		public dListNode(dListNode next, dListNode prev, Object element) {
+			this.next = next;
+			this.prev = prev;
+			this.element = element;
 		}
-		return false;
+
+		public dListNode getNext() {
+			return next;
+		}
+
+		public void setNext(dListNode next) {
+			this.next = next;
+		}
+
+		public dListNode getPrev() {
+			return prev;
+		}
+
+		public void setPrev(dListNode prev) {
+			this.prev = prev;
+		}
+
+		public Object getElement() {
+			return element;
+		}
+
+		public void setElement(Object element) {
+			this.element = element;
+		}
 	}
 
 	@Override
@@ -395,8 +393,7 @@ public class DoublyLinkedList implements ILinkedList {
 		
 		@Override
 		public boolean hasNext() {
-			if (fetcher != null) { return true;}
-			return false;
+			return fetcher != null;
 		}
 
 		@Override
@@ -422,8 +419,7 @@ public class DoublyLinkedList implements ILinkedList {
 		
 		@Override
 		public boolean hasNext() {
-			if (fetcher != null) { return true;}
-			return false;
+			return fetcher != null;
 		}
 
 		@Override

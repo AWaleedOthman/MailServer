@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="345.0" prefWidth="454.0" styleClass="anchor"
-            stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="GUI.Edit">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="345.0" prefWidth="454.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            fx:controller="GUI.Edit">
    <children>
       <GridPane alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="258.0" prefWidth="382.0">
          <columnConstraints>

@@ -93,23 +93,6 @@ public class Utils {
         }
     }
 
-//    public static @Nullable SinglyLinkedList getValues(@NotNull String csLine) {
-//        SinglyLinkedList list = new SinglyLinkedList();
-//        int length = csLine.length(), l, r;
-//        Pattern p = Pattern.compile("\"[^\"]*\"");
-//        Matcher m = p.matcher(csLine);
-//        while (m.find()) {
-//            l = m.start();
-//            r = m.end();
-//            while (r < length && csLine.charAt(r) == '"') {
-//                if (!m.find()) return null;
-//                r = m.end();
-//            }
-//            list.add(csLine.substring(l + 1, r - 1));
-//        }
-//        return list;
-//    }
-
     public static boolean validString(@NotNull String s) {
         return s.indexOf(',') == -1 && s.indexOf('"') == -1;
     }
@@ -121,5 +104,19 @@ public class Utils {
         alert.setContentText("Oops! It looks like a file has been deleted.");
         alert.showAndWait();
         System.exit(0);
+    }
+
+    public static DoublyLinkedList matchArray(String[] arr, String matcher) {
+        matcher = matcher.toLowerCase();
+        DoublyLinkedList list = new DoublyLinkedList();
+        for (String s : arr) {
+            if (s.toLowerCase().startsWith(matcher)) list.add(s);
+        }
+        if (list.isEmpty()) {
+            for (String s : arr) {
+                if (s.toLowerCase().contains(matcher)) list.add(s);
+            }
+        }
+        return list;
     }
 }
