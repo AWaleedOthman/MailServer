@@ -460,4 +460,44 @@ public class DoublyLinkedList implements ILinkedList {
 	public void setTail(dListNode tail) {
 		this.tail = tail;
 	}
+	public DoublyLinkedList searchStack(Comparator comp, Object value) {
+		Stack stack = new Stack();
+		DoublyLinkedList back = new DoublyLinkedList();
+		stack.push(this.head);
+		stack.push(this.tail);
+
+		while (!stack.isEmpty()) {
+			dListNode end = (dListNode) stack.pop();
+			dListNode start = (dListNode) stack.pop();
+			dListNode node = getListCenter(start, end);
+
+			if (comp.compare(node, value) == 0) {
+				back.add(node);
+				dListNode pointer;
+				pointer = node;
+				while (pointer != null) {
+					if (comp.compare(pointer, value) == 0) {
+						back.add(pointer);
+					}
+				pointer = pointer.getNext();
+				}
+				while (pointer != null) {
+					if (comp.compare(pointer, value) == 0) {
+						back.add(pointer);
+					}
+					pointer = pointer.getPrev();
+				}
+			//searching right side
+			} else if (comp.compare(node, value) < 0) {
+				stack.push(node.getNext());
+				stack.push(end);
+			//searching left side
+			} else {
+				stack.push(start);
+				stack.push(node.getPrev());
+			}
+
+		}
+		return back;
+	}
 }
