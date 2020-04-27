@@ -317,8 +317,9 @@ public class HomeController implements Initializable {
         Contacts controller = loader.getController();
         controller.setApp(app);
         rootPane.getChildren().setAll(pane);
-        rootPane.getScene().getWindow().setHeight(639);
-        rootPane.getScene().getWindow().setWidth(570);
+        rootPane.getScene().getWindow().setHeight(608);
+        rootPane.getScene().getWindow().setWidth(654);
+        rootPane.getScene().getWindow().centerOnScreen();
 	}
 	
 	public void foldersBtnClicked() {
@@ -332,8 +333,9 @@ public class HomeController implements Initializable {
             Utils.fileNotFound();
         }
         rootPane.getChildren().setAll(pane);
-        rootPane.getScene().getWindow().setWidth(637);
+        rootPane.getScene().getWindow().setWidth(615);
         rootPane.getScene().getWindow().setHeight(487);
+		rootPane.getScene().getWindow().centerOnScreen();
 	}
 	
 	/*
@@ -415,6 +417,7 @@ public class HomeController implements Initializable {
 			viewMailController.setParameters(app, mail);
             stage.setTitle("View mail");
             stage.setScene(new Scene(root, 1096, 627));
+            stage.getScene().getWindow().centerOnScreen();
             stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -439,6 +442,7 @@ public class HomeController implements Initializable {
             stage.setTitle("Compose");
             stage.setScene(new Scene(root, 948, 500));
             stage.setOnCloseRequest(event -> {composeController.draft();} );
+            stage.getScene().getWindow().centerOnScreen();
             stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -40,9 +40,9 @@ public class App implements IApp {
 	
 	
 	
-	public App() {
-		loadMails();
-	}
+//	public App() {
+//		loadMails();
+//	}
 	
 	public User getLoggedinUser() {
 	    return loggedinUser;

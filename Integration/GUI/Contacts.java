@@ -88,10 +88,11 @@ public class Contacts implements Initializable {
         }
         Stage stage = new Stage();
         stage.setTitle("Add Contact");
-        stage.getIcons().add(new Image("/icon.png"));
+        //stage.getIcons().add(new Image("/icon.png"));
         stage.sizeToScene();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
+        stage.getScene().getWindow().centerOnScreen();
         stage.show();
     }
 
@@ -153,6 +154,7 @@ public class Contacts implements Initializable {
         this.pane.getChildren().setAll(pane);
         this.pane.getScene().getWindow().setHeight(722);
         this.pane.getScene().getWindow().setWidth(1175);
+        this.pane.getScene().getWindow().centerOnScreen();
     }
 
     private void edit(Contact contact) {
@@ -168,10 +170,11 @@ public class Contacts implements Initializable {
         }
         Stage stage = new Stage();
         stage.setTitle("Edit Contact");
-        stage.getIcons().add(new Image("/icon.png"));
+        //stage.getIcons().add(new Image("/icon.png"));
         stage.sizeToScene();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
+        stage.getScene().getWindow().centerOnScreen();
         stage.show();
 
 

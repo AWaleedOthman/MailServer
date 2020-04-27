@@ -151,6 +151,7 @@ public class Signup {
             rootPane.getChildren().setAll(pane);
             rootPane.getScene().getWindow().setHeight(722);
             rootPane.getScene().getWindow().setWidth(1175);
+            rootPane.getScene().getWindow().centerOnScreen();
         }
         passwordField.setText("");
         confirmField.setText("");
@@ -172,6 +173,8 @@ public class Signup {
         }
         rootPane.getChildren().setAll(pane);
         rootPane.getScene().getWindow().setHeight(437);
+        rootPane.getScene().getWindow().setWidth(629);
+        rootPane.getScene().getWindow().centerOnScreen();
     }
 
     private boolean allValid() {

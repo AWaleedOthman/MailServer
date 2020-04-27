@@ -54,6 +54,7 @@ public class Signin {
             rootPane.getChildren().setAll(pane);
             rootPane.getScene().getWindow().setHeight(722);
             rootPane.getScene().getWindow().setWidth(1175);
+            rootPane.getScene().getWindow().centerOnScreen();
         }
     }
 
@@ -70,6 +71,8 @@ public class Signin {
         }
         rootPane.getChildren().setAll(pane);
         rootPane.getScene().getWindow().setHeight(659);
+        rootPane.getScene().getWindow().setWidth(629);
+        rootPane.getScene().getWindow().centerOnScreen();
     }
 
 }
