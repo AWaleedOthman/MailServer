@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" prefHeight="622.0" prefWidth="614.0"
-            xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="GUI.Signup">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootPane" prefHeight="622.0" prefWidth="614.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Signup">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="119.0" prefHeight="47.0" prefWidth="600.0">
          <children>
-            <Label prefHeight="35.0" prefWidth="99.0" text="Sign-up">
+            <Label prefHeight="45.0" prefWidth="108.0" text="Sign-up">
                <font>
-                  <Font name="Forte" size="30.0"/>
+                  <Font name="Forte" size="30.0" />
                </font>
             </Label>
          </children>
@@ -64,8 +76,7 @@
                </font>
             </Label>
             <TextField fx:id="nameField" onKeyTyped="#checkName" GridPane.columnIndex="1" />
-            <TextField fx:id="addressField" onKeyTyped="#checkAddress" promptText="example@trio.com"
-                       GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <TextField fx:id="addressField" onKeyTyped="#checkAddress" promptText="example@trio.com" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <PasswordField fx:id="passwordField" onKeyTyped="#checkPassword" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <PasswordField fx:id="confirmField" onKeyTyped="#checkPassword" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="8">

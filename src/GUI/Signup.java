@@ -1,10 +1,10 @@
 package GUI;
 
-import Classes.MailServer.App;
-import Classes.MailServer.User;
-import Classes.Misc.AES;
-import Classes.Misc.Birthday;
-import Classes.Misc.Utils;
+import Classes.App;
+import Classes.User;
+import Misc.AES;
+import Misc.Birthday;
+import Misc.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -139,6 +139,18 @@ public class Signup {
             user.setBirthday(new Birthday(ld.getDayOfMonth(), ld.getMonthValue(), ld.getYear()));
             if (!app.signup(user)) Utils.fileNotFound();
             invalidLabel.setText("");
+            AnchorPane pane = null;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
+            try {
+				pane = loader.load();
+			} catch (IOException e) {
+				Utils.fileNotFound();
+			}
+            HomeController home = loader.getController();
+            home.initialize(app);
+            rootPane.getChildren().setAll(pane);
+            rootPane.getScene().getWindow().setHeight(722);
+            rootPane.getScene().getWindow().setWidth(1175);
         }
         passwordField.setText("");
         confirmField.setText("");

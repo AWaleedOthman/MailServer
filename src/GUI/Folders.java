@@ -1,16 +1,18 @@
 package GUI;
 
-import Classes.DataStructures.DoublyLinkedList;
-import Classes.MailServer.App;
-import Classes.MailServer.User;
-import Classes.Misc.Utils;
+import Classes.DoublyLinkedList;
+import Classes.App;
+import Classes.User;
+import Misc.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -21,11 +23,19 @@ public class Folders {
 
     private App app;
     private User user;
+    
+    @FXML
+    private AnchorPane rootPane;
     @FXML
     private ListView<String> list;
     @FXML
     private TextField searchField;
-
+    @FXML
+    private Button renameBtn;
+    @FXML
+    private Button delBtn;
+    @FXML
+    private Button addBtn;
 
     protected void setApp(App app) {
         this.app = app;
@@ -75,7 +85,7 @@ public class Folders {
         }
         Stage stage = new Stage();
         stage.setTitle("Add Folder");
-        stage.getIcons().add(new Image("/icon.png"));
+        //stage.getIcons().add(new Image("/icon.png"));
         stage.sizeToScene();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
@@ -91,10 +101,10 @@ public class Folders {
             File file = new File(user.getFilePath() + "\\inbox");
             String[] directories = file.list((current, name) -> new File(current, name).isDirectory());
             DoublyLinkedList dll = Utils.matchArray(directories, text);
-            Iterator<String> iter = dll.iterator(true);
+            Iterator<Object> iter = dll.iterator(true);
             list.getItems().clear();
             while (iter.hasNext()) {
-                list.getItems().add(iter.next());
+                list.getItems().add(iter.next().toString());
             }
         }
     }
@@ -112,7 +122,7 @@ public class Folders {
         }
         Stage stage = new Stage();
         stage.setTitle("Rename folder");
-        stage.getIcons().add(new Image("/icon.png"));
+        //stage.getIcons().add(new Image("/icon.png"));
         stage.sizeToScene();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
@@ -121,6 +131,18 @@ public class Folders {
 
     @FXML
     private void back() {
-        //TODO
+    	AnchorPane pane = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+        try {
+			pane = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+			Utils.fileNotFound();
+		}
+        HomeController home = loader.getController();
+        home.initialize(app);
+        rootPane.getChildren().setAll(pane);
+        rootPane.getScene().getWindow().setHeight(722);
+        rootPane.getScene().getWindow().setWidth(1175);
     }
 }

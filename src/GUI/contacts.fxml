@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import java.lang.String?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="pane" prefHeight="519.0" prefWidth="602.0"
-            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="GUI.Contacts">
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Contacts">
     <children>
-        <TableView fx:id="tv" layoutX="14.0" layoutY="129.0" prefHeight="376.0" prefWidth="411.0">
+        <TableView fx:id="tv" layoutX="14.0" layoutY="127.0" prefHeight="415.0" prefWidth="411.0">
             <columns>
-                <TableColumn fx:id="tcName" editable="false" prefWidth="152.800048828125" resizable="false"
-                             sortable="false" text="Name"/>
-                <TableColumn fx:id="tcAddress" editable="false" minWidth="0.0" prefWidth="253.5999755859375"
-                             resizable="false" sortable="false" text="Main Address"/>
+                <TableColumn fx:id="tcName" editable="false" prefWidth="152.800048828125" resizable="false" sortable="false" text="Name" />
+                <TableColumn fx:id="tcAddress" editable="false" minWidth="0.0" prefWidth="253.5999755859375" resizable="false" sortable="false" text="Main Address" />
             </columns>
         </TableView>
-        <Button layoutX="488.0" layoutY="367.0" mnemonicParsing="false" onAction="#add" text="Add"/>
-        <Button layoutX="482.0" layoutY="426.0" mnemonicParsing="false" onAction="#del" text="Delete"/>
-        <TextField fx:id="searchField" layoutX="74.0" layoutY="83.0" onKeyTyped="#search" prefHeight="26.0"
-                   prefWidth="185.0"/>
+        <Button layoutX="512.0" layoutY="367.0" mnemonicParsing="false" onAction="#add" text="Add" />
+        <Button layoutX="505.0" layoutY="426.0" mnemonicParsing="false" onAction="#del" text="Delete" />
+        <TextField fx:id="searchField" layoutX="74.0" layoutY="83.0" onKeyTyped="#search" prefHeight="26.0" prefWidth="185.0" />
         <Label layoutX="14.0" layoutY="88.0" text="Search:">
             <font>
-                <Font name="System Bold" size="12.0"/>
+                <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <ComboBox fx:id="searchCombo" layoutX="289.0" layoutY="83.0" onAction="#search" prefHeight="26.0"
-                  prefWidth="136.0" promptText="by name/address">
+        <ComboBox fx:id="searchCombo" layoutX="289.0" layoutY="83.0" onAction="#search" prefHeight="26.0" prefWidth="136.0" promptText="by name/address">
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="by name"/>
-                    <String fx:value="by address"/>
+                    <String fx:value="by name" />
+                    <String fx:value="by address" />
                 </FXCollections>
             </items>
         </ComboBox>
-        <ComboBox fx:id="sortCombo" layoutX="439.0" layoutY="233.0" prefHeight="26.0" prefWidth="136.0"
-                  promptText="by name/date">
+        <ComboBox fx:id="sortCombo" layoutX="439.0" layoutY="233.0" prefHeight="31.0" prefWidth="185.0" promptText="by name/date">
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="by name"/>
-                    <String fx:value="by date added"/>
+                    <String fx:value="by name" />
+                    <String fx:value="by date added" />
                 </FXCollections>
             </items>
         </ComboBox>
         <Label layoutX="439.0" layoutY="203.0" text="Sort by:">
             <font>
-                <Font name="System Bold" size="12.0"/>
+                <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <Button fx:id="sortBtn" layoutX="486.0" layoutY="304.0" mnemonicParsing="false" onAction="#sort" text="Sort!"/>
-        <Hyperlink fx:id="back" layoutX="490.0" layoutY="481.0" onAction="#back" text="Back"/>
+        <Button fx:id="sortBtn" layoutX="510.0" layoutY="302.0" mnemonicParsing="false" onAction="#sort" text="Sort!" />
+        <Hyperlink fx:id="back" layoutX="521.0" layoutY="482.0" onAction="#back" text="Back" />
         <Label layoutX="77.0" layoutY="14.0" text="Contacts">
             <font>
-                <Font name="Forte" size="48.0"/>
+                <Font name="Forte" size="48.0" />
             </font>
         </Label>
     </children>

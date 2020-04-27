@@ -1,6 +1,6 @@
 package GUI;
 
-import Classes.MailServer.App;
+import Classes.App;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +16,8 @@ public class AddFolder {
     private Folders foldersController;
 
     @FXML
+    private Button addBtn;
+    @FXML
     private Button cancelBtn;
     @FXML
     private TextField nameField;
@@ -30,6 +32,7 @@ public class AddFolder {
     @FXML
     private void add() {
         String name = nameField.getText();
+        
         File f = new File(app.getLoggedinUser().getFilePath() + "\\inbox\\" + name);
         if (!f.mkdir()) invalid.setText("invalid folder name");
         else {

@@ -1,8 +1,8 @@
 package GUI;
 
-import Classes.MailServer.App;
-import Classes.MailServer.Contact;
-import Classes.Misc.Utils;
+import Classes.App;
+import Classes.Contact;
+import Misc.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

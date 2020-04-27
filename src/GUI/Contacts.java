@@ -1,10 +1,10 @@
 package GUI;
 
-import Classes.DataStructures.DoublyLinkedList;
-import Classes.MailServer.App;
-import Classes.MailServer.Contact;
-import Classes.MailServer.User;
-import Classes.Misc.Utils;
+import Classes.DoublyLinkedList;
+import Classes.App;
+import Classes.Contact;
+import Classes.User;
+import Misc.Utils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +26,11 @@ public class Contacts implements Initializable {
 
     private App app;
     private User user;
+    
+    @FXML
+    private Button sortBtn;
+    @FXML
+    private Hyperlink back;
     @FXML
     private AnchorPane pane;
     @FXML
@@ -57,10 +62,10 @@ public class Contacts implements Initializable {
 
     protected void setUp() {
         DoublyLinkedList list = user.getContacts();
-        Iterator<Contact> iter = list.iterator(true);
+        Iterator<Object> iter = list.iterator(true);
         tv.getItems().clear();
         while (iter.hasNext()) {
-            tv.getItems().add(iter.next());
+            tv.getItems().add((Contact) iter.next());
         }
     }
 
@@ -127,25 +132,27 @@ public class Contacts implements Initializable {
             res = user.getContactByAddress(text);
         }
         tv.getItems().clear();
-        Iterator<Contact> iter = res.iterator(true);
+        Iterator<Object> iter = res.iterator(true);
         while (iter.hasNext()) {
-            tv.getItems().add(iter.next());
+            tv.getItems().add((Contact) iter.next());
         }
     }
 
     @FXML
     private void back() {
-        AnchorPane pane = null;
+    	AnchorPane pane = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("folders.fxml"));
-            pane = loader.load();
-            Folders controller = loader.getController();
-            controller.setApp(app);
-        } catch (IOException e) {
-            Utils.fileNotFound();
-        }
+			pane = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+			Utils.fileNotFound();
+		}
+        HomeController home = loader.getController();
+        home.initialize(app);
         this.pane.getChildren().setAll(pane);
-        this.pane.getScene().getWindow().sizeToScene();
+        this.pane.getScene().getWindow().setHeight(722);
+        this.pane.getScene().getWindow().setWidth(1175);
     }
 
     private void edit(Contact contact) {

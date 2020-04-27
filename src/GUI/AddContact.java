@@ -1,8 +1,8 @@
 package GUI;
 
-import Classes.MailServer.App;
-import Classes.MailServer.Contact;
-import Classes.Misc.Utils;
+import Classes.App;
+import Classes.Contact;
+import Misc.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,6 +14,9 @@ public class AddContact {
 
     private App app;
     private Contacts controller;
+    
+    @FXML
+    private Button saveBtn;
     @FXML
     private Button cancelBtn;
     @FXML
@@ -48,7 +51,7 @@ public class AddContact {
             }
         }
         if (ok) {
-            Contact contact = new Contact(app, name);
+            Contact contact = new Contact(name);
             contact.addAddresses(arr);
             app.getLoggedinUser().addContact(contact);
             controller.setUp();

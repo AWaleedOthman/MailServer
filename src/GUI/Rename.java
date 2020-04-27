@@ -1,6 +1,6 @@
 package GUI;
 
-import Classes.MailServer.App;
+import Classes.App;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,6 +18,8 @@ public class Rename {
 
     @FXML
     private Button cancelBtn;
+    @FXML
+    private Button renameBtn;
     @FXML
     private TextField nameField;
     @FXML
