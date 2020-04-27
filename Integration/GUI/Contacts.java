@@ -24,9 +24,11 @@ import java.util.ResourceBundle;
 
 public class Contacts implements Initializable {
 
+    private final String sep = System.getProperty("file.separator");
+
     private App app;
     private User user;
-    
+
     @FXML
     private Button sortBtn;
     @FXML
@@ -93,6 +95,7 @@ public class Contacts implements Initializable {
         stage.setScene(new Scene(root));
         stage.setResizable(false);
         stage.getScene().getWindow().centerOnScreen();
+        stage.getIcons().add(new Image("system" + sep + "icon.png"));
         stage.show();
     }
 
@@ -141,14 +144,14 @@ public class Contacts implements Initializable {
 
     @FXML
     private void back() {
-    	AnchorPane pane = null;
+        AnchorPane pane = null;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
         try {
-			pane = loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-			Utils.fileNotFound();
-		}
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Utils.fileNotFound();
+        }
         HomeController home = loader.getController();
         home.initialize(app);
         this.pane.getChildren().setAll(pane);

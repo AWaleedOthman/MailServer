@@ -21,6 +21,8 @@ import java.util.Iterator;
 
 public class Folders {
 
+    private final String sep = System.getProperty("file.separator");
+
     private App app;
     private User user;
     
@@ -85,7 +87,7 @@ public class Folders {
         }
         Stage stage = new Stage();
         stage.setTitle("Add Folder");
-        //stage.getIcons().add(new Image("/icon.png"));
+        stage.getIcons().add(new Image("system" + sep + "icon.png"));
         stage.sizeToScene();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
@@ -123,7 +125,7 @@ public class Folders {
         }
         Stage stage = new Stage();
         stage.setTitle("Rename folder");
-        //stage.getIcons().add(new Image("/icon.png"));
+        stage.getIcons().add(new Image("system" + sep + "icon.png"));
         stage.sizeToScene();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
