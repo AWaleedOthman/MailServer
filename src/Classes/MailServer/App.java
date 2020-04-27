@@ -460,6 +460,36 @@ public class App implements IApp {
 		}
 
 	}
+	//edit certain record in csv file 
+	public void editIndex(String path, DoublyLinkedList mails, Folder des) {
+		File index = new File(path);
+		String line = "";
+		String splitBy = ",";
+		File tmp = new File(path + "index.csv");
+		try (BufferedReader br = new BufferedReader(new FileReader(index))) {
+			tmp.createNewFile();
+			BufferedWriter bw = new BufferedWriter(new FileWriter(tmp, true));
+			while ((line = br.readLine()) != null) {
+				String[] data = line.split(splitBy);
+				if (findID(mails, Integer.parseInt(data[0]))) {
+					String temp = line + "," + des;
+					bw.append(temp);
+					bw.append("\n");
+				} else {
+					bw.append(line);
+					bw.append("\n");
+				}
+			}
+			bw.close();
+			br.close();
+			index.delete();
+			tmp.renameTo(index);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	// check if the id is located in list of mails or not 
 	public boolean findID(DoublyLinkedList list, int ID) {
 		Iterator it = list.iterator(true);
 		while (it.hasNext()) {
