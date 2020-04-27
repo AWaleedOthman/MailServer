@@ -334,6 +334,141 @@ public class App implements IApp {
 			//throw new RuntimeException("Error loading file");
 		}
     }
-    
+    public void moveEmails(DoublyLinkedList mails, Folder des) {
+		Iterator it = mails.iterator(true);
+		//String indexFile = "system\\users\\" + currentMail.getSenderAddress() + "\\inbox\\" + "index.csv";
+
+		//deleteIndex(mails, indexFile);
+		// looping through mails
+		while (it.hasNext()) {
+			Mail currentMail = (Mail) it.next();
+			
+			String content = currentMail.getID() + "," + currentMail.getTitle() + "," + currentMail.getSenderAddress()
+					+ "," + currentMail.getSenderName() + "," + currentMail.getRecieverAddress() 
+					+ "," + currentMail.getPriority() + "," + currentMail.getDate();
+			BufferedWriter edit; // editing index file of the des folder
+			try {
+				edit = new BufferedWriter(new FileWriter(des.getPath() + "\\index.csv", true));
+				edit.append(content);
+				edit.append("\n");
+				edit.flush();
+				edit.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			// moving folders by creating a copy
+			File originalFile = new File("system\\users\\" + currentMail.getSenderAddress() + "\\inbox\\"
+					+ currentMail.getID() + "\\" + currentMail.getID() + ".txt");
+
+			des.addSubFolder(String.valueOf(currentMail.getID()));
+			File destination = new File(
+					des.getPath() + "\\" + currentMail.getID() + "\\" + currentMail.getID() + ".txt");
+
+			try {
+				Files.copy(originalFile.toPath(), destination.toPath());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			// deleting original files
+			originalFile.delete();
+			File originalFolder = new File(
+					"system\\users\\" + currentMail.getSenderAddress() + "\\inbox\\" + currentMail.getID());
+			originalFolder.delete();
+
+		}
+	}
+	public void deleteEmails(DoublyLinkedList mails) {
+		// 4il mo2 di w 7ot mkanha l 7aga l bt4awr 3l currentuser
+		Folder des = new Folder("system\\users\\mo2@thetrio.com\\trash");
+		moveEmails(mails, des);
+	}
+	public void updateTrash() {
+		File trashIndex = new File("system\\users\\mo2@thetrio.com\\trash\\index.csv");
+		DoublyLinkedList toBeDeletedList = new DoublyLinkedList();
+
+		try (BufferedReader br = new BufferedReader(new FileReader(trashIndex))) {
+			String line = "";
+			String splitBy = ",";
+			while ((line = br.readLine()) != null) {
+				String[] data = line.split(splitBy);
+				Date d1 = new Date();
+				Date d2 = new SimpleDateFormat("EEEE - MMM dd - yyyy HH:mm:ss a").parse(data[4]);
+				int diff = getDaysDiff(d2, d1);
+				if (diff > 30) {
+					toBeDeletedList.add(new Mail(Integer.parseInt(data[0]), data[1], data[2], data[3],
+							new SimpleDateFormat("EEEE - MMM dd - yyyy HH:mm:ss a").parse(data[4]),
+							Priority.values()[Integer.parseInt(data[5]) - 1]));
+				}
+			}
+			br.close();
+			deleteIndex(toBeDeletedList, trashIndex.toString());
+			Iterator it = toBeDeletedList.iterator(true);
+			while (it.hasNext()) {
+				Mail current = (Mail) it.next();
+				File dFolder = new File(
+						"system\\users\\mo2@thetrio.com\\trash\\" + current.getID() + "\\" + current.getID() + ".txt");
+				dFolder.delete();
+				File dFolder2 = new File("system\\users\\mo2@thetrio.com\\trash\\" + current.getID());
+				dFolder2.delete();
+			}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	// sub helping functions functions 
+	//calculate days between 2 dates
+	public int getDaysDiff(Date date1, Date date2) {
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		Instant instant = date1.toInstant();
+		LocalDate localDate1 = instant.atZone(defaultZoneId).toLocalDate();
+		instant = date2.toInstant();
+		LocalDate localDate2 = instant.atZone(defaultZoneId).toLocalDate();
+		int diff = (int) ChronoUnit.DAYS.between(localDate1, localDate2);
+		return diff;
+	}
+	// delete record in index file
+	public void deleteIndex(DoublyLinkedList list, String path) {
+		File index = new File(path);
+		String line = "";
+		String splitBy = ",";
+		File tmp = new File(path + "copy.csv");
+		try (BufferedReader br = new BufferedReader(new FileReader(index))) {
+			tmp.createNewFile();
+			BufferedWriter bw = new BufferedWriter(new FileWriter(tmp, true));
+			while ((line = br.readLine()) != null) {
+				String[] data = line.split(splitBy);
+				if (findID(list,Integer.parseInt (data[0]))) {
+					continue;
+				} else {
+					bw.append(line);
+					bw.append("\n");
+				}
+			}
+			bw.close();
+			br.close();
+			index.delete();
+			tmp.renameTo(index);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+	public boolean findID(DoublyLinkedList list, int ID) {
+		Iterator it = list.iterator(true);
+		while (it.hasNext()) {
+			Mail currentNode = (Mail) it.next();
+			if (currentNode.getID() == ID) {
+				return true;
+			}
+		}
+		return false;
+	}
     
 }
