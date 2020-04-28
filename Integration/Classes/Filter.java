@@ -29,7 +29,11 @@ public class Filter implements IFilter {
 		else if (filterAttribute == FilterAttribute.Recievers) {
 			return filterRecievers(mails, currentFolder);
 		}
-		else if (filterAttribute == FilterAttribute.Sender) {
+		else if (filterAttribute == FilterAttribute.SenderAddress) {
+			DoublyLinkedList list = (DoublyLinkedList) mails;
+			return list.searchStack(new Sort(SortAttribute.SenderAddress).sortAttribute(), value);
+		}
+		else if (filterAttribute == FilterAttribute.SenderName) {
 			DoublyLinkedList list = (DoublyLinkedList) mails;
 			return list.searchStack(new Sort(SortAttribute.SenderName).sortAttribute(), value);
 		}
@@ -56,7 +60,7 @@ public class Filter implements IFilter {
 			if (file.exists()) {
 				String[] files = file.list();
 				for (String pathname : files) {
-					if (value.toString() == pathname) { mailsFiltered.add(mail);}
+					if (value.equals(pathname)) { mailsFiltered.add(mail);}
 		        }
 			}
 		}
@@ -81,7 +85,7 @@ public class Filter implements IFilter {
 				reader.close();
 				String[] recievers = row.split(",");
 				for (String reciever : recievers) {
-					if (value.toString() == reciever) { mailsFiltered.add(mail);}
+					if (value.equals(reciever)) { mailsFiltered.add(mail);}
 		        }
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -97,10 +101,10 @@ public class Filter implements IFilter {
 		DoublyLinkedList mailsFiltered = new DoublyLinkedList();
 		Iterator<Object> it = mails.iterator(true);
 		while(it.hasNext()) {
-			Mail mail = (Mail)it;
+			Mail mail = (Mail)it.next();
 			try {
 				BufferedReader reader = new BufferedReader(new FileReader(folder.getPath() 
-						+ s + mail.getID() + s + mail.getID() + s + ".txt"));
+						+ s + mail.getID() + s + mail.getID() + ".txt"));
 				for (int i = 0; i < 7; i++) {
 					reader.readLine();
 				}
