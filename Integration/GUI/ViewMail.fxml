@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="627.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ViewMailController">
+<AnchorPane prefHeight="627.0" prefWidth="854.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ViewMailController">
    <children>
-      <BorderPane layoutY="-2.0" prefHeight="627.0" prefWidth="1096.0" AnchorPane.topAnchor="-2.0">
+      <BorderPane layoutY="-2.0" prefHeight="627.0" prefWidth="1096.0" stylesheets="@application.css" AnchorPane.topAnchor="-2.0">
          <left>
             <Pane prefHeight="627.0" prefWidth="286.0" BorderPane.alignment="CENTER">
                <children>
@@ -21,11 +21,6 @@
                      </font>
                   </Label>
                   <Label layoutX="14.0" layoutY="114.0" prefHeight="28.0" prefWidth="97.0" text="To">
-                     <font>
-                        <Font name="Yu Gothic Regular" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="recieverAddressLbl" layoutX="38.0" layoutY="150.0" prefHeight="28.0" prefWidth="231.0">
                      <font>
                         <Font name="Yu Gothic Regular" size="15.0" />
                      </font>
@@ -45,13 +40,14 @@
                         <Font name="Yu Gothic Regular" size="15.0" />
                      </font>
                   </Label>
+                  <ListView fx:id="recieverList" layoutX="14.0" layoutY="142.0" prefHeight="200.0" prefWidth="263.0" />
                </children>
             </Pane>
          </left>
          <center>
             <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="bodyLbl" layoutX="12.0" layoutY="7.0" prefHeight="259.0" prefWidth="789.0" style="-fx-background-color: Black;" textFill="WHITE">
+                  <Label fx:id="bodyLbl" layoutX="12.0" layoutY="7.0" prefHeight="259.0" prefWidth="789.0" wrapText="true">
                      <font>
                         <Font name="Yu Gothic Regular" size="15.0" />
                      </font>

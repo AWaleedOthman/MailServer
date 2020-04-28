@@ -38,12 +38,6 @@ public class App implements IApp {
 	private final File fList = new File(path + sep +"list.txt");
 	private final DoublyLinkedList list = new DoublyLinkedList();
 	
-	
-	
-//	public App() {
-//		loadMails();
-//	}
-	
 	public User getLoggedinUser() {
 	    return loggedinUser;
 	  }
@@ -402,7 +396,6 @@ public class App implements IApp {
 		BufferedReader reader;
 		mails.clear();
 		try {
-			System.out.println(this.currentFolder.getIndexPath());
 			reader = new BufferedReader(new FileReader(this.currentFolder.getIndexPath()));
 			String row;
 			while ((row = reader.readLine()) != null) {
@@ -539,7 +532,8 @@ public class App implements IApp {
             i = sc.nextInt();
             sc.close();
             BufferedWriter f = new BufferedWriter(new FileWriter(des, false));
-            f.write(++i);
+            i++;
+            f.write(i + "");
             f.close();
         } catch (IOException e) {
             Utils.fileNotFound();

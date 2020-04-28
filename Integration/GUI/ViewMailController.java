@@ -30,13 +30,13 @@ public class ViewMailController implements Initializable {
 	@FXML
 	private Label priorityLbl;
 	@FXML
-	private Label recieverAddressLbl;
-	@FXML
 	private Label senderAddressLbl;
 	@FXML
 	private Label subjectLbl;
 	@FXML
 	private ListView<String> attachList;
+	@FXML
+	private ListView<String> recieverList;
 	
 	public void setParameters(App app, Mail mail) {
 		this.app = app;
@@ -72,8 +72,13 @@ public class ViewMailController implements Initializable {
 			priorityLbl.setText(row);
 			// Seventh Line the mail recievers addresses
 			row = reader.readLine();
-			row.replaceAll(",", "\n");
-			recieverAddressLbl.setText(row);
+			String[] recievers = row.split(",");
+			row = "";
+			for (String reciever : recievers) {
+				System.out.println(reciever);
+				recieverList.getItems().add(reciever);
+			}
+			System.out.println(row);
 			// Reading the mail message text
 			String message = "";
 			while ((row = reader.readLine()) != null) {

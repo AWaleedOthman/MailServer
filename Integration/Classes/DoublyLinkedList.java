@@ -486,26 +486,30 @@ public class DoublyLinkedList implements ILinkedList{
 		while (!stack.isEmpty()) {
 			dListNode end = (dListNode) stack.pop();
 			dListNode start = (dListNode) stack.pop();
+			if(end == null || start == null || end.getNext() == start) {
+				break;
+			}
 			dListNode node = getListCenter(start, end);
 
-			if (comp.compare(node, value) == 0) {
-				back.add(node);
+			if (comp.compare(node.getElement(), value) == 0) {
+				back.add(node.getElement());
 				dListNode pointer;
-				pointer = node;
+				pointer = node.getNext();
 				while (pointer != null) {
-					if (comp.compare(pointer, value) == 0) {
-						back.add(pointer);
+					if (comp.compare(pointer.getElement(), value) == 0) {
+						back.add(pointer.getElement());
 					}
 				pointer = pointer.getNext();
 				}
+				pointer = node.getPrev();
 				while (pointer != null) {
-					if (comp.compare(pointer, value) == 0) {
-						back.add(pointer);
+					if (comp.compare(pointer.getElement(), value) == 0) {
+						back.add(pointer.getElement());
 					}
 					pointer = pointer.getPrev();
 				}
 			//searching right side
-			} else if (comp.compare(node, value) < 0) {
+			} else if (comp.compare(node.getElement(), value) < 0) {
 				stack.push(node.getNext());
 				stack.push(end);
 			//searching left side

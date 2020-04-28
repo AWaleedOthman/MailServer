@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -147,6 +149,11 @@ public class HomeController implements Initializable {
 	}
 	
 	private void showMails(int i) {
+		// Max page count depending on the number of loaded mails in the current folder and filter
+	    pgr.setPageCount((int)(((float)app.availableMailsCount()/10) + 0.9));
+	    if (app.availableMailsCount() == 0) {
+	    	pgr.setPageCount(1);
+	    }
 		mailsTbl.getItems().clear();
 		Mail[] mails = (Mail[])app.listEmails(i);
 		for (int j = 0; j < 10 && mails[j] != null; j++) {
@@ -169,15 +176,15 @@ public class HomeController implements Initializable {
 			bannerLbl.setText("Hello, " + app.getLoggedinUser().getName() + "\t Happy birthday !! What a wonderful " + age + "years!!");
 		}
 		sortChoiceBox.getItems().addAll(SortAttribute.Date.toString(), 
-				SortAttribute.Title.toString(), SortAttribute.SenderName.toString());
+				SortAttribute.Title.toString(), SortAttribute.SenderName.toString(), SortAttribute.SenderAddress.toString());
 		sortChoiceBox.getSelectionModel().select(SortAttribute.Date.toString());
 		searchChoiceBox.getItems().addAll("No Filter", FilterAttribute.Attachments.toString(), FilterAttribute.Date.toString(),
-				FilterAttribute.Recievers.toString(), FilterAttribute.Sender.toString(),
+				FilterAttribute.Recievers.toString(), FilterAttribute.SenderAddress.toString(), FilterAttribute.SenderName.toString(),
 				FilterAttribute.Text.toString(), FilterAttribute.Title.toString());
 		
 		searchChoiceBox.getSelectionModel().select("No Filter");
 		searchChoiceBox.setOnAction(e -> {
-		    if (FilterAttribute.valueOf(searchChoiceBox.getSelectionModel().getSelectedItem()) == FilterAttribute.Date) {
+		    if (searchChoiceBox.getSelectionModel().getSelectedItem() != "No Filter" && FilterAttribute.valueOf(searchChoiceBox.getSelectionModel().getSelectedItem()) == FilterAttribute.Date) {
 		    	datePck.setDisable(false);
 		    	searchTxt.setDisable(true);
 		    }
@@ -186,6 +193,7 @@ public class HomeController implements Initializable {
 		    	searchTxt.setDisable(false);
 		    } 	
 		});
+		datePck.setValue(LocalDate.now());
 		
 		// Preparing table columns and setting attributes
 		TableColumn<MailHeader, String> IDColumn=new TableColumn<>();
@@ -229,8 +237,6 @@ public class HomeController implements Initializable {
 	    mailsTbl.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	    // Add columns to the table view
 	    mailsTbl.getColumns().addAll(titleColumn, senderNameColumn, addressColumn, dateColumn, priorityColumn);
-		// Max page count depending on the number of loaded mails in the current folder and filter
-	    pgr.setPageCount((int)(((float)app.availableMailsCount()/10) + 0.9));
 	    // Load mails in the page 1
 		showMails(1);
     }
@@ -351,13 +357,21 @@ public class HomeController implements Initializable {
 			FilterAttribute filter = FilterAttribute.valueOf(searchChoiceBox.getSelectionModel().getSelectedItem());
 			Mail mail = null;
 			if(filter == FilterAttribute.Date) {
-				Date date = java.sql.Date.valueOf(datePck.getValue());
+				Date date = null;
+				try {
+					date = new SimpleDateFormat("yyyy-MM-dd").parse(datePck.getValue().toString());
+				} catch (ParseException e) {
+					Utils.fileNotFound();
+				}
 				mail = new Mail("", "", "", date,Priority.Secondary);
 			}
 			else if(filter == FilterAttribute.Title) {
 				mail = new Mail(searchTxt.getText(), "", "", null,Priority.Secondary);
 			}
-			else if(filter == FilterAttribute.Sender) {
+			else if(filter == FilterAttribute.SenderAddress) {
+				mail = new Mail("", searchTxt.getText(), "", null,Priority.Secondary);
+			}
+			else if(filter == FilterAttribute.SenderName) {
 				mail = new Mail("", "", searchTxt.getText(), null,Priority.Secondary);
 			}
 			return mail;

@@ -4,7 +4,8 @@ public enum FilterAttribute {
 	Attachments,
 	Date,
 	Recievers,
-	Sender,
+	SenderAddress,
+	SenderName,
 	Text,
 	Title
 }

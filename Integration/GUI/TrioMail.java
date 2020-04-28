@@ -10,11 +10,11 @@ import javafx.stage.Stage;
 
 public class TrioMail extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    private final String sep = System.getProperty("file.separator");
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
+	private final String sep = System.getProperty("file.separator");
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -30,9 +30,10 @@ public class TrioMail extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("TrioMail");
-        primaryStage.getIcons().add(new Image("system" + sep + "icon.png"));
+        primaryStage.getIcons().add(new Image("icon.png"));
+        //primaryStage.getIcons().add(new Image("system" + sep + "icon.png"));
         primaryStage.show();
         primaryStage.setResizable(false);
-    }
+	}
 
 }

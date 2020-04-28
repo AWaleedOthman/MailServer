@@ -20,6 +20,7 @@ public class User implements IContact {
     private String name, filePath;
     private String gender;
     private Birthday birthday;
+
     private final String sep = System.getProperty("file.separator");
 
     public User(String address, String encryptedpassword) {
@@ -167,7 +168,7 @@ public class User implements IContact {
 
     public void addFolder(String name) {
         try {
-            File index = new File(filePath + sep + "inbox" + sep + name + sep + "index.csv");
+        	File index = new File(filePath + sep + "inbox" + sep + name + sep + "index.csv");
             index.createNewFile();
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + sep + "inbox" + sep
                     + "folders.txt", true));
