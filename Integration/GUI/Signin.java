@@ -4,17 +4,17 @@ import Classes.App;
 import Misc.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class Signin {
+public class Signin implements Initializable {
 
     private App app;
 
@@ -28,8 +28,6 @@ public class Signin {
     private Label invalidSigninLabel;
     @FXML
     private AnchorPane rootPane;
-    @FXML
-    private Hyperlink loadSignup;
     @FXML
     private Button signinButton;
     
@@ -70,9 +68,13 @@ public class Signin {
             Utils.fileNotFound();
         }
         rootPane.getChildren().setAll(pane);
-        rootPane.getScene().getWindow().setHeight(659);
+        rootPane.getScene().getWindow().setHeight(723);
         rootPane.getScene().getWindow().setWidth(629);
         rootPane.getScene().getWindow().centerOnScreen();
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        signinButton.setDefaultButton(true);
+    }
 }

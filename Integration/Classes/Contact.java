@@ -1,12 +1,10 @@
 package Classes;
 
-import Misc.Utils;
 import Interfaces.IContact;
+import Misc.Utils;
 
 import java.io.IOException;
 import java.util.Iterator;
-//TODO test Contact and User and App
-//TODO JavaDoc comments in all project
 
 public class Contact implements IContact {
 

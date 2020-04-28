@@ -1,8 +1,8 @@
 package GUI;
 
-import Classes.DoublyLinkedList;
 import Classes.App;
 import Classes.Contact;
+import Classes.DoublyLinkedList;
 import Classes.User;
 import Misc.Utils;
 import javafx.collections.ObservableList;
@@ -94,11 +94,14 @@ public class Contacts implements Initializable {
         stage.setScene(new Scene(root));
         stage.setResizable(false);
         stage.getScene().getWindow().centerOnScreen();
-        stage.getIcons().add(new Image("system" + sep + "icon.png"));
+        try {
+            stage.getIcons().add(new Image("icon.png"));
+        } catch (Exception e) {
+            stage.getIcons().add(new Image("GUI" + sep + "icon.png"));
+        }
         stage.show();
     }
 
-    //TODO del(problem in DoublyLinkedList.remove()), sort
     @FXML
     private void del() {
         ObservableList<Contact> selected = tv.getSelectionModel().getSelectedItems();
@@ -171,7 +174,11 @@ public class Contacts implements Initializable {
         }
         Stage stage = new Stage();
         stage.setTitle("Edit Contact");
-        //stage.getIcons().add(new Image("/icon.png"));
+        try {
+            stage.getIcons().add(new Image("icon.png"));
+        } catch (Exception e) {
+            stage.getIcons().add(new Image("GUI" + sep + "icon.png"));
+        }
         stage.sizeToScene();
         stage.setScene(new Scene(root));
         stage.setResizable(false);

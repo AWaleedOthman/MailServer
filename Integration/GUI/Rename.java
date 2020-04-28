@@ -19,8 +19,6 @@ public class Rename {
     @FXML
     private Button cancelBtn;
     @FXML
-    private Button renameBtn;
-    @FXML
     private TextField nameField;
     @FXML
     private Label invalid;

@@ -1,27 +1,37 @@
 package Classes;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-
 import Interfaces.IFolder;
 import Misc.Birthday;
 
+import java.io.*;
+import java.nio.file.Files;
+
 public class Folder implements IFolder {
-	/*
-	 * FolderPath member stores the folder path on the system
-	 * */
-	private final String path;
+    /*
+     * FolderPath member stores the folder path on the system
+     * */
+    private final String path;
 
     public Folder(String path) {
         this.path = path;
     }
 
     String sep = System.getProperty("file.separator");
-    
+
+    public static boolean copyFiles(File from, String desPath) {
+        try {
+            byte[] fileContent = Files.readAllBytes(from.toPath());
+            File out = new File(desPath);
+            FileOutputStream fos = new FileOutputStream(out);
+            fos.write(fileContent);
+            fos.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+
+    }
+
     public void createUserFolder(String address, String name, String gender, Birthday bd) throws IOException {
         Folder userFolder = addSubFolder(address);
         File userInfo = new File(userFolder.getPath() + sep + "info.txt");
@@ -54,40 +64,29 @@ public class Folder implements IFolder {
         Folder trash = userFolder.addSubFolder("trash");
         File trashIndex = new File(trash.getPath() + sep + "index.csv");
         trashIndex.createNewFile();
+        Folder drafts = userFolder.addSubFolder("drafts");
+        File draftsIndex = new File(drafts.getPath() + sep + "index.csv");
+        draftsIndex.createNewFile();
 
-    }	
-
-    protected String folderName() {
-    	String[] names = this.path.split(sep);
-    	return names[names.length-1];
     }
-    
+
     protected Folder addSubFolder(String name) {
         File f = new File(path + sep + name);
         f.mkdir();
         return new Folder(path + sep + name);
     }
-	
-    public static boolean copyFiles(File from, String desPath) {
-		try {
-			byte[] fileContent = Files.readAllBytes(from.toPath());
-			File out = new File(desPath);
-			FileOutputStream fos = new FileOutputStream(out);
-			fos.write(fileContent);
-			fos.close();
-			return true;
-		} catch (IOException e) {
-			return false;
-		}
-		
+
+    protected String folderName() {
+        String[] names = this.path.split(sep);
+        return names[names.length - 1];
     }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public String getIndexPath() {
-		return path + sep +"index.csv";
-	}
-	
+    public String getIndexPath() {
+        return path + sep + "index.csv";
+    }
+
 }

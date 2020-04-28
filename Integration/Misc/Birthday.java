@@ -70,4 +70,8 @@ public class Birthday {
     public String toString() {
         return day + "/" + month + "/" + year;
     }
+
+    public boolean valid() {
+        return getAge() >= 0;
+    }
 }

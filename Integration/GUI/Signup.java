@@ -7,14 +7,17 @@ import Misc.Birthday;
 import Misc.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 
-public class Signup {
+public class Signup implements Initializable {
 
     private App app;
 
@@ -28,11 +31,13 @@ public class Signup {
     private TextField nameField, passwordField, confirmField, addressField;
     @FXML
     private Label invalidNameLabel, invalidAddressLabel, invalidAddressLabel2, invalidAddressLabel3,
-            invalidPasswordLabel, invalidPasswordLabel2, invalidConfirmLabel, invalidLabel;
+            invalidPasswordLabel, invalidPasswordLabel2, invalidConfirmLabel, invalidLabel, invalidBd;
     @FXML
     private ToggleGroup t1;
     @FXML
     private DatePicker datePicker;
+    @FXML
+    private Button signupBtn;
 
     @FXML
     private boolean checkName() {
@@ -126,6 +131,22 @@ public class Signup {
     }
 
     @FXML
+    private boolean checkBd() {
+        LocalDate ld = datePicker.getValue();
+        if (ld == null) {
+            invalidBd.setText("");
+            return false;
+        }
+        Birthday bd = new Birthday(ld.getDayOfMonth(), ld.getMonthValue(), ld.getYear());
+        if (!bd.valid()) {
+            invalidBd.setText("invalid birthday");
+            return false;
+        }
+        invalidBd.setText("");
+        return true;
+    }
+
+    @FXML
     private void callSignup() {
 
         if (!allValid()) {
@@ -142,10 +163,10 @@ public class Signup {
             AnchorPane pane = null;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
             try {
-				pane = loader.load();
-			} catch (IOException e) {
-				Utils.fileNotFound();
-			}
+                pane = loader.load();
+            } catch (IOException e) {
+                Utils.fileNotFound();
+            }
             HomeController home = loader.getController();
             home.initialize(app);
             rootPane.getChildren().setAll(pane);
@@ -178,8 +199,12 @@ public class Signup {
     }
 
     private boolean allValid() {
-        return checkName() && checkAddress() && checkPassword() && checkConfirm() && datePicker.getValue() != null;
+        return checkName() && checkAddress() && checkPassword() && checkConfirm() && checkBd() && datePicker.getValue() != null;
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        signupBtn.setDefaultButton(true);
+    }
 }
