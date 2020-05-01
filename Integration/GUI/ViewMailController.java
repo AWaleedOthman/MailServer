@@ -1,5 +1,12 @@
 package GUI;
 
+import java.awt.Desktop;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import Classes.App;
 import Classes.Folder;
 import Classes.Mail;
@@ -9,18 +16,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class ViewMailController implements Initializable {
-
+	
 	private App app;
 	private Mail mail;
-
+	
 	@FXML
 	private Button openBtn;
 	@FXML
@@ -75,7 +75,6 @@ public class ViewMailController implements Initializable {
 			String[] recievers = row.split(",");
 			row = "";
 			for (String reciever : recievers) {
-				System.out.println(reciever);
 				recieverList.getItems().add(reciever);
 			}
 			System.out.println(row);
@@ -87,6 +86,7 @@ public class ViewMailController implements Initializable {
 			bodyLbl.setText(message);
 			reader.close();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -128,6 +128,7 @@ public class ViewMailController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
 		
 	}
 	

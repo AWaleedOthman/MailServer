@@ -24,6 +24,10 @@ public class Birthday {
         this.year = year;
     }
 
+    public boolean valid() {
+        return getAge() >= 0;
+    }
+    
 //    public static boolean valid(int day, int month, int year) {
 //        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 //        if (day > 9 || day < 1) return false;
@@ -69,9 +73,5 @@ public class Birthday {
 
     public String toString() {
         return day + "/" + month + "/" + year;
-    }
-
-    public boolean valid() {
-        return getAge() >= 0;
     }
 }

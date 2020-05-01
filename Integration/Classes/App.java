@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -29,8 +28,8 @@ import java.util.Scanner;
 public class App implements IApp {
 
 	private Folder currentFolder = new Folder(".");
-	public DoublyLinkedList mails = new DoublyLinkedList();
-	public DoublyLinkedList workingList;
+	private DoublyLinkedList mails = new DoublyLinkedList();
+	private DoublyLinkedList workingList;
 	boolean reverseSorting = false;
 	private User loggedinUser;
 	private final String sep = System.getProperty("file.separator");
@@ -203,51 +202,60 @@ public class App implements IApp {
 	@Override
 	public void moveEmails(ILinkedList mails, IFolder des) {
 		Folder destFolder = (Folder) des;
+		if(destFolder.folderName().equals(this.currentFolder.folderName())) { return;}
 		DoublyLinkedList mailList = (DoublyLinkedList) mails;
 		Iterator<Object> it = mailList.iterator(true);
-		String indexFile = "system" + sep + "users" + sep + loggedinUser.getAddress() + sep +"inbox" + sep + "index.csv";
-		boolean flagForModificationDate = (destFolder.folderName() == "trash");
+		String indexFile = this.currentFolder.getPath() + sep + "index.csv";
+		boolean flagForModificationDate = (destFolder.folderName().equals("trash"));
 		
 		deleteIndex(mailList, indexFile);
 		// looping through mails
-		while (it.hasNext()) {
-			Mail currentMail = (Mail) it.next();
-
-			String content = currentMail.getID() + "," + currentMail.getTitle() + "," + currentMail.getSenderAddress()
-					+ "," + currentMail.getSenderName() + "," + currentMail.getRecieverAddress() 
-					+ "," + currentMail.getPriority() + "," + currentMail.getDate();
-			if (flagForModificationDate) {content += new Date().toString();}
-			BufferedWriter edit; // editing index file of the des folder
-			try {
-				edit = new BufferedWriter(new FileWriter(destFolder.getPath() + sep + "index.csv", true));
+		try {
+			BufferedWriter edit = new BufferedWriter(new FileWriter(destFolder.getPath() + sep + "index.csv", true));
+			while (it.hasNext()) {
+				Mail currentMail = (Mail) it.next();
+	
+				String content = currentMail.getID() + "," + currentMail.getTitle() + "," + currentMail.getSenderAddress()
+						+ "," + currentMail.getSenderName() + "," + new SimpleDateFormat("EEEE - MMM dd - yyyy HH:mm:ss a").format(currentMail.getDate()) 
+						+ "," + (currentMail.getPriority().ordinal()+1);
+				if (flagForModificationDate) {content += "," + new SimpleDateFormat("EEEE - MMM dd - yyyy HH:mm:ss a").format(new Date());}
 				edit.append(content);
 				edit.append("\n");
 				edit.flush();
-				edit.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-
-			// moving folders by creating a copy
-			File originalFile = new File("system" + sep + "users" + sep + currentMail.getSenderAddress() + sep + "inbox" + sep
-					+ currentMail.getID() + sep + currentMail.getID() + ".txt");
-
-			destFolder.addSubFolder(String.valueOf(currentMail.getID()));
-			File destination = new File(
-					destFolder.getPath() + sep + currentMail.getID() + sep + currentMail.getID() + ".txt");
-
-			try {
+				// moving folders by creating a copy
+				File originalFile = new File(this.currentFolder.getPath() + sep
+						+ currentMail.getID() + sep + currentMail.getID() + ".txt");
+	
+				destFolder.addSubFolder(String.valueOf(currentMail.getID()));
+				File destination = new File(
+						destFolder.getPath() + sep + currentMail.getID() + sep + currentMail.getID() + ".txt");
 				Files.copy(originalFile.toPath(), destination.toPath());
-			} catch (IOException e) {
-				e.printStackTrace();
+				File file = new File(this.currentFolder.getPath() 
+						+ sep + currentMail.getID() + sep + "attachment");
+				if (file.exists()) {
+					Folder mailFolder = new Folder(destFolder.getPath() + sep + currentMail.getID());
+					mailFolder.addSubFolder("attachment");
+					String[] files = file.list();
+					for (String pathname : files) {
+						
+						File srcFile = new File(this.currentFolder.getPath() 
+								+ sep + currentMail.getID() + sep + "attachment" + sep + pathname);
+						String dest = destFolder.getPath() + sep + currentMail.getID() + sep + "attachment" + sep + pathname;
+						Folder.copyFiles(srcFile, dest);
+						srcFile.delete();
+			        }
+					File originalAttachmentFolder = new File(this.currentFolder.getPath() 
+							+ sep + currentMail.getID() + sep + "attachment");
+					originalAttachmentFolder.delete();
+				}
+				// deleting original files
+				originalFile.delete();
+				File originalFolder = new File(this.currentFolder.getPath() + sep + currentMail.getID());
+				originalFolder.delete();
 			}
-
-			// deleting original files
-			originalFile.delete();
-			File originalFolder = new File(
-					"system" + sep + "users" + sep + currentMail.getSenderAddress() + sep + "inbox" + sep + currentMail.getID());
-			originalFolder.delete();
-
+			edit.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -263,17 +271,17 @@ public class App implements IApp {
 			//appending data in csv file
 			// Appending in the sender sent folder index
 			BufferedWriter edit = new BufferedWriter(
-					new FileWriter("system" + sep + "users" + sep + mail.getSenderAddress() + sep + "sent" + sep + "index.csv", true));
+					new FileWriter(this.getLoggedinUser().getFilePath() + sep + "sent" + sep + "index.csv", true));
 			edit.append(content);
 			edit.append("\n");
 			edit.flush();
 			edit.close();
 			// Creating mail folder in the sent folder
-			Folder dir = new Folder("system" + sep + "users"+ sep + mail.getSenderAddress() + sep + "sent" + sep);
+			Folder dir = new Folder(this.getLoggedinUser().getFilePath() + sep + "sent" + sep);
 			dir.addSubFolder(mail.getID()+"");
-			Folder mailDir = new Folder("system" + sep + "users"+ sep + mail.getSenderAddress() + sep + "sent" + sep + mail.getID() + sep);
+			Folder mailDir = new Folder(this.getLoggedinUser().getFilePath() + sep + "sent" + sep + mail.getID() + sep);
 			mailDir.addSubFolder("attachment");
-			File directory = new File("system"+ sep +"users"+ sep + mail.getSenderAddress() + sep + "sent" + sep + mail.getID() + sep +  mail.getID() + ".txt");
+			File directory = new File(this.getLoggedinUser().getFilePath() + sep + "sent" + sep + mail.getID() + sep +  mail.getID() + ".txt");
 			// Creating body file
 			String mailBody = mail.getID() + "\n" + mail.getTitle() + "\n" + mail.getSenderAddress() + "\n" + mail.getSenderName() + "\n"
 								+ date + "\n" + mail.getPriority().toString() + "\n";
@@ -290,9 +298,8 @@ public class App implements IApp {
 			it = mail.getAttachments().iterator();
 			while (it.hasNext()) {
 				File file = (File)it.next();
-				String dest = "system" + sep + "users" + sep + mail.getSenderAddress() + sep + "sent" + sep + mail.getID() + sep + "attachment" + sep + file.getName();
+				String dest = this.getLoggedinUser().getFilePath() + sep + "sent" + sep + mail.getID() + sep + "attachment" + sep + file.getName();
 				if(!Folder.copyFiles(file, dest)) { return false;}
-				//Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
 			}
 			
 			
@@ -330,8 +337,8 @@ public class App implements IApp {
 				it = mail.getAttachments().iterator();
 				while (it.hasNext()) {
 					File file = (File)it.next();
-					File dest = new File("system" + sep + "users" + sep + reciever + sep + "inbox" + sep + mail.getID() + sep + "attachment" + sep + file.getName());
-					Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+					String dest = "system" + sep + "users" + sep + reciever + sep + "inbox" + sep + mail.getID() + sep + "attachment" + sep + file.getName();
+					if(!Folder.copyFiles(file, dest)) { return false;}
 				}
 			}
 		} catch (Exception e) {
@@ -354,17 +361,17 @@ public class App implements IApp {
 			//appending data in csv file
 			// Appending in the sender draft folder index
 			BufferedWriter edit = new BufferedWriter(
-					new FileWriter("system" + sep + "users" + sep + mail.getSenderAddress() + sep + "draft" + sep + "index.csv", true));
+					new FileWriter("system" + sep + "users" + sep + mail.getSenderAddress() + sep + "drafts" + sep + "index.csv", true));
 			edit.append(content);
 			edit.append("\n");
 			edit.flush();
 			edit.close();
 			// Creating mail folder in the draft folder
-			Folder dir = new Folder("system" + sep + "users"+ sep + mail.getSenderAddress() + sep + "draft" + sep);
+			Folder dir = new Folder(this.getLoggedinUser().getFilePath() + sep + "drafts" + sep);
 			dir.addSubFolder(mail.getID()+"");
-			Folder mailDir = new Folder("system" + sep + "users"+ sep + mail.getSenderAddress() + sep + "draft" + sep + mail.getID() + sep);
+			Folder mailDir = new Folder(this.getLoggedinUser().getFilePath() + sep + "drafts" + sep + mail.getID() + sep);
 			mailDir.addSubFolder("attachment");
-			File directory = new File("system"+ sep +"users"+ sep + mail.getSenderAddress() + sep + "draft" + sep + mail.getID() + sep +  mail.getID() + ".txt");
+			File directory = new File(this.getLoggedinUser().getFilePath() + sep + "drafts" + sep + mail.getID() + sep +  mail.getID() + ".txt");
 			// Creating body file
 			String mailBody = mail.getID() + "\n" + mail.getTitle() + "\n" + mail.getSenderAddress() + "\n" + mail.getSenderName() + "\n"
 								+ date + "\n" + mail.getPriority().toString() + "\n";
@@ -381,7 +388,7 @@ public class App implements IApp {
 			it = mail.getAttachments().iterator();
 			while (it.hasNext()) {
 				File file = (File)it.next();
-				String dest = "system" + sep + "users" + sep + mail.getSenderAddress() + sep + "draft" + sep + mail.getID() + sep + "attachment" + sep + file.getName();
+				String dest = this.getLoggedinUser().getFilePath() + sep + "drafts" + sep + mail.getID() + sep + "attachment" + sep + file.getName();
 				if(!Folder.copyFiles(file, dest)) { return false;}
 			}
 		} catch (Exception e) {
@@ -445,14 +452,11 @@ public class App implements IApp {
 			Iterator<Object> it = toBeDeletedList.iterator(true);
 			while (it.hasNext()) {
 				Mail current = (Mail) it.next();
-				File dFolder = new File(
-						loggedinUser.getFilePath() +sep+"trash"+sep + current.getID() + sep + current.getID() + ".txt");
-				dFolder.delete();
-				File dFolder2 = new File(loggedinUser.getFilePath() + sep + "trash" + sep + current.getID());
-				dFolder2.delete();
+				Folder.deleteMailFolder(loggedinUser.getFilePath() +sep+"trash"+sep + current.getID());
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
+			Utils.fileNotFound();
 		}
 	}
 

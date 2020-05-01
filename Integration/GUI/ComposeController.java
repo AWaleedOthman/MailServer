@@ -1,12 +1,16 @@
 package GUI;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.net.URL;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import Classes.App;
+import Classes.DoublyLinkedList;
+import Classes.Folder;
 import Classes.Mail;
 import Classes.Priority;
 import Classes.SinglyLinkedList;
@@ -26,8 +30,10 @@ public class ComposeController implements Initializable {
 
 	private App app;
 	private Stage currentStage;
-	
+	private Mail loadedDraft = null;
 	private boolean isSent = false;
+	
+	
 	@FXML
 	private Button addRecieverBtn;
 	@FXML
@@ -56,10 +62,13 @@ public class ComposeController implements Initializable {
 	private TextField subjectTxt;
 	
 	FileChooser fil_chooser = new FileChooser(); 
+	private final String sep = System.getProperty("file.separator");
+	private HomeController homeController; 
 	
-	public void setParameters(App app, Stage stage) {
+	public void setParameters(App app, Stage stage, HomeController homeController) {
 		this.app = app;
 		this.currentStage = stage;
+		this.homeController = homeController;
 	}
 	
 	public void addRecieverBtnClicked() {
@@ -113,12 +122,15 @@ public class ComposeController implements Initializable {
     
     @FXML
     public void composeBtnClicked() {
-    	// Compose mail Compose(getMail)
     	app.compose(getMail());
     	isSent = true;
+    	if (loadedDraft != null) {
+    		DoublyLinkedList mailList = new DoublyLinkedList(); 
+        	mailList.add(loadedDraft);
+        	app.deleteIndex(mailList, this.app.getLoggedinUser().getFilePath() + sep + "drafts" + sep + "index.csv");
+        	Folder.deleteMailFolder(this.app.getLoggedinUser().getFilePath() + sep + "drafts" + sep + loadedDraft.getID());
+    	}
     	currentStage.close();
-    	//Stage stage = (Stage) composeBtn.getScene().getWindow();
-        //stage.close();
     }
     
     public void removeAttachmentBtnClicked() {
@@ -133,7 +145,8 @@ public class ComposeController implements Initializable {
     
     @FXML
     public void draft() {
-    	if (isSent) {
+    	this.homeController.refresh();
+    	if (isSent || loadedDraft != null) {
     		return;
     	}
     	app.draft(getMail());
@@ -141,16 +154,53 @@ public class ComposeController implements Initializable {
     }
     
     public void loadDraft(Mail mail) {
-    	subjectTxt.setText(mail.getTitle());
-    	Iterator<Object> it = mail.getRecieverAddress().iterator();
-    	while (it.hasNext()) {
-    		recieversList.getItems().add(it.next().toString());
-    	}
-    	it = mail.getAttachments().iterator();
-    	while (it.hasNext()) {
-    		attachList.getItems().add(it.next().toString());
-    	}
-    	bodyTxtArea.setText(mail.getText());
+    	this.loadedDraft = mail;
+    	BufferedReader reader;
+    	try {
+			reader = new BufferedReader(new FileReader(app.getLoggedinUser().getFilePath() 
+					+ sep + "drafts" + sep + mail.getID() + sep + mail.getID() + ".txt"));
+			// First Line the mail ID
+			String row = reader.readLine();
+			// Second Line the mail Subject
+			row = reader.readLine();
+			subjectTxt.setText(row);
+			// Third Line the mail sender's address
+			row = reader.readLine();
+			// Fourth Line the mail sender's name
+			row = reader.readLine();
+			// Fifth Line the mail date
+			row = reader.readLine();
+			// Sixth Line the mail priority
+			row = reader.readLine();
+			// Seventh Line the mail recievers addresses
+			row = reader.readLine();
+			String[] recievers = row.split(",");
+			row = "";
+			for (String reciever : recievers) {
+				recieversList.getItems().add(reciever);
+			}
+			System.out.println(row);
+			// Reading the mail message text
+			String message = "";
+			while ((row = reader.readLine()) != null) {
+			    message += row + "\n";
+			}
+			bodyTxtArea.setText(message);
+			reader.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		File file = new File(app.getLoggedinUser().getFilePath() + sep 
+				+ "drafts" + sep + mail.getID() + sep + "attachment");
+		if (file.exists()) {
+			String[] files = file.list();
+			for (String pathname : files) {
+				File attachmentFile = new File(app.getLoggedinUser().getFilePath() + sep 
+						+ "drafts" + sep + mail.getID() + sep + "attachment" + sep + pathname);
+				attachList.getItems().add(attachmentFile.getAbsolutePath());
+	        }
+		}
     	priorityChoiceBox.getSelectionModel().select(mail.getPriority().toString());
     }
     

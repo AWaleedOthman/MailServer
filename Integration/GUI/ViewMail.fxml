@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="627.0" prefWidth="854.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ViewMailController">
+<AnchorPane prefHeight="627.0" prefWidth="854.0" styleClass="anchor" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ViewMailController">
    <children>
       <BorderPane layoutY="-2.0" prefHeight="627.0" prefWidth="1096.0" stylesheets="@application.css" AnchorPane.topAnchor="-2.0">
          <left>

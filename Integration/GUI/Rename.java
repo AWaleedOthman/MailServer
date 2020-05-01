@@ -12,12 +12,15 @@ import java.io.File;
 
 public class Rename {
 
+	private final String sep = System.getProperty("file.separator");
     private App app;
     private Folders foldersController;
     private String dir;
 
     @FXML
     private Button cancelBtn;
+    @FXML
+    private Button renameBtn;
     @FXML
     private TextField nameField;
     @FXML
@@ -37,8 +40,8 @@ public class Rename {
 
     @FXML
     private void rename() {
-        File old = new File(app.getLoggedinUser().getFilePath() + "\\inbox\\" + dir);
-        File f = new File(app.getLoggedinUser().getFilePath() + "\\inbox\\" + nameField.getText());
+        File old = new File(app.getLoggedinUser().getFilePath() + sep + "inbox" + sep + dir);
+        File f = new File(app.getLoggedinUser().getFilePath() + sep + "inbox" + sep + nameField.getText());
         if (!old.renameTo(f)) invalid.setText("invalid folder name");
         else {
             invalid.setText("");

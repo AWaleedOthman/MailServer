@@ -1,8 +1,8 @@
 package GUI;
 
+import Classes.DoublyLinkedList;
 import Classes.App;
 import Classes.Contact;
-import Classes.DoublyLinkedList;
 import Classes.User;
 import Misc.Utils;
 import javafx.collections.ObservableList;
@@ -37,9 +37,9 @@ public class Contacts implements Initializable {
     @FXML
     private TableView<Contact> tv;
     @FXML
-    private TableColumn tcName, tcAddress;
+    private TableColumn<String, Contact> tcName, tcAddress;
     @FXML
-    private ComboBox sortCombo, searchCombo;
+    private ComboBox<String> sortCombo, searchCombo;
     @FXML
     private TextField searchField;
 

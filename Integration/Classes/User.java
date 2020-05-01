@@ -6,10 +6,12 @@ import Interfaces.IContact;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class User implements IContact {
 
@@ -43,7 +45,7 @@ public class User implements IContact {
         contact.setOwner(this);
         contacts.add(contact);
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + "\\contacts.csv", true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + sep + "contacts.csv", true));
             writer.write(contact.getName() + "," + contact.getIndex() + "," + contact.getAddressesString());
             writer.newLine();
             writer.close();
@@ -140,7 +142,7 @@ public class User implements IContact {
 
     protected void exportContacts() throws IOException {
         if (contacts.isEmpty()) return;
-        BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + "\\contacts.csv", false));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + sep + "contacts.csv", false));
         Iterator<Object> iter = contacts.iterator(true);
         while (iter.hasNext()) {
             Contact contact = (Contact) iter.next();
@@ -151,12 +153,25 @@ public class User implements IContact {
     }
 
     public void editFolders() {
-        File file = new File(this.getFilePath() + "\\inbox");
-        String[] directories = file.list((current, name) -> new File(current, name).isDirectory());
+        DoublyLinkedList dll = new DoublyLinkedList();
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + "\\inbox\\folders.txt", false));
-            for (String name : directories) {
-                writer.write(name);
+            Scanner sc = new Scanner(new File(this.getFilePath() + sep + "inbox" + sep + "folders.txt"));
+            while (sc.hasNext()) {
+            	String folderName = sc.nextLine();
+            	File folder = new File(this.getFilePath() + sep + "inbox" + sep + folderName);
+            	if (folder.exists()) {
+            		dll.add(folderName);
+            	}
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            Utils.fileNotFound();
+        }
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + sep + "inbox" + sep + "folders.txt", false));
+            Iterator<Object> iter = dll.iterator(true);
+            while (iter.hasNext()) {
+            	writer.write(iter.next().toString());
                 writer.newLine();
             }
             writer.close();

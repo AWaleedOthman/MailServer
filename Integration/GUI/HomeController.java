@@ -1,25 +1,5 @@
 package GUI;
 
-import Classes.*;
-import Misc.Birthday;
-import Misc.Utils;
-import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,12 +10,50 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import Classes.App;
+import Classes.DoublyLinkedList;
+import Classes.Filter;
+import Classes.FilterAttribute;
+import Classes.Folder;
+import Classes.Mail;
+import Classes.Priority;
+import Classes.Sort;
+import Classes.SortAttribute;
+import Misc.Birthday;
+import Misc.Utils;
+import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
 
 	private App app;
 	private final String sep = System.getProperty("file.separator");
-
+	private boolean isDraft = false;
+	
 	@FXML
 	private AnchorPane rootPane;
 	@FXML
@@ -74,83 +92,63 @@ public class HomeController implements Initializable {
 	private Button composeBtn;
 	
 	
-	public void initialize(App app) {
-		this.app = app;
-		app.setViewingOptions(new Folder(app.getLoggedinUser().getFilePath() + sep + "inbox"), null, null);
-		bannerLbl.setText("Hello, " + app.getLoggedinUser().getName());
-		Calendar cal = Calendar.getInstance();
-		int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-		int month = cal.get(Calendar.MONTH) + 1;
-		Birthday bd = app.getLoggedinUser().getBirthday();
-		if (dayOfMonth == bd.getDay() && month == bd.getMonth()) {
-			int age = bd.getAge();
-			bannerLbl.setText("Hello, " + app.getLoggedinUser().getName() + "\t\t Happy birthday! What a wonderful " + age + " years!");
+	public class MailHeader {
+		
+		private int ID;
+		
+		private String title;
+		
+		private String senderName;
+		
+		private String address;
+		
+		private String date;
+		
+		private Priority priority;
+		
+		public MailHeader(int ID, String title, String sendername, String address, String date, Priority priority) {
+	        this.ID = ID;
+			this.title = title;
+	        this.senderName = sendername;
+	        this.address = address;
+	        this.date = date;
+	        this.priority = priority;
+	    }
+
+		public String getTitle() {
+			return title;
 		}
-		sortChoiceBox.getItems().addAll(SortAttribute.Date.toString(),
-				SortAttribute.Title.toString(), SortAttribute.SenderName.toString(), SortAttribute.SenderAddress.toString());
-		sortChoiceBox.getSelectionModel().select(SortAttribute.Date.toString());
-		searchChoiceBox.getItems().addAll("No Filter", FilterAttribute.Attachments.toString(), FilterAttribute.Date.toString(),
-				FilterAttribute.Recievers.toString(), FilterAttribute.SenderAddress.toString(), FilterAttribute.SenderName.toString(),
-				FilterAttribute.Text.toString(), FilterAttribute.Title.toString());
 
-		searchChoiceBox.getSelectionModel().select("No Filter");
-		searchChoiceBox.setOnAction(e -> {
-			if (searchChoiceBox.getSelectionModel().getSelectedItem() != "No Filter" && FilterAttribute.valueOf(searchChoiceBox.getSelectionModel().getSelectedItem()) == FilterAttribute.Date) {
-				datePck.setDisable(false);
-				searchTxt.setDisable(true);
-			} else {
-				datePck.setDisable(true);
-				searchTxt.setDisable(false);
-			}
-		});
-		datePck.setValue(LocalDate.now());
+		public String getSenderName() {
+			return senderName;
+		}
 
-		// Preparing table columns and setting attributes
-		TableColumn<MailHeader, String> IDColumn=new TableColumn<>();
-		IDColumn.setVisible(false);
-	    IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
-		TableColumn<MailHeader, String> titleColumn=new TableColumn<>("Title");
-	    titleColumn.setMinWidth(150);
-	    titleColumn.setResizable(false);
-	    titleColumn.setSortable(false);
-		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-		TableColumn<MailHeader, String> senderNameColumn = new TableColumn<>("Sender name");
-		senderNameColumn.setMinWidth(145);
-		senderNameColumn.setResizable(false);
-		senderNameColumn.setSortable(false);
-		senderNameColumn.setCellValueFactory(new PropertyValueFactory<>("SenderName"));
-		TableColumn<MailHeader, String> addressColumn = new TableColumn<>("Address");
-		addressColumn.setMinWidth(150);
-		addressColumn.setResizable(false);
-		addressColumn.setSortable(false);
-		addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-		TableColumn<MailHeader, String> dateColumn = new TableColumn<>("Date");
-		dateColumn.setMinWidth(200);
-		dateColumn.setResizable(false);
-		dateColumn.setSortable(false);
-		dateColumn.setCellValueFactory(new PropertyValueFactory<MailHeader, String>("Date"));
-		TableColumn<MailHeader, String> priorityColumn = new TableColumn<>("Priority");
-		priorityColumn.setMinWidth(150);
-		priorityColumn.setResizable(false);
-		priorityColumn.setSortable(false);
-		priorityColumn.setCellValueFactory(new PropertyValueFactory<MailHeader, String>("Priority"));
-		mailsTbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent mouseEvent) {
-				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-					if (mouseEvent.getClickCount() == 2) {
-						openMail();
-					}
-				}
-			}
-		});
-		mailsTbl.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		// Add columns to the table view
-		mailsTbl.getColumns().addAll(titleColumn, senderNameColumn, addressColumn, dateColumn, priorityColumn);
-		// Load mails in the page 1
-		showMails(1);
+		public String getAddress() {
+			return address;
+		}
+
+		public String getDate() {
+			return date;
+		}
+
+		public int getID() {
+			return ID;
+		}
+
+		public void setID(int iD) {
+			ID = iD;
+		}
+
+		public Priority getPriority() {
+			return priority;
+		}
+
+		public void setPriority(Priority priority) {
+			this.priority = priority;
+		}
+		
 	}
-
+	
 	private void showMails(int i) {
 		// Max page count depending on the number of loaded mails in the current folder and filter
 		pgr.setPageCount((int) (((float) app.availableMailsCount() / 10) + 0.9));
@@ -165,42 +163,89 @@ public class HomeController implements Initializable {
 			mailsTbl.getItems().add(MH);
 		}
 	}
-
-	public void moveBtnClicked() {
-		ObservableList<MailHeader> moveMails = mailsTbl.getSelectionModel().getSelectedItems();
-		DoublyLinkedList mailList = new DoublyLinkedList();
-		for (MailHeader MH : moveMails) {
-			try {
-				mailList.add(new Mail(MH.getTitle(), MH.getAddress(), MH.getSenderName(),
-						new SimpleDateFormat("EEEE - MMM dd - yyyy HH:mm:ss a").parse(MH.getDate()), MH.getPriority()));
-			} catch (ParseException e) {
-				Utils.fileNotFound();
-			}
+	
+	@SuppressWarnings("unchecked")
+	public void initialize(App app) {
+		this.app = app;
+		app.setViewingOptions(new Folder(app.getLoggedinUser().getFilePath() + sep + "inbox"), null, null);
+		bannerLbl.setText("Hello, " + app.getLoggedinUser().getName());
+		Calendar cal = Calendar.getInstance();
+		int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+		int month = cal.get(Calendar.MONTH) + 1;
+		Birthday bd = app.getLoggedinUser().getBirthday();
+		if (dayOfMonth == bd.getDay() && month == bd.getMonth()) {
+			int age = bd.getAge();
+			bannerLbl.setText("Hello, " + app.getLoggedinUser().getName() + "\t\t Happy birthday! What a wonderful " + age + " years!");
 		}
-		Parent root = null;
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("folderChooser.fxml"));
-			root = loader.load();
-			FolderChooser controller = loader.getController();
-			controller.setApp(app);
-		} catch (IOException e) {
-			Utils.fileNotFound();
-		}
-		Stage stage = new Stage();
-		stage.setTitle("Move");
-		try {
-			stage.getIcons().add(new Image("icon.png"));
-		} catch (Exception e) {
-			stage.getIcons().add(new Image("GUI" + sep + "icon.png"));
-		}
-		stage.sizeToScene();
-		stage.setScene(new Scene(root));
-		stage.setResizable(false);
-		stage.getScene().getWindow().centerOnScreen();
-		stage.show();
-	}
-
+		sortChoiceBox.getItems().addAll(SortAttribute.Date.toString(), 
+				SortAttribute.Title.toString(), SortAttribute.SenderName.toString(), SortAttribute.SenderAddress.toString());
+		sortChoiceBox.getSelectionModel().select(SortAttribute.Date.toString());
+		searchChoiceBox.getItems().addAll("No Filter", FilterAttribute.Attachments.toString(), FilterAttribute.Date.toString(),
+				FilterAttribute.Recievers.toString(), FilterAttribute.SenderAddress.toString(), FilterAttribute.SenderName.toString(),
+				FilterAttribute.Text.toString(), FilterAttribute.Title.toString());
+		
+		searchChoiceBox.getSelectionModel().select("No Filter");
+		searchChoiceBox.setOnAction(e -> {
+		    if (searchChoiceBox.getSelectionModel().getSelectedItem() != "No Filter" && FilterAttribute.valueOf(searchChoiceBox.getSelectionModel().getSelectedItem()) == FilterAttribute.Date) {
+		    	datePck.setDisable(false);
+		    	searchTxt.setDisable(true);
+		    }
+		    else {
+		    	datePck.setDisable(true);
+		    	searchTxt.setDisable(false);
+		    } 	
+		});
+		datePck.setValue(LocalDate.now());
+		
+		// Preparing table columns and setting attributes
+		TableColumn<MailHeader, String> IDColumn=new TableColumn<>();
+		IDColumn.setVisible(false);
+	    IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
+		TableColumn<MailHeader, String> titleColumn=new TableColumn<>("Title");
+	    titleColumn.setMinWidth(150);
+	    titleColumn.setResizable(false);
+	    titleColumn.setSortable(false);
+	    titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+	    TableColumn<MailHeader, String> senderNameColumn=new TableColumn<>("Sender name");
+	    senderNameColumn.setMinWidth(145);
+	    senderNameColumn.setResizable(false);
+	    senderNameColumn.setSortable(false);
+	    senderNameColumn.setCellValueFactory(new PropertyValueFactory<>("SenderName"));
+	    TableColumn<MailHeader, String> addressColumn=new TableColumn<>("Address");
+	    addressColumn.setMinWidth(150);
+	    addressColumn.setResizable(false);
+	    addressColumn.setSortable(false);
+	    addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+	    TableColumn<MailHeader, String> dateColumn=new TableColumn<>("Date");
+	    dateColumn.setMinWidth(200);
+	    dateColumn.setResizable(false);
+	    dateColumn.setSortable(false);
+	    dateColumn.setCellValueFactory(new PropertyValueFactory<MailHeader, String>("Date"));
+	    TableColumn<MailHeader, String> priorityColumn=new TableColumn<>("Priority");
+	    priorityColumn.setMinWidth(150);
+	    priorityColumn.setResizable(false);
+	    priorityColumn.setSortable(false);
+	    priorityColumn.setCellValueFactory(new PropertyValueFactory<MailHeader, String>("Priority"));
+	    mailsTbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	        @Override
+	        public void handle(MouseEvent mouseEvent) {
+	            if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+	                if(mouseEvent.getClickCount() == 2){
+	                    if(!isDraft) {	openMail();}
+	                    else {	openDraft();}
+	                }
+	            }
+	        }
+	    }); 
+	    mailsTbl.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+	    // Add columns to the table view
+	    mailsTbl.getColumns().addAll(titleColumn, senderNameColumn, addressColumn, dateColumn, priorityColumn);
+	    // Load mails in the page 1
+		showMails(1);
+    }
+	
 	public void loadInbox() {
+		this.isDraft = false;
 		moveBtn.setVisible(true);
 		delBtn.setVisible(true);
 		app.setViewingOptions(new Folder(app.getLoggedinUser().getFilePath() + sep + "inbox"), null, null);
@@ -208,7 +253,7 @@ public class HomeController implements Initializable {
 		// VBox to carry the user folders
 		// Replace 5 with the user number of folders
 		VBox folders = new VBox(5);
-
+		
 		BufferedReader reader;
 		try {
 			reader = new BufferedReader(new FileReader(this.app.getLoggedinUser().getFilePath()
@@ -231,7 +276,6 @@ public class HomeController implements Initializable {
 		/* We will iterate on the user folders and add them*/
 		inboxTPane.setContent(folders);
 	}
-	
 	/*
 	 * Event for handling user accessing folders
 	 * */
@@ -246,11 +290,11 @@ public class HomeController implements Initializable {
 
         }
     }
-	
 	/*
 	 * Load mails in the user sent folder
 	 * */
 	public void loadSent() {
+		this.isDraft = false;
 		moveBtn.setVisible(false);
 		delBtn.setVisible(false);
 		// SetviewingOption
@@ -258,15 +302,26 @@ public class HomeController implements Initializable {
 		// Show mails
 		showMails(1);
 	}
-	
 	/*
 	 * Load mails in the user trash folder
 	 * */
 	public void loadTrash() {
+		app.updateTrash();
+		this.isDraft = false;
 		moveBtn.setVisible(false);
 		delBtn.setVisible(false);
 		// SetviewingOption
 		app.setViewingOptions(new Folder(app.getLoggedinUser().getFilePath() + sep + "trash"), null, null);
+		// Show mails
+		showMails(1);
+	}
+	
+	public void loadDrafts() {
+		this.isDraft = true;
+		moveBtn.setVisible(false);
+		delBtn.setVisible(false);
+		// SetviewingOption
+		app.setViewingOptions(new Folder(app.getLoggedinUser().getFilePath() + sep + "drafts"), null, null);
 		// Show mails
 		showMails(1);
 	}
@@ -293,7 +348,7 @@ public class HomeController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("folders.fxml"));
             pane = loader.load();
             Folders controller = loader.getController();
-            controller.setApp(app);
+            controller.setParameters(app, this);
         } catch (IOException e) {
             Utils.fileNotFound();
         }
@@ -389,7 +444,47 @@ public class HomeController implements Initializable {
 			Stage stage = new Stage();
 			viewMailController.setParameters(app, mail);
             stage.setTitle("View mail");
+            try {
+                stage.getIcons().add(new Image("icon.png"));
+            } catch (Exception e) {
+                stage.getIcons().add(new Image("GUI" + sep + "icon.png"));
+            }
             stage.setScene(new Scene(root, 1096, 627));
+            stage.getScene().getWindow().centerOnScreen();
+            stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+			Utils.fileNotFound();
+		}
+	}
+	
+	public void openDraft() {
+		MailHeader MH = mailsTbl.getSelectionModel().getSelectedItem();
+		Mail mail = null;
+		try {
+			 mail = new Mail(MH.getID(), MH.getTitle(), MH.getAddress(), MH.getSenderName(),
+					new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy").parse(MH.getDate()), MH.getPriority());
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+			Utils.fileNotFound();
+		}
+		// We have mail ID then we can load it in the viewMail scene
+		Parent root;
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("Compose.fxml"));
+    	try {
+			root = loader.load();
+			ComposeController composeController = loader.getController();
+			Stage stage = new Stage();
+			composeController.setParameters(app, stage, this);
+			composeController.loadDraft(mail);
+			this.refresh();
+            stage.setTitle("View mail");
+            stage.setScene(new Scene(root, 1096, 627));
+            try {
+                stage.getIcons().add(new Image("icon.png"));
+            } catch (Exception e) {
+                stage.getIcons().add(new Image("GUI" + sep + "icon.png"));
+            }
             stage.getScene().getWindow().centerOnScreen();
             stage.show();
 		} catch (IOException e) {
@@ -411,19 +506,74 @@ public class HomeController implements Initializable {
 			root = loader.load();
 			ComposeController composeController = loader.getController();
 			Stage stage = new Stage();
-			composeController.setParameters(app, stage);
-			stage.setTitle("Compose");
-			stage.setScene(new Scene(root, 948, 500));
-			stage.setOnCloseRequest(event -> {
-				composeController.draft();
-			});
-			stage.getScene().getWindow().centerOnScreen();
-			stage.show();
+			composeController.setParameters(app, stage, this);
+            stage.setTitle("Compose");
+            try {
+                stage.getIcons().add(new Image("icon.png"));
+            } catch (Exception e) {
+                stage.getIcons().add(new Image("GUI" + sep + "icon.png"));
+            }
+            stage.setScene(new Scene(root, 948, 500));
+            stage.setOnCloseRequest(event -> {composeController.draft();} );
+            stage.getScene().getWindow().centerOnScreen();
+            stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}   
 	}
-
+	
+	public void moveBtnClicked() {
+		ObservableList<MailHeader> moveMails = mailsTbl.getSelectionModel().getSelectedItems();
+		DoublyLinkedList mailList = new DoublyLinkedList(); 
+		for (MailHeader MH : moveMails) {
+			try {
+				mailList.add(new Mail(MH.getID(), MH.getTitle(), MH.getAddress(), MH.getSenderName(),
+						new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy").parse(MH.getDate()), MH.getPriority()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+				Utils.fileNotFound();
+			}
+		}
+		
+		Parent root = null;
+		Stage stage = new Stage();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("folderChooser.fxml"));
+			root = loader.load();
+			FolderChooser controller = loader.getController();
+			controller.setParameters(app, mailList, stage, this);
+		} catch (IOException e) {
+			Utils.fileNotFound();
+		}
+		stage.setTitle("Move");
+		try {
+			stage.getIcons().add(new Image("icon.png"));
+		} catch (Exception e) {
+			stage.getIcons().add(new Image("GUI" + sep + "icon.png"));
+		}
+		stage.sizeToScene();
+		stage.setScene(new Scene(root));
+		stage.setResizable(false);
+		stage.getScene().getWindow().centerOnScreen();
+		stage.show();
+	}
+	
+	public void delBtnClicked() {
+		ObservableList<MailHeader> moveMails = mailsTbl.getSelectionModel().getSelectedItems();
+		DoublyLinkedList mailList = new DoublyLinkedList(); 
+		for (MailHeader MH : moveMails) {
+			try {
+				mailList.add(new Mail(MH.getID(), MH.getTitle(), MH.getAddress(), MH.getSenderName(),
+						new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy").parse(MH.getDate()), MH.getPriority()));
+			} catch (ParseException e) {
+				Utils.fileNotFound();
+			}
+		}
+		app.deleteEmails(mailList);
+		refresh();
+	}
+	
+	
 	@FXML
 	private void signout() {
 		AnchorPane pane = null;
@@ -441,80 +591,8 @@ public class HomeController implements Initializable {
 		rootPane.getScene().getWindow().centerOnScreen();
 	}
 
-	public void delBtnClicked() {
-		ObservableList<MailHeader> moveMails = mailsTbl.getSelectionModel().getSelectedItems();
-		DoublyLinkedList mailList = new DoublyLinkedList();
-		for (MailHeader MH : moveMails) {
-			try {
-				mailList.add(new Mail(MH.getTitle(), MH.getAddress(), MH.getSenderName(),
-						new SimpleDateFormat("EEEE - MMM dd - yyyy HH:mm:ss a").parse(MH.getDate()), MH.getPriority()));
-			} catch (ParseException e) {
-				Utils.fileNotFound();
-			}
-		}
-		app.deleteEmails(mailList);
-	}
-	
-	/*public static void main(String[] args) {
-		
-	}*/
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		
 	}
-
-	public class MailHeader {
-
-		private final String title;
-		private final String senderName;
-		private final String address;
-		private final String date;
-		private int ID;
-		private Priority priority;
-
-		public MailHeader(int ID, String title, String sendername, String address, String date, Priority priority) {
-			this.ID = ID;
-			this.title = title;
-			this.senderName = sendername;
-			this.address = address;
-			this.date = date;
-			this.priority = priority;
-		}
-
-		public String getTitle() {
-			return title;
-		}
-
-		public String getSenderName() {
-			return senderName;
-		}
-
-		public String getAddress() {
-			return address;
-		}
-
-		public String getDate() {
-			return date;
-		}
-
-		public int getID() {
-			return ID;
-		}
-
-		public void setID(int iD) {
-			ID = iD;
-		}
-
-		public Priority getPriority() {
-			return priority;
-		}
-
-		public void setPriority(Priority priority) {
-			this.priority = priority;
-		}
-
-	}
-
-
 }

@@ -10,11 +10,11 @@ import javafx.stage.Stage;
 
 public class TrioMail extends Application {
 
-    private final String sep = System.getProperty("file.separator");
-
-    public static void main(String[] args) {
-        launch(args);
-    }
+	private final String sep = System.getProperty("file.separator");
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -37,10 +37,6 @@ public class TrioMail extends Application {
         }
         primaryStage.show();
         primaryStage.setResizable(false);
-    }
+	}
 
 }
-/*TODO
- 1. edit user info
- 2. problem compose crashes
-*/

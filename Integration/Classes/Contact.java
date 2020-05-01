@@ -1,7 +1,7 @@
 package Classes;
 
-import Interfaces.IContact;
 import Misc.Utils;
+import Interfaces.IContact;
 
 import java.io.IOException;
 import java.util.Iterator;

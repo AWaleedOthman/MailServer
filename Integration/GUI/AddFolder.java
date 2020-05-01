@@ -12,6 +12,7 @@ import java.io.File;
 
 public class AddFolder {
 
+	private final String sep = System.getProperty("file.separator");
     private App app;
     private Folders foldersController;
 
@@ -33,7 +34,7 @@ public class AddFolder {
     private void add() {
         String name = nameField.getText();
         
-        File f = new File(app.getLoggedinUser().getFilePath() + "\\inbox\\" + name);
+        File f = new File(app.getLoggedinUser().getFilePath() + sep + "inbox" + sep + name);
         if (!f.mkdir()) invalid.setText("invalid folder name");
         else {
             invalid.setText("");

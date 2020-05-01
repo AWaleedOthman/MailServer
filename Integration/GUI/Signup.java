@@ -31,7 +31,7 @@ public class Signup implements Initializable {
     private TextField nameField, passwordField, confirmField, addressField;
     @FXML
     private Label invalidNameLabel, invalidAddressLabel, invalidAddressLabel2, invalidAddressLabel3,
-            invalidPasswordLabel, invalidPasswordLabel2, invalidConfirmLabel, invalidLabel, invalidBd;
+    		invalidPasswordLabel, invalidPasswordLabel2, invalidConfirmLabel, invalidLabel, invalidBd;
     @FXML
     private ToggleGroup t1;
     @FXML
@@ -129,7 +129,7 @@ public class Signup implements Initializable {
         return false;
 
     }
-
+    
     @FXML
     private boolean checkBd() {
         LocalDate ld = datePicker.getValue();
@@ -145,7 +145,7 @@ public class Signup implements Initializable {
         invalidBd.setText("");
         return true;
     }
-
+    
     @FXML
     private void callSignup() {
 
@@ -163,10 +163,10 @@ public class Signup implements Initializable {
             AnchorPane pane = null;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
             try {
-                pane = loader.load();
-            } catch (IOException e) {
-                Utils.fileNotFound();
-            }
+				pane = loader.load();
+			} catch (IOException e) {
+				Utils.fileNotFound();
+			}
             HomeController home = loader.getController();
             home.initialize(app);
             rootPane.getChildren().setAll(pane);
@@ -199,12 +199,13 @@ public class Signup implements Initializable {
     }
 
     private boolean allValid() {
-        return checkName() && checkAddress() && checkPassword() && checkConfirm() && checkBd() && datePicker.getValue() != null;
+    	return checkName() && checkAddress() && checkPassword() && checkConfirm() && checkBd() && datePicker.getValue() != null;
     }
 
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		signupBtn.setDefaultButton(true);
+	}
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        signupBtn.setDefaultButton(true);
-    }
+
 }
