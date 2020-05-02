@@ -319,7 +319,7 @@ public class HomeController implements Initializable {
 	public void loadDrafts() {
 		this.isDraft = true;
 		moveBtn.setVisible(false);
-		delBtn.setVisible(false);
+		delBtn.setVisible(true);
 		// SetviewingOption
 		app.setViewingOptions(new Folder(app.getLoggedinUser().getFilePath() + sep + "drafts"), null, null);
 		// Show mails
@@ -479,7 +479,7 @@ public class HomeController implements Initializable {
 			composeController.loadDraft(mail);
 			this.refresh();
             stage.setTitle("View mail");
-            stage.setScene(new Scene(root, 1096, 627));
+            stage.setScene(new Scene(root, 948, 500));
             try {
                 stage.getIcons().add(new Image("icon.png"));
             } catch (Exception e) {
@@ -569,7 +569,12 @@ public class HomeController implements Initializable {
 				Utils.fileNotFound();
 			}
 		}
-		app.deleteEmails(mailList);
+		if (app.getCurrentFolder().folderName().equals("inbox")) {
+			app.deleteEmails(mailList);
+		}
+		else if (app.getCurrentFolder().folderName().equals("drafts")) {
+			app.deleteDrafts(mailList);
+		}
 		refresh();
 	}
 	
