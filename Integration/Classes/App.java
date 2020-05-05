@@ -199,6 +199,17 @@ public class App implements IApp {
 		moveEmails(mails, des);
 	}
 
+	public void deleteDrafts(ILinkedList mails) {
+		DoublyLinkedList mailList = (DoublyLinkedList) mails;
+		String indexFile = this.currentFolder.getPath() + sep + "index.csv";
+		deleteIndex(mailList, indexFile);
+		Iterator<Object> it = mailList.iterator(true);
+		while (it.hasNext()) {
+			Mail mail = (Mail) it.next();
+			Folder.deleteMailFolder(loggedinUser.getFilePath() +sep+"drafts"+sep + mail.getID());
+		}
+	}
+	
 	@Override
 	public void moveEmails(ILinkedList mails, IFolder des) {
 		Folder destFolder = (Folder) des;

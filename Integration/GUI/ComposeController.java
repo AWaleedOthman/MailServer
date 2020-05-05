@@ -73,7 +73,6 @@ public class ComposeController implements Initializable {
 	
 	public void addRecieverBtnClicked() {
 		String address = recieverTxt.getText();
-		// Check the address here
 		if (app.addressExists(address.toLowerCase())) {
 			recieverTxt.setText("");
 			recieversList.getItems().add(address);
@@ -122,7 +121,12 @@ public class ComposeController implements Initializable {
     
     @FXML
     public void composeBtnClicked() {
-    	app.compose(getMail());
+    	Mail mail = getMail();
+    	if (mail.getRecieverAddress().size() == 0) {
+    		recieverErrorLbl.setText("No Addresses specified !!");
+    		return;
+    	}
+    	app.compose(mail);
     	isSent = true;
     	if (loadedDraft != null) {
     		DoublyLinkedList mailList = new DoublyLinkedList(); 
@@ -146,10 +150,9 @@ public class ComposeController implements Initializable {
     @FXML
     public void draft() {
     	this.homeController.refresh();
-    	if (isSent || loadedDraft != null) {
-    		return;
+    	if (!isSent && loadedDraft == null) {
+    		app.draft(getMail());
     	}
-    	app.draft(getMail());
     	currentStage.close();
     }
     
