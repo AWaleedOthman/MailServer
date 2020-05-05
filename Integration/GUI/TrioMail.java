@@ -25,8 +25,8 @@ public class TrioMail extends Application {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("signin.fxml"));
         Parent root = loader.load();
-        Signin signinConntroller = loader.getController();
-        signinConntroller.setApp(app);
+        Signin signinController = loader.getController();
+        signinController.setApp(app);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("TrioMail");

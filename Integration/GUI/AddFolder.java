@@ -38,8 +38,8 @@ public class AddFolder {
         if (!f.mkdir()) invalid.setText("invalid folder name");
         else {
             invalid.setText("");
-            foldersController.setUp();
             app.getLoggedinUser().addFolder(name);
+            foldersController.setUp();
             cancel();
         }
     }
