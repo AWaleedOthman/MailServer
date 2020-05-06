@@ -14,37 +14,72 @@ public class Contact implements IContact {
     private int index;
     private String mainAddress;
 
-
+    /**
+     * class constructor used in App class
+     *
+     * @param name  contact's name
+     * @param owner the User who has this contact
+     * @param index number of contact in user's contact list
+     */
     public Contact(String name, User owner, int index) {
         this.name = name;
         this.owner = owner;
         this.index = index;
     }
 
+    /**
+     * class constructor used in GUI
+     *
+     * @param name contact's name
+     */
     public Contact(String name) {
         this.name = name;
     }
 
+    /**
+     * the index given to each contact according to the date added
+     *
+     * @return contact's index in user's list of contacts
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     * @param owner User who has this contact in their list
+     */
     protected void setOwner(User owner) {
         this.owner = owner;
     }
 
+    /**
+     * the index given to each contact according to the date added
+     *
+     * @param index contact's index in user's list of contacts
+     */
     protected void setIndex(int index) {
         this.index = index;
     }
 
+    /**
+     * deletes the contact from the user's list of contacts
+     *
+     * @return true if the contact was deleted successfully, false otherwise
+     */
     public boolean delete() {
         return owner.delContact(this);
     }
 
+    /**
+     * @return contact's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name contact's name
+     */
     public void setName(String name) {
         this.name = name;
         try {
@@ -54,10 +89,21 @@ public class Contact implements IContact {
         }
     }
 
+    /**
+     * every contact in the user's list of contacts may have more than one email address
+     *
+     * @return a doubly linked list containing all the contact addresses
+     */
     public DoublyLinkedList getAddresses() {
         return addresses;
     }
 
+    /**
+     * adds an array of addresses to the contact's list of addresses
+     * it takes an array because String.split returns an array
+     *
+     * @param arr array of strings containing the addresses
+     */
     public void addAddresses(String[] arr) {
         if (arr == null) return;
         for (String s : arr) {
@@ -65,52 +111,10 @@ public class Contact implements IContact {
         }
         mainAddress = (String) addresses.get(0);
     }
-//
-//    public boolean addAddress(String address) {
-//        if (!app.addressExists(address)) return false;
-//        addresses.add(address);
-//        try {
-//            owner.exportContacts();
-//        } catch (IOException e) {
-//            Utils.fileNotFound();
-//        }
-//        return true;
-//    }
-//
-//    public boolean changeAddress(String old, String address) {
-//        Iterator<String> iter = addresses.iterator(true);
-//
-//        for (int i = 0; iter.hasNext(); i++) {
-//            if (old.equals(iter.next())) {
-//                addresses.set(i, address);
-//                try {
-//                    owner.exportContacts();
-//                } catch (IOException e) {
-//                    Utils.fileNotFound();
-//                }
-//                mainAddress = (String) addresses.get(0);
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    public void deleteAddress(@NotNull String old) {
-//        Iterator<String> iter = addresses.iterator(true);
-//
-//        for (int i = 0; iter.hasNext(); i++) {
-//            if (old.equals(iter.next())) {
-//                addresses.remove(i);
-//                try {
-//                    owner.exportContacts();
-//                } catch (IOException e) {
-//                    Utils.fileNotFound();
-//                }
-//                return;
-//            }
-//        }
-//    }
 
+    /**
+     * @return the addresses of the contact as a single string comma separated
+     */
     public String getAddressesString() {
         StringBuilder sb = new StringBuilder();
         if (addresses.isEmpty()) return "";
@@ -122,6 +126,9 @@ public class Contact implements IContact {
         return sb.toString();
     }
 
+    /**
+     * @return the first address in the contact's list of addresses
+     */
     public String getMainAddress() {
         return mainAddress;
     }

@@ -22,20 +22,31 @@ public class User implements IContact {
     private String name, filePath;
     private String gender;
     private Birthday birthday;
-
+    //path separator according to the OS
     private final String sep = System.getProperty("file.separator");
 
+    /**
+     * class constructor
+     *
+     * @param address           user's email address
+     * @param encryptedpassword password after encryption (using Misc.AES)
+     */
     public User(String address, String encryptedpassword) {
         this.address = address;
         this.encryptedPassword = encryptedpassword;
     }
 
+    /**
+     * class constructor
+     *
+     * @param address user's email address
+     */
     public User(String address) {
         this.address = address;
     }
 
     /**
-     * adds to list and to csv file
+     * adds contact to list and to csv file
      *
      * @param contact to be added
      * @throws IOException file not found
@@ -54,6 +65,11 @@ public class User implements IContact {
         }
     }
 
+    /**
+     * used to sort list of contacts by date added
+     *
+     * @return doubly linked list containing the list of contacts sorted
+     */
     public DoublyLinkedList sortContactsByIndex() {
         Sort sort = new Sort(SortAttribute.contactIndex);
         Comparator<Object> c = sort.sortAttribute();
@@ -61,6 +77,11 @@ public class User implements IContact {
         return contacts;
     }
 
+    /**
+     * used to sort list of contacts by their name
+     *
+     * @return doubly linked list containing the list of contacts sorted
+     */
     public DoublyLinkedList sortContactsByName() {
         Sort sort = new Sort(SortAttribute.contactName);
         Comparator<Object> c = sort.sortAttribute();
@@ -68,6 +89,16 @@ public class User implements IContact {
         return contacts;
     }
 
+    /**
+     * used to search for contacts by their names
+     * it iterates through contacts
+     *
+     * @param cName search key
+     *              it doesn't have to be complete name as a match occurs if contact's name begins with the key
+     *              in case the above criteria resulted in an empty list; we search again but this time a match occurs
+     *              if the contact's name contains the key
+     * @return doubly linked list of contacts having names as key
+     */
     public DoublyLinkedList getContactByName(String cName) {
         cName = cName.toLowerCase();
         DoublyLinkedList res = new DoublyLinkedList();
@@ -86,6 +117,16 @@ public class User implements IContact {
         return res;
     }
 
+    /**
+     * used to search for contacts by their address
+     * it iterates through each contact's list of addresses
+     *
+     * @param address search key
+     *                it doesn't have to be complete address as a match occurs if contact's address begins with the key
+     *                in case the above criteria resulted in an empty list; we search again but this time a match occurs
+     *                if the contact's address contains the key
+     * @return doubly linked list of contacts having email address as key
+     */
     public DoublyLinkedList getContactByAddress(String address) {
         address = address.toLowerCase();
         DoublyLinkedList res = new DoublyLinkedList();
@@ -112,6 +153,13 @@ public class User implements IContact {
         return res;
     }
 
+    /**
+     * deletes the contact from this user's list of contacts
+     * used by Contact.delete()
+     *
+     * @param contact to be deleted
+     * @return true if contact deleted successfully, false otherwise
+     */
     protected boolean delContact(Contact contact) {
         Iterator<Object> iter = contacts.iterator(true);
         int index;
@@ -140,6 +188,12 @@ public class User implements IContact {
         return false;
     }
 
+    /**
+     * overwrites contacts.csv file in the user's directory with the list of contacts
+     * used after any editing or deleting
+     *
+     * @throws IOException file not found
+     */
     protected void exportContacts() throws IOException {
         if (contacts.isEmpty()) return;
         BufferedWriter writer = new BufferedWriter(new FileWriter(this.getFilePath() + sep + "contacts.csv", false));
@@ -152,16 +206,20 @@ public class User implements IContact {
         writer.close();
     }
 
+    /**
+     * overwrites the folders.txt file in user/inbox with the new folders for the user
+     * used after adding,deleting or renaming any of the user's folders
+     */
     public void editFolders() {
         DoublyLinkedList dll = new DoublyLinkedList();
         try {
             Scanner sc = new Scanner(new File(this.getFilePath() + sep + "inbox" + sep + "folders.txt"));
             while (sc.hasNext()) {
-            	String folderName = sc.nextLine();
-            	File folder = new File(this.getFilePath() + sep + "inbox" + sep + folderName);
-            	if (folder.exists()) {
-            		dll.add(folderName);
-            	}
+                String folderName = sc.nextLine();
+                File folder = new File(this.getFilePath() + sep + "inbox" + sep + folderName);
+                if (folder.exists()) {
+                    dll.add(folderName);
+                }
             }
             sc.close();
         } catch (FileNotFoundException e) {
@@ -171,7 +229,7 @@ public class User implements IContact {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + sep + "inbox" + sep + "folders.txt", false));
             Iterator<Object> iter = dll.iterator(true);
             while (iter.hasNext()) {
-            	writer.write(iter.next().toString());
+                writer.write(iter.next().toString());
                 writer.newLine();
             }
             writer.close();
@@ -181,9 +239,14 @@ public class User implements IContact {
 
     }
 
+    /**
+     * adds new folder
+     *
+     * @param name new folder's name
+     */
     public void addFolder(String name) {
         try {
-        	File index = new File(filePath + sep + "inbox" + sep + name + sep + "index.csv");
+            File index = new File(filePath + sep + "inbox" + sep + name + sep + "index.csv");
             index.createNewFile();
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + sep + "inbox" + sep
                     + "folders.txt", true));
