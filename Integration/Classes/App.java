@@ -37,12 +37,22 @@ public class App implements IApp {
 	private final File fList = new File(path + sep +"list.txt");
 	private final DoublyLinkedList list = new DoublyLinkedList();
 	
+	/**
+	 * get current user instance from App class
+	 * @return
+	 */
 	public User getLoggedinUser() {
 	    return loggedinUser;
 	  }
 	
 	@Override
-	  public boolean signin(String email, String password) {
+	/**
+	 * this function is responsible for signing in process  
+	 * @param email mail of user
+	 * @param password password of user
+	 * @return true if valid sign in & false for invalid sign in
+	 */
+	public boolean signin(String email, String password) {
 	    User user = Utils.binarySearch(email, list);
 	    if (user == null) return false; //invalid sign-in
 	    try {
@@ -55,6 +65,11 @@ public class App implements IApp {
 	    }
 
 	@Override
+	/**
+	 * this function is responsible for signing up process (creating new contact)
+	 * @param contact new user info 
+	 * @return true if all data is compatible & false if not compatible 
+	 */
 	public boolean signup(IContact contact) {
         User user;
         user = (User) contact;
@@ -71,7 +86,10 @@ public class App implements IApp {
         loggedinUser = loadInfo(user.getAddress());
         return true;
     }
-	
+	/**
+	 * this functions is used to load users 
+	 * @throws FileNotFoundException
+	 */
 	public void loadUsers() throws FileNotFoundException {
         Scanner sc = new Scanner(fList);
         while (sc.hasNext()) {
@@ -79,7 +97,11 @@ public class App implements IApp {
         }
         sc.close();
     }
-	
+	/**
+	 * this functions check if the address is present or not
+	 * @param address user address
+	 * @return true if located 
+	 */
 	public boolean addressExists(String address) {
         User user = Utils.binarySearch(address, list);
         return user != null;
@@ -113,7 +135,11 @@ public class App implements IApp {
         }
         writer.close();
     }
-    
+    /**
+     * this function load user info 
+     * @param address user address
+     * @return user info 
+     */
     private User loadInfo(String address) {
         /*load user info*/
         User user = new User(address);
@@ -150,6 +176,12 @@ public class App implements IApp {
     
 
 	@Override
+	/**
+	 * this function manipulate folder , sorting , filter
+	 * @param folder set current folder to this folder from which mails will be loaded
+	 * @param filter filtering mails loaded from current folder
+	 * @param sort sort and filter mails loaded from current folder according to instance created from filter class or sort class
+	 */
 	public void setViewingOptions(IFolder folder, IFilter filter, ISort sort) {
 		// No loaded mails and no specified folder to load from
 		if (folder == null && mails == null) { throw new IllegalArgumentException();}
@@ -172,6 +204,11 @@ public class App implements IApp {
 	}
 	
 	@Override
+	/**
+	 * this function list emails in certain page
+	 * @param page page number
+	 * @return array with mails in this page
+	 */
 	public IMail[] listEmails(int page) {
 		// If no loaded mails then Set viewing options has not been called yet
 		if (this.mails == null || this.workingList == null) { throw new IllegalStateException();}
@@ -194,11 +231,19 @@ public class App implements IApp {
 	}
 
 	@Override
+	/**
+	 * this function is supposed to move a chosen email to trash
+	 * @param mails list of mails wanted to be deleted
+	 */
 	public void deleteEmails(ILinkedList mails) {
 		Folder des = new Folder(loggedinUser.getFilePath() + sep + "trash");
 		moveEmails(mails, des);
 	}
-
+	
+	/**
+	 * this function is supposed to delete a chosen email in drafts
+	 * @param mails list of mails wanted to be deleted
+	 */
 	public void deleteDrafts(ILinkedList mails) {
 		DoublyLinkedList mailList = (DoublyLinkedList) mails;
 		String indexFile = this.currentFolder.getPath() + sep + "index.csv";
@@ -211,6 +256,11 @@ public class App implements IApp {
 	}
 	
 	@Override
+	/**
+	 * this function move mails to certain folder 
+	 * @param mails list of mails to be moved
+	 * @param des destination folder to be moved to
+	 */
 	public void moveEmails(ILinkedList mails, IFolder des) {
 		Folder destFolder = (Folder) des;
 		if(destFolder.folderName().equals(this.currentFolder.folderName())) { return;}
@@ -271,6 +321,11 @@ public class App implements IApp {
 	}
 
 	@Override
+	/**
+	 * this function used for creating a new email
+	 * @param email mail info 
+	 * @return true if mail is created successfully  
+	 */
 	public boolean compose(IMail email) {
 		Mail  mail = (Mail)email;
     	// Data to be entered in index file
@@ -360,7 +415,11 @@ public class App implements IApp {
 		return true;
 	}
 	
-	
+	/**
+	 * this function is supposed to create a draft
+	 * @param email mail info
+	 * @return true if draft is saved successfully 
+	 */
 	public boolean draft(IMail email) {
 		Mail  mail = (Mail)email;
     	// Data to be entered in index file
@@ -409,7 +468,9 @@ public class App implements IApp {
 		return true;
 	}
 	
-
+	/**
+	 * this function is used for loading mails
+	 */
 	public void loadMails() {
 		BufferedReader reader;
 		mails.clear();
@@ -439,7 +500,9 @@ public class App implements IApp {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * this function check mails in trash if time of an email exceed 30 days this mail will be deleted
+	 */
 	public void updateTrash() {
 		File trashIndex = new File(loggedinUser.getFilePath()+ sep + "trash" + sep + "index.csv");
 		DoublyLinkedList toBeDeletedList = new DoublyLinkedList();
@@ -472,7 +535,11 @@ public class App implements IApp {
 	}
 
 
-	// delete record in index file
+	/**
+	 * this function delete certain record in a file
+	 * @param list list of mails 
+	 * @param path path of the file
+	 */
 	public void deleteIndex(DoublyLinkedList list, String path) {
 		File index = new File(path);
 		String line = "";
@@ -499,7 +566,12 @@ public class App implements IApp {
 		}
 
 	}
-	
+	/**
+	 * this function search for a certain ID in a list (check if exist)
+	 * @param list list of mails
+	 * @param ID ID i want to look for in list of mails
+	 * @return true if located
+	 */
 	public boolean findID(DoublyLinkedList list, int ID) {
 		Iterator<Object> it = list.iterator(true);
 		while (it.hasNext()) {
@@ -525,7 +597,9 @@ public class App implements IApp {
 	public int availableMailsCount() {
 		return workingList.size();
 	}
-	
+	/**
+	 * this function sort mails by priority
+	 */
 	public void SortByPriority() {
 		PriorityQueue PQueue = new PriorityQueue();
 		Iterator<Object> it = workingList.iterator(true);
@@ -538,7 +612,10 @@ public class App implements IApp {
 			workingList.add(PQueue.removeMin());
 		}
 	}
-	
+	/**
+	 * get next mail unique ID after each time using compose function or draft function
+	 * @return
+	 */
 	public int updateMailID() {
         int i = 0;
         try {
@@ -555,7 +632,10 @@ public class App implements IApp {
         }
         return i;
     }
-	
+	/**
+	 * this function reverse sorting
+	 * @param flag control type of sorting ascending or descending
+	 */
 	public void reverseSort(boolean flag) {
 		this.reverseSorting = flag;
 	}
