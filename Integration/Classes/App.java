@@ -219,6 +219,7 @@ public class App implements IApp {
 		Iterator<Object> it = workingList.iterator(!reverseSorting);
 		// Skip the unwanted pages
 		while (it.hasNext() && counter < (page-1) * 10) {
+			it.next();
 			counter ++;
 		}
 		// Load the wanted page
