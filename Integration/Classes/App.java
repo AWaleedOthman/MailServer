@@ -1,49 +1,38 @@
 package Classes;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import Interfaces.*;
+import Misc.AES;
+import Misc.Birthday;
+import Misc.Utils;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
-
-import Interfaces.IApp;
-import Interfaces.IContact;
-import Interfaces.IFilter;
-import Interfaces.IFolder;
-import Interfaces.ILinkedList;
-import Interfaces.IMail;
-import Interfaces.ISort;
-import Misc.Utils;
-import Misc.AES;
-import Misc.Birthday;
-
-import java.io.*;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class App implements IApp {
 
 	private Folder currentFolder = new Folder(".");
-	private DoublyLinkedList mails = new DoublyLinkedList();
+	private final DoublyLinkedList mails = new DoublyLinkedList();
 	private DoublyLinkedList workingList;
 	boolean reverseSorting = false;
 	private User loggedinUser;
 	private final String sep = System.getProperty("file.separator");
-	private final String path = System.getProperty("user.dir") + sep + "system"+ sep +"users";
-	private final File fList = new File(path + sep +"list.txt");
+	private final String path = System.getProperty("user.dir") + sep + "system" + sep + "users";
+	private final File fList = new File(path + sep + "list.txt");
 	private final DoublyLinkedList list = new DoublyLinkedList();
-	
+
 	/**
 	 * get current user instance from App class
+	 *
 	 * @return
 	 */
 	public User getLoggedinUser() {
-	    return loggedinUser;
-	  }
+		return loggedinUser;
+	}
 	
 	@Override
 	/**
@@ -377,7 +366,7 @@ public class App implements IApp {
 				queue.enqueue(it.next());
 			}
 			while (!queue.isEmpty()) {
-				
+
 				String reciever = queue.dequeue().toString();
 				edit = new BufferedWriter(
 						new FileWriter("system" + sep + "users" + sep + reciever + sep + "inbox" + sep + "index.csv", true));
@@ -385,16 +374,16 @@ public class App implements IApp {
 				edit.append("\n");
 				edit.flush();
 				edit.close();
-				
+
 				// Creating mail folder in the reciever's inbox folder
-				dir = new Folder("system" + sep + "users"+ sep + reciever + sep + "inbox" + sep);
-				dir.addSubFolder(mail.getID()+"");
-				mailDir = new Folder("system" + sep + "users"+ sep + reciever + sep + "inbox" + sep + mail.getID() + sep);
+				dir = new Folder("system" + sep + "users" + sep + reciever + sep + "inbox" + sep);
+				dir.addSubFolder(mail.getID() + "");
+				mailDir = new Folder("system" + sep + "users" + sep + reciever + sep + "inbox" + sep + mail.getID() + sep);
 				mailDir.addSubFolder("attachment");
-				directory = new File("system"+ sep +"users"+ sep + reciever + sep + "inbox" + sep + mail.getID() + sep +  mail.getID() + ".txt");
+				directory = new File("system" + sep + "users" + sep + reciever + sep + "inbox" + sep + mail.getID() + sep + mail.getID() + ".txt");
 				// Creating body file
 				mailBody = mail.getID() + "\n" + mail.getTitle() + "\n" + mail.getSenderAddress() + "\n" + mail.getSenderName() + "\n"
-									+ date + "\n" + mail.getPriority().toString() + "\n" + reciever;
+						+ date + "\n" + mail.getPriority().toString() + "\n" + reciever;
 				mailBody += "\n" + mail.getText() + "\n";
 				writer = new FileWriter(directory);
 				directory.createNewFile();
